@@ -23,3 +23,17 @@ class BaseLed(ABC):
     @abstractmethod
     def get_colour(self) -> int:
         pass
+
+
+class NullLed(BaseLed):
+    def __init__(self):
+        self.colour = 0
+
+    def set_colour(self, colour: int) -> None:
+        self.colour = colour
+
+    def get_colour(self) -> int:
+        return self.colour
+
+
+# TODO LED

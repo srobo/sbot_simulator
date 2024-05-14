@@ -25,3 +25,27 @@ class BaseServo(ABC):
     def enabled(self) -> bool:
         pass
 
+
+class NullServo(BaseServo):
+    def __init__(self) -> None:
+        self.position = 1500
+        self._enabled = False
+
+    def disable(self) -> None:
+        self._enabled = False
+
+    def set_position(self, value: int) -> None:
+        self.position = value
+        self._enabled = True
+
+    def get_position(self) -> int:
+        return self.position
+
+    def get_current(self) -> int:
+        return 0
+
+    def enabled(self) -> bool:
+        return self._enabled
+
+# TODO rotary servo
+# TODO linear servo
