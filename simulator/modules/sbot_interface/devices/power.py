@@ -33,3 +33,23 @@ class BaseButton(ABC):
     @abstractmethod
     def get_state(self) -> bool:
         pass
+
+
+class NullBuzzer(BaseBuzzer):
+    def __init__(self) -> None:
+        self.frequency = 0
+        self.duration = 0
+        super().__init__()
+
+    def set_note(self, freq: int, dur: int) -> None:
+        self.frequency = freq
+        self.duration = dur
+
+    def get_note(self) -> Tuple[int, int]:
+        return self.frequency, self.duration
+
+
+class NullButton(BaseButton):
+    def get_state(self) -> bool:
+        # button is always pressed
+        return True
