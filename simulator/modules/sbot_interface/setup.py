@@ -1,7 +1,12 @@
+import logging
+
 from sbot_interface.socket_server import DeviceServer, SocketServer
 
 
-def setup_devices() -> SocketServer:
+def setup_devices(log_level: int = logging.WARNING) -> SocketServer:
+    device_logger = logging.getLogger('sbot_interface')
+    device_logger.setLevel(log_level)
+
     # this is the configuration of devices connected to the robot
     devices = [
     ]

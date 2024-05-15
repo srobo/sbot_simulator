@@ -1,6 +1,9 @@
+import logging
 import select
 import socket
 from typing import Optional, Protocol
+
+LOGGER = logging.getLogger(__name__)
 
 
 class Board(Protocol):
@@ -19,6 +22,7 @@ class DeviceServer:
         self.server_socket.bind(('localhost', 0))
         self.server_socket.listen(1)  # only allow one connection per device
         self.server_socket.setblocking(False)
+        LOGGER.info(f'Started {self.board.asset_tag} on port {self.port}')
 
         self.device_socket: Optional[socket.socket] = None
         self.buffer = b''
@@ -32,9 +36,13 @@ class DeviceServer:
             return None
 
     def run_command(self, command: str) -> str:
+        LOGGER.debug(f'> {command}')
         try:
-            return self.board.handle_command(command) + '\n'
+            response = self.handle_command(command)
+            LOGGER.debug(f'< {response}')
+            return response + '\n'
         except Exception as e:
+            LOGGER.exception(f'Error processing command: {command}')
             return f'NACK:{e}\n'
 
     def flush_buffer(self) -> None:
@@ -57,12 +65,14 @@ class DeviceServer:
             self.disconnect_device()
         self.device_socket, _ = self.server_socket.accept()
         self.device_socket.setblocking(False)
+        LOGGER.info(f'Connected to {self.asset_tag} from {self.device_socket.getpeername()}')
 
     def disconnect_device(self) -> None:
         self.flush_buffer()
         if self.device_socket is not None:
             self.device_socket.close()
             self.device_socket = None
+            LOGGER.info(f'Disconnected from {self.asset_tag}')
 
     @property
     def port(self) -> int:

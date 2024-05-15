@@ -1,6 +1,9 @@
+import logging
 from typing import List
 
 from sbot_interface.devices.motor import MAX_POWER, MIN_POWER, BaseMotor
+
+LOGGER = logging.getLogger(__name__)
 
 
 ## Based on the Motor Board v4.4.1 firmware
@@ -18,6 +21,7 @@ class MotorBoard:
             # Output faults are unsupported
             return "0,0:12000"
         elif args[0] == '*RESET':
+            LOGGER.info(f'Resetting motor board {self.asset_tag}')
             for motor in self.motors:
                 motor.disable()
             return 'ACK'
@@ -43,6 +47,7 @@ class MotorBoard:
                     return 'NACK:Invalid motor power'
                 if not (MIN_POWER <= power <= MAX_POWER):
                     return 'NACK:Invalid motor power'
+                LOGGER.info(f'Setting motor {motor_number} on board {self.asset_tag} to {power}')
                 self.motors[motor_number].set_power(power)
                 return 'ACK'
             elif args[2] == 'GET?':
@@ -51,6 +56,7 @@ class MotorBoard:
                     f'{self.motors[motor_number].get_power()}',
                 )
             elif args[2] == 'DISABLE':
+                LOGGER.info(f'Disabling motor {motor_number} on board {self.asset_tag}')
                 self.motors[motor_number].disable()
                 return 'ACK'
             elif args[2] == 'I?':

@@ -1,6 +1,9 @@
+import logging
 from typing import List
 
 from sbot_interface.devices.arduino_devices import BasePin, GPIOPinMode, UltrasonicSensor
+
+LOGGER = logging.getLogger(__name__)
 
 
 ## Based on the Arduino v2.0 firmware
@@ -37,6 +40,7 @@ class Arduino:
                         mode = GPIOPinMode(args[4])
                     except ValueError:
                         return 'NACK:Invalid mode'
+                    LOGGER.info(f'Setting pin {pin_number} of arduino {self.asset_tag} to mode {mode}')
                     self.pins[pin_number].set_mode(mode)
                     return 'ACK'
             elif args[2] == 'DIGITAL':
@@ -46,7 +50,10 @@ class Arduino:
                     if len(args) < 5:
                         return 'NACK:Missing value'
                     value = args[4]
-                    self.pins[pin_number].set_digital(value)
+                    if value not in ['0', '1']:
+                        return 'NACK:Invalid value'
+                    LOGGER.info(f'Setting pin {pin_number} of arduino {self.asset_tag} to digital value {value}')
+                    self.pins[pin_number].set_digital(bool(value))
                     return 'ACK'
             elif args[2] == 'ANALOG':
                 if args[3] == 'GET?':

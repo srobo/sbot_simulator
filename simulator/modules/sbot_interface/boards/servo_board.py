@@ -1,6 +1,9 @@
+import logging
 from typing import List
 
 from sbot_interface.devices.servo import MAX_POSITION, MIN_POSITION, BaseServo
+
+LOGGER = logging.getLogger(__name__)
 
 
 ## Based on the Servo Board v4.4 firmware
@@ -19,6 +22,7 @@ class ServoBoard:
         elif args[0] == '*STATUS?':
             return f"{self.watchdog_fail}:{self.pgood}"
         elif args[0] == '*RESET':
+            LOGGER.info(f'Resetting servo board {self.asset_tag}')
             for servo in self.servos:
                 servo.disable()
             return 'ACK'
@@ -41,6 +45,7 @@ class ServoBoard:
                 return 'NACK:Missing servo command'
 
             if args[2] == 'DISABLE':
+                LOGGER.info(f'Disabling servo {servo_number} on board {self.asset_tag}')
                 self.servos[servo_number].disable()
                 return 'ACK'
             elif args[2] == 'GET?':
@@ -56,6 +61,7 @@ class ServoBoard:
                 if not (MIN_POSITION <= setpoint <= MAX_POSITION):
                     return 'NACK:Invalid servo setpoint'
 
+                LOGGER.info(f'Setting servo {servo_number} on board {self.asset_tag} to {setpoint}')
                 self.servos[servo_number].set_position(setpoint)
                 return 'ACK'
             else:

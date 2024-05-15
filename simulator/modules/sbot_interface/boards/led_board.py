@@ -1,6 +1,9 @@
+import logging
 from typing import List
 
 from sbot_interface.devices.led import RGB_COLOURS, BaseLed
+
+LOGGER = logging.getLogger(__name__)
 
 # *IDN?
 # *STATUS?
@@ -11,6 +14,7 @@ from sbot_interface.devices.led import RGB_COLOURS, BaseLed
 # LED:START:GET?
 
 LED_START = 4
+
 
 class LedBoard:
     def __init__(self, leds: List[BaseLed], asset_tag: str, software_version: str='1.0'):
@@ -25,6 +29,7 @@ class LedBoard:
         elif args[0] == '*STATUS?':
             return 'ACK'
         elif args[0] == '*RESET':
+            LOGGER.info(f'Resetting led board {self.asset_tag}')
             for led in self.leds:
                 led.set_colour(0)
             return 'ACK'
@@ -45,6 +50,7 @@ class LedBoard:
                         return 'NACK:Invalid LED start'
                     if start not in [0, 1]:
                         return 'NACK:Invalid LED start'
+                    LOGGER.info(f'Setting start LED on board {self.asset_tag} to {start}')
                     self.leds[led_number].set_colour(start)
                     return 'ACK'
                 elif args[2] == 'GET?':
@@ -72,6 +78,10 @@ class LedBoard:
                         return 'NACK:Invalid LED colour'
                     if r not in [0, 1] or g not in [0, 1] or b not in [0, 1]:
                         return 'NACK:Invalid LED colour'
+                    LOGGER.info(
+                        f'Setting LED {led_number} on board {self.asset_tag} to '
+                        f'{r}:{g}:{b} (colour {RGB_COLOURS.index((r, g, b))}',
+                    )
                     self.leds[led_number].set_colour(RGB_COLOURS.index((r, g, b)))
                     return 'ACK'
                 elif args[2] == 'GET?':

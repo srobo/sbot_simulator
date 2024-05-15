@@ -1,7 +1,10 @@
+import logging
 from typing import List, Tuple
 
 from sbot_interface.devices.led import BaseLed
 from sbot_interface.devices.power import BaseButton, BaseBuzzer, Output
+
+LOGGER = logging.getLogger(__name__)
 
 NUM_OUTPUTS = 7  # 6 12V outputs, 1 5V output
 SYS_OUTPUT = 6  # 5V output for the brain
@@ -38,6 +41,7 @@ class PowerBoard:
             # Output faults are unsupported, fan is always off
             return f"0,0,0,0,0,0,0:{self.temp}:0:5000"
         elif args[0] == '*RESET':
+            LOGGER.info(f'Resetting power board {self.asset_tag}')
             for output in self.outputs:
                 output.set_output(False)
             self.buzzer.set_note(0, 0)
@@ -72,6 +76,7 @@ class PowerBoard:
                     return 'NACK:Invalid output state'
                 if state not in [0, 1]:
                     return 'NACK:Invalid output state'
+                LOGGER.info(f'Setting output {output_number} on board {self.asset_tag} to {state}')
                 self.outputs[output_number].set_output(state)
                 return 'ACK'
             elif args[2] == 'GET?':
@@ -97,6 +102,7 @@ class PowerBoard:
                 if len(args) < 4:
                     return 'NACK:Missing LED state'
                 if args[3] in ['0', '1', 'F']:
+                    LOGGER.info(f'Setting {args[1]} LED on board {self.asset_tag} to {args[3]}')
                     if args[3] == 'F':
                         self.leds[led_type].set_colour(1)
                     else:
@@ -130,6 +136,7 @@ class PowerBoard:
                 if dur < 0:
                     return 'NACK:Invalid note duration'
 
+                LOGGER.info(f'Setting buzzer on board {self.asset_tag} to {freq}Hz for {dur}ms')
                 self.buzzer.set_note(freq, dur)
                 return 'ACK'
         else:
