@@ -1,3 +1,4 @@
+import atexit
 import logging
 import select
 import socket
@@ -22,23 +23,24 @@ class DeviceServer:
         self.server_socket.bind(('localhost', 0))
         self.server_socket.listen(1)  # only allow one connection per device
         self.server_socket.setblocking(False)
-        LOGGER.info(f'Started {self.board.asset_tag} on port {self.port}')
+        LOGGER.info(f'Started server for {self.board_type} ({self.board.asset_tag}) on port {self.port}')
 
         self.device_socket: Optional[socket.socket] = None
         self.buffer = b''
+        atexit.register(self.close)
 
     def process_data(self, data: bytes) -> Optional[bytes]:
         self.buffer += data
         if b'\n' in self.buffer:
             data, self.buffer = self.buffer.split(b'\n', 1)
-            return self.run_command(data.decode()).encode()
+            return self.run_command(data.decode().strip()).encode()
         else:
             return None
 
     def run_command(self, command: str) -> str:
         LOGGER.debug(f'> {command}')
         try:
-            response = self.handle_command(command)
+            response = self.board.handle_command(command)
             LOGGER.debug(f'< {response}')
             return response + '\n'
         except Exception as e:
@@ -74,6 +76,10 @@ class DeviceServer:
             self.device_socket = None
             LOGGER.info(f'Disconnected from {self.asset_tag}')
 
+    def close(self) -> None:
+        self.disconnect_device()
+        self.server_socket.close()
+
     @property
     def port(self) -> int:
         if self.server_socket is None:
@@ -86,7 +92,7 @@ class DeviceServer:
 
     @property
     def board_type(self) -> str:
-        return self.board.__qualname__
+        return self.board.__class__.__name__
 
 
 class SocketServer:
@@ -124,7 +130,6 @@ class SocketServer:
 
     def links_formatted(self, address='localhost') -> str:
         return '\n'.join(
-            f"socket://{address}:{port}/{board_type}/{asset_tag};"
+            f"socket://{address}:{data['port']}/{data['board_type']}/{asset_tag};"
             for asset_tag, data in self.links().items()
-            for board_type, port in data.items()
         )

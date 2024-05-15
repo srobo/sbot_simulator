@@ -22,7 +22,7 @@ def setup_devices(log_level: int = logging.WARNING) -> SocketServer:
 
 
 def main() -> None:
-    server = setup_devices()
+    server = setup_devices(logging.DEBUG)
     # generate and print the socket url and information for each device
     print(server.links_formatted())
     # start select loop for all server sockets and device sockets
@@ -30,4 +30,5 @@ def main() -> None:
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     main()
