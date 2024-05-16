@@ -2,7 +2,8 @@ import atexit
 import logging
 import select
 import socket
-from typing import Optional, Protocol
+import struct
+from typing import Optional, Protocol, Union
 
 LOGGER = logging.getLogger(__name__)
 
@@ -11,7 +12,7 @@ class Board(Protocol):
     asset_tag: str
     software_version: str
 
-    def handle_command(self, command: str) -> str:
+    def handle_command(self, command: str) -> Union[str, bytes]:
         pass
 
 
@@ -33,19 +34,23 @@ class DeviceServer:
         self.buffer += data
         if b'\n' in self.buffer:
             data, self.buffer = self.buffer.split(b'\n', 1)
-            return self.run_command(data.decode().strip()).encode()
+            return self.run_command(data.decode().strip())
         else:
             return None
 
-    def run_command(self, command: str) -> str:
+    def run_command(self, command: str) -> bytes:
         LOGGER.debug(f'> {command}')
         try:
             response = self.board.handle_command(command)
-            LOGGER.debug(f'< {response}')
-            return response + '\n'
+            if isinstance(response, bytes):
+                LOGGER.debug(f'< {len(response)} bytes')
+                return b'\0' + struct.pack('>I', len(response)) + response
+            else:
+                LOGGER.debug(f'< {response}')
+                return response + b'\n'
         except Exception as e:
             LOGGER.exception(f'Error processing command: {command}')
-            return f'NACK:{e}\n'
+            return f'NACK:{e}\n'.encode()
 
     def flush_buffer(self) -> None:
         self.buffer = b''
