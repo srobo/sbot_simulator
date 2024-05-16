@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Tuple
 
 
 class BaseCamera(ABC):
@@ -8,7 +9,7 @@ class BaseCamera(ABC):
         pass
 
     @abstractmethod
-    def get_resolution(self) -> Tuple[int, int]:
+    def get_resolution(self) -> tuple[int, int]:
         pass
 
 
@@ -16,7 +17,7 @@ class NullCamera(BaseCamera):
     def get_image(self) -> bytes:
         return b''
 
-    def get_resolution(self) -> Tuple[int, int]:
+    def get_resolution(self) -> tuple[int, int]:
         return 0, 0
 
 

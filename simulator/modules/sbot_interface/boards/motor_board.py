@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import logging
-from typing import List
 
 from sbot_interface.devices.motor import MAX_POWER, MIN_POWER, BaseMotor
 
@@ -8,7 +9,7 @@ LOGGER = logging.getLogger(__name__)
 
 ## Based on the Motor Board v4.4.1 firmware
 class MotorBoard:
-    def __init__(self, motors: List[BaseMotor], asset_tag: str, software_version: str='4.4.1'):
+    def __init__(self, motors: list[BaseMotor], asset_tag: str, software_version: str='4.4.1'):
         self.motors = motors
         self.asset_tag = asset_tag
         self.software_version = software_version

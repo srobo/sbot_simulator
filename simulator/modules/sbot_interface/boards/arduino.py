@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import logging
-from typing import List
 
 from sbot_interface.devices.arduino_devices import BasePin, GPIOPinMode, UltrasonicSensor
 
@@ -8,7 +9,7 @@ LOGGER = logging.getLogger(__name__)
 
 ## Based on the Arduino v2.0 firmware
 class Arduino:
-    def __init__(self, pins: List[BasePin], asset_tag: str, software_version: str='2.0'):
+    def __init__(self, pins: list[BasePin], asset_tag: str, software_version: str='2.0'):
         self.pins = pins
         self.asset_tag = asset_tag
         self.software_version = software_version

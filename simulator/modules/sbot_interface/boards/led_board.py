@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import logging
-from typing import List
 
 from sbot_interface.devices.led import RGB_COLOURS, BaseLed
 
@@ -17,7 +18,7 @@ LED_START = 4
 
 
 class LedBoard:
-    def __init__(self, leds: List[BaseLed], asset_tag: str, software_version: str='1.0'):
+    def __init__(self, leds: list[BaseLed], asset_tag: str, software_version: str='1.0'):
         self.leds = leds
         self.asset_tag = asset_tag
         self.software_version = software_version

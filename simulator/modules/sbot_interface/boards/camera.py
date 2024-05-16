@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import logging
-from typing import Union
 
 from sbot_interface.devices.camera import BaseCamera
 
@@ -17,7 +18,7 @@ class CameraBoard:
         self.software_version = software_version
         self.camera = camera
 
-    def handle_command(self, command: str) -> Union[str, bytes]:
+    def handle_command(self, command: str) -> str | bytes:
         args = command.split(':')
         if args[0] == '*IDN?':
             return f'Student Robotics:CAMv1a:{self.asset_tag}:{self.software_version}'

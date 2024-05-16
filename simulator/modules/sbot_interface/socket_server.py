@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import atexit
 import logging
 import select
 import socket
 import struct
-from typing import Optional, Protocol, Union
+from typing import Protocol
 
 LOGGER = logging.getLogger(__name__)
 
@@ -12,7 +14,7 @@ class Board(Protocol):
     asset_tag: str
     software_version: str
 
-    def handle_command(self, command: str) -> Union[str, bytes]:
+    def handle_command(self, command: str) -> str | bytes:
         pass
 
 
@@ -26,11 +28,11 @@ class DeviceServer:
         self.server_socket.setblocking(False)
         LOGGER.info(f'Started server for {self.board_type} ({self.board.asset_tag}) on port {self.port}')
 
-        self.device_socket: Optional[socket.socket] = None
+        self.device_socket: socket.socket | None = None
         self.buffer = b''
         atexit.register(self.close)
 
-    def process_data(self, data: bytes) -> Optional[bytes]:
+    def process_data(self, data: bytes) -> bytes | None:
         self.buffer += data
         if b'\n' in self.buffer:
             data, self.buffer = self.buffer.split(b'\n', 1)

@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Tuple
 
 
 class Output:
@@ -25,7 +26,7 @@ class BaseBuzzer(ABC):
         pass
 
     @abstractmethod
-    def get_note(self) -> Tuple[int, int]:
+    def get_note(self) -> tuple[int, int]:
         pass
 
 
@@ -45,7 +46,7 @@ class NullBuzzer(BaseBuzzer):
         self.frequency = freq
         self.duration = dur
 
-    def get_note(self) -> Tuple[int, int]:
+    def get_note(self) -> tuple[int, int]:
         return self.frequency, self.duration
 
 

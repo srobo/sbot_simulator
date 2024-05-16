@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import logging
-from typing import List, Tuple
 
 from sbot_interface.devices.led import BaseLed
 from sbot_interface.devices.power import BaseButton, BaseBuzzer, Output
@@ -17,10 +18,10 @@ ERR_LED = 1
 class PowerBoard:
     def __init__(
         self,
-        outputs: List[Output],
+        outputs: list[Output],
         buzzer: BaseBuzzer,
         button: BaseButton,
-        leds: Tuple[BaseLed, BaseLed],
+        leds: tuple[BaseLed, BaseLed],
         asset_tag: str,
         software_version: str='4.4.2',
     ):

@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import logging
-from typing import List
 
 from sbot_interface.devices.servo import MAX_POSITION, MIN_POSITION, BaseServo
 
@@ -8,7 +9,7 @@ LOGGER = logging.getLogger(__name__)
 
 ## Based on the Servo Board v4.4 firmware
 class ServoBoard:
-    def __init__(self, servos: List[BaseServo], asset_tag: str, software_version: str='4.4'):
+    def __init__(self, servos: list[BaseServo], asset_tag: str, software_version: str='4.4'):
         self.servos = servos
         self.asset_tag = asset_tag
         self.software_version = software_version
