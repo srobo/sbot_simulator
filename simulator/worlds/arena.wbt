@@ -1,16 +1,98 @@
 #VRML_SIM R2023b utf8
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "../protos/Arena.proto"
+EXTERNPROTO "../protos/Deck.proto"
+EXTERNPROTO "../protos/TriangleDeck.proto"
+EXTERNPROTO "../protos/Can.proto"
+
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.5773 0.5773 0.5773 2.0944
-  position 0 0 10
+  orientation 0.43231 0.43231 -0.79134 1.80272
+  position 0 6.4 9.6
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
-RectangleArena {
+
+Arena {
+  size 5.6 5.6
+  locked TRUE
+}
+Deck {
+  name "TL deck"
+  size 1.2192 1.2192
+  translation 2.1904 -2.1904 0.085
+  locked TRUE
+}
+Deck {
+  name "BR deck"
+  size 1.2192 1.2192
+  translation -2.1904 2.1904 0.085
+  locked TRUE
+}
+Deck {
+  name "CR deck"
+  size 1.2192 1.2192
+  translation -0.6096 -0.6096 0.085
+  locked TRUE
+}
+Deck {
+  name "CL deck"
+  size 1.2192 1.2192
+  translation 0.6096 0.6096 0.085
+  locked TRUE
+}
+TriangleDeck {
+  name "TR deck"
+  size 1.2192 1.2192
+  translation -2.1904 -2.1904 0.085
+  locked TRUE
+}
+TriangleDeck {
+  name "BL deck"
+  size 1.2192 1.2192
+  translation 2.1904 2.1904 0.085
+  rotation 0 0 1 3.14159
+  locked TRUE
+}
+
+DEF CANS Pose {
+  translation 0 0 0.05
+  children [
+    Can {
+      name "can1"
+      translation -0.3 0.04 0
+    }
+    Can {
+      name "can2"
+      translation -1.6 1.4 0
+    }
+    Can {
+      name "can3"
+      translation -2.76 -0.04 0
+    }
+    Can {
+      name "can4"
+      translation -1.6 -1.6 0
+    }
+    Can {
+      name "can5"
+      translation 0.3 -0.04 0
+    }
+    Can {
+      name "can6"
+      translation 1.6 -1.4 0
+    }
+    Can {
+      name "can7"
+      translation 2.76 0.04 0
+    }
+    Can {
+      name "can8"
+      translation 1.6 1.6 0
+    }
+  ]
 }

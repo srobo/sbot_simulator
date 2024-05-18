@@ -1,0 +1,129 @@
+#VRML_SIM R2023b utf8
+# template language: javascript
+
+PROTO Arena [
+  field SFVec2f size 1 1
+  field SFColor wallColour 0.095395215 0.22841774 0.8000001
+  field MFString floorTexture []
+  field SFBool locked FALSE
+] {
+  Group {
+    children [
+      DEF ARENA_WALLS Group {
+        children [
+          Solid {  # North Wall
+            translation 0 %<= -(fields.size.value.y / 2 + 0.075) >% 0.15
+            children [
+              DEF NORTH_WALL Shape {
+                appearance DEF WALL_COLOUR PBRAppearance {
+                  baseColor IS wallColour
+                  roughness 1
+                  metalness 0
+                }
+                geometry Box {
+                  size %<= fields.size.value.x >% 0.15 0.3
+                }
+              }
+            ]
+            name "North Wall"
+            locked IS locked
+          }
+          Solid {  # East Wall
+            translation %<= -(fields.size.value.x / 2 + 0.075) >% 0 0.15
+            children [
+              DEF EAST_WALL Shape {
+                appearance USE WALL_COLOUR
+                geometry Box {
+                  size 0.15 %<= fields.size.value.y + 0.3 >% 0.3
+                }
+              }
+            ]
+            name "East Wall"
+            locked IS locked
+          }
+          Solid {  # West Wall
+            translation %<= fields.size.value.x / 2 + 0.075 >% 0 0.15
+            children [USE EAST_WALL]
+            name "West Wall"
+            locked IS locked
+          }
+          Solid {  # South Wall
+            translation 0 %<= fields.size.value.y / 2 + 0.075 >% 0.15
+            children [USE NORTH_WALL]
+            name "South Wall"
+            locked IS locked
+          }
+        ]
+      }
+      DEF ARENA_BOUNDING Group {
+        children [
+          Solid {  # Floor
+            translation 0 -0.002 0
+            children [
+              DEF FLOOR Shape {
+                appearance Appearance {
+                  texture ImageTexture {
+                    url IS floorTexture
+                    repeatS FALSE
+                    repeatT FALSE
+                  }
+                }
+                geometry Plane {
+                  size IS size
+                }
+              }
+            ]
+            name "Floor"
+            boundingObject USE FLOOR
+            locked IS locked
+          }
+          Solid {  # Ceiling
+            rotation 1 0 0 3.1419
+            translation 0 0 2
+            boundingObject Plane {
+              size IS size
+            }
+            name "Top boundary"
+            locked IS locked
+          }
+          Solid {  # North bound
+            rotation 1 0 0 -1.5708
+            translation 0 %<= -fields.size.value.y / 2 >% 1
+            boundingObject Plane {
+              size %<= fields.size.value.x >% 2
+            }
+            name "North boundary"
+            locked IS locked
+          }
+          Solid {  # East bound
+            rotation 0 -1 0 -1.5708
+            translation %<= -fields.size.value.x / 2 >% 0 1
+            boundingObject Plane {
+              size 2 %<= fields.size.value.y >%
+            }
+            name "East boundary"
+            locked IS locked
+          }
+          Solid {  # South bound
+            rotation 1 0 0 1.5708
+            translation 0 %<= fields.size.value.y / 2 >% 1
+            boundingObject Plane {
+              size %<= fields.size.value.x >% 2
+            }
+            name "South boundary"
+            locked IS locked
+          }
+          Solid {  # West bound
+            rotation 0 -1 0 1.5708
+            translation %<= fields.size.value.x / 2 >% 0 1
+            boundingObject Plane {
+              size 2 %<= fields.size.value.y >%
+            }
+            name "West boundary"
+            locked IS locked
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+#VRML_SIM R2023b utf8
+# template language: javascript
+
+PROTO Deck [
+  field SFVec2f size 1 1
+  field SFVec3f translation 0 0 0.001
+  field SFRotation rotation 1 0 0 0
+  field SFFloat height 0.17
+  field SFColor sideColour 1 1 1
+  field SFColor topColour 0.1 0.1 0.1
+  field SFBool locked FALSE
+  field SFString name ""
+] {
+  Solid {
+    translation IS translation
+    rotation IS rotation
+    children [
+      Shape {
+        appearance PBRAppearance {
+          baseColor IS sideColour
+          roughness 1
+          metalness 0.5
+        }
+        geometry DEF DECK Box {
+          size %<= fields.size.value.x >% %<= fields.size.value.y >% %<= fields.height.value >%
+        }
+      }
+      Solid {
+        translation 0 0 %<= fields.height.value / 2 + 0.002 >%
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor IS topColour
+              roughness 1
+              metalness 0
+            }
+            geometry Plane {
+              size %<= fields.size.value.x >% %<= fields.size.value.y >%
+            }
+            castShadows FALSE
+          }
+        ]
+        name "Top of deck"
+      }
+    ]
+    boundingObject USE DECK
+    name IS name
+    locked IS locked
+  }
+}

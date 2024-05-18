@@ -1,0 +1,35 @@
+#VRML_SIM R2023b utf8
+
+PROTO Can [
+  field SFVec3f translation 0 0 0.001
+  field SFRotation rotation 1 0 0 0
+  field SFString name ""
+] {
+  Solid {
+    translation IS translation
+    rotation IS rotation
+    children [
+      Shape {
+        appearance DEF TOKEN_APPEARANCE PBRAppearance {
+          baseColor 1 1 1
+          roughness 1
+          metalness 1
+        }
+        geometry DEF TOKEN_GEOMETRY Cylinder {
+          height 0.1
+          radius 0.034
+        }
+      }
+    ]
+    name IS name
+    boundingObject USE TOKEN_GEOMETRY
+    physics Physics {
+      density -1
+      mass 0.300
+      damping Damping {
+        linear 0.4
+        angular 0.4
+      }
+    }
+  }
+}
