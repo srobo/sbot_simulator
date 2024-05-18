@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
+from sbot_interface.devices.util import get_globals
+
 
 class Output:
     def __init__(self, downstream_current = None) -> None:
@@ -54,3 +56,17 @@ class NullButton(BaseButton):
     def get_state(self) -> bool:
         # button is always pressed
         return True
+
+
+class StartButton(BaseButton):
+    def __init__(self) -> None:
+        self._initialized = False
+
+    def get_state(self) -> bool:
+        g = get_globals()
+        if not self._initialized:
+            if g.robot.getCustomData() != 'start':
+                g.robot.setCustomData('ready')
+            self._initialized = True
+
+        return g.robot.getCustomData() == 'start'
