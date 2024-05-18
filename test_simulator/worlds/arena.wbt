@@ -1,4 +1,5 @@
 #VRML_SIM R2023b utf8
+
 WorldInfo {
 }
 Viewpoint {
@@ -9,4 +10,7 @@ Background {
   skyColor [
     0.4 0.7 1
   ]
+}
+Robot {
+  controller "test_runner"
 }
