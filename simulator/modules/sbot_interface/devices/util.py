@@ -44,7 +44,8 @@ def get_globals() -> GlobalData:
     """Returns the global dictionary."""
     global __GLOBALS
     if __GLOBALS is None:
-        robot = Robot()
+        robot = Robot() if Robot.created is None else Robot.created
+
         __GLOBALS = GlobalData(robot=robot, timestep=int(robot.getBasicTimeStep() * 1000))
     return __GLOBALS
 

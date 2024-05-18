@@ -5,6 +5,7 @@ import logging
 import select
 import socket
 import struct
+from threading import Event
 from typing import Protocol
 
 LOGGER = logging.getLogger(__name__)
@@ -105,9 +106,10 @@ class DeviceServer:
 class SocketServer:
     def __init__(self, devices: list[DeviceServer]) -> None:
         self.devices = devices
+        self.stop_event = Event()
 
     def run(self) -> None:
-        while True:
+        while not self.stop_event.is_set():
             # select on all server sockets and device sockets
             sockets = [device.socket() for device in self.devices]
 
@@ -124,7 +126,7 @@ class SocketServer:
                     else:
                         response = device.process_data(data)
                         if response is not None:
-                            device.device_socket.send(response)
+                            device.device_socket.sendall(response)
 
     def links(self) -> dict[str, dict[str, str]]:
         return {
