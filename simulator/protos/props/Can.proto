@@ -18,6 +18,7 @@ PROTO Can [
         geometry DEF TOKEN_GEOMETRY Cylinder {
           height 0.1
           radius 0.034
+          subdivision 12
         }
       }
     ]
