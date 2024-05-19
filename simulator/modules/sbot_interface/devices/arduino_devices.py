@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from enum import Enum
 
 from sbot_interface.devices.led import Led as _Led
-from sbot_interface.devices.util import WebotsDevice, get_globals, get_robot_device, map_to_range
+from sbot_interface.devices.util import WebotsDevice, get_globals, get_robot_device
 
 ANALOG_MAX = 1023
 
@@ -134,7 +134,8 @@ class PressureSensor(BasePin):
 class ReflectanceSensor(BasePin):
     def __init__(self, device_name: str) -> None:
         g = get_globals()
-        self._device = get_robot_device(g.robot, device_name, WebotsDevice.Camera)
+        self._device = get_robot_device(g.robot, device_name, WebotsDevice.DistanceSensor)
+        self._device.enable(g.timestep)
         self._mode = GPIOPinMode.INPUT
 
     def get_mode(self) -> GPIOPinMode:
@@ -150,9 +151,7 @@ class ReflectanceSensor(BasePin):
         pass
 
     def get_analog(self) -> int:
-        image = self._device.getImage()
-        grey_val = self._device.imageGetGray(image, self._device.getWidth(), 0, 0)
-        return map_to_range((0, 255), (0, ANALOG_MAX), grey_val)
+        return int(self._device.getValue())
 
 
 class Led(BasePin):
