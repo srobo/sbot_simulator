@@ -8,6 +8,8 @@ import struct
 from threading import Event
 from typing import Protocol
 
+from sbot_interface.devices.util import get_globals
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -106,7 +108,9 @@ class DeviceServer:
 class SocketServer:
     def __init__(self, devices: list[DeviceServer]) -> None:
         self.devices = devices
+        g = get_globals()
         self.stop_event = Event()
+        g.stop_event = self.stop_event
 
     def run(self) -> None:
         while not self.stop_event.is_set():

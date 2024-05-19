@@ -37,7 +37,7 @@ class Camera(BaseCamera):
         # so we need to wait for a frame to be captured after enabling the camera.
         # The image data buffer is automatically freed at the end of the timestep.
         self._device.enable(self.sample_time)
-        g.robot.step(self.sample_time)
+        g.sleep(self.sample_time / 1000)
 
         image_data_raw = self._device.getImage()
         self._device.disable()

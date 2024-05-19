@@ -1,4 +1,6 @@
+import threading
 from dataclasses import dataclass
+from math import ceil
 from typing import TypeVar
 
 from controller import (
@@ -38,6 +40,24 @@ class WebotsDevice:
 class GlobalData:
     robot: Robot
     timestep: int
+    stop_event: threading.Event | None = None
+
+    def sleep(self, secs: float) -> None:
+        """Sleeps for a given duration in simulator time."""
+        if secs == 0:
+            return
+        elif secs < 0:
+            raise ValueError("Sleep duration must be non-negative.")
+
+        # Convert to a multiple of the timestep
+        secs = ceil((secs * 1000) / self.timestep) * self.timestep
+
+        # Sleep for the given duration
+        result = self.robot.step(secs)
+
+        # If the simulation has stopped, set the stop event
+        if (result == -1) and (self.stop_event is not None):
+            self.stop_event.set()
 
 
 def get_globals() -> GlobalData:
@@ -46,7 +66,10 @@ def get_globals() -> GlobalData:
     if __GLOBALS is None:
         robot = Robot() if Robot.created is None else Robot.created
 
-        __GLOBALS = GlobalData(robot=robot, timestep=int(robot.getBasicTimeStep() * 1000))
+        __GLOBALS = GlobalData(
+            robot=robot,
+            timestep=int(robot.getBasicTimeStep() * 1000),
+        )
     return __GLOBALS
 
 
