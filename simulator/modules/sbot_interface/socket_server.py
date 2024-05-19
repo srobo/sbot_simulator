@@ -11,6 +11,7 @@ from typing import Protocol
 from sbot_interface.devices.util import get_globals
 
 LOGGER = logging.getLogger(__name__)
+g = get_globals()
 
 
 class Board(Protocol):
@@ -38,6 +39,8 @@ class DeviceServer:
     def process_data(self, data: bytes) -> bytes | None:
         self.buffer += data
         if b'\n' in self.buffer:
+            # Sleep to simulate processing time
+            g.sleep(g.timestep / 1000)
             data, self.buffer = self.buffer.split(b'\n', 1)
             return self.run_command(data.decode().strip())
         else:
@@ -108,7 +111,6 @@ class DeviceServer:
 class SocketServer:
     def __init__(self, devices: list[DeviceServer]) -> None:
         self.devices = devices
-        g = get_globals()
         self.stop_event = Event()
         g.stop_event = self.stop_event
 
