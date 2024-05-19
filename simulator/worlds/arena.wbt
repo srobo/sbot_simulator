@@ -65,34 +65,43 @@ DEF CANS Pose {
   children [
     Can {
       name "can1"
-      translation -0.3 0.04 0
+      translation -0.3 0.44 0
     }
     Can {
       name "can2"
-      translation -1.6 1.4 0
+      translation -1.6 1.3 0
     }
     Can {
       name "can3"
-      translation -2.76 -0.04 0
+      translation -1.5892 -0.04 0
     }
     Can {
       name "can4"
-      translation -1.6 -1.6 0
+      translation -2.43 -0.04 0
     }
     Can {
       name "can5"
-      translation 0.3 -0.04 0
+      translation -1.6 -1.6 0
     }
+
     Can {
       name "can6"
-      translation 1.6 -1.4 0
+      translation 0.3 -0.44 0
     }
     Can {
       name "can7"
-      translation 2.76 0.04 0
+      translation 1.6 -1.3 0
     }
     Can {
       name "can8"
+      translation 1.5892 0.04 0
+    }
+    Can {
+      name "can9"
+      translation 2.43 0.04 0
+    }
+    Can {
+      name "can10"
       translation 1.6 1.6 0
     }
   ]
