@@ -1,10 +1,10 @@
 #VRML_SIM R2023b utf8
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
-EXTERNPROTO "../protos/Arena.proto"
-EXTERNPROTO "../protos/Deck.proto"
-EXTERNPROTO "../protos/TriangleDeck.proto"
-EXTERNPROTO "../protos/Can.proto"
+EXTERNPROTO "../protos/arena/Arena.proto"
+EXTERNPROTO "../protos/arena/Deck.proto"
+EXTERNPROTO "../protos/arena/TriangleDeck.proto"
+EXTERNPROTO "../protos/props/Can.proto"
 
 WorldInfo {
 }
