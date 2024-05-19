@@ -62,10 +62,14 @@ PROTO Arena [
             children [
               DEF FLOOR Shape {
                 appearance Appearance {
+                  material Material {
+                    ambientIntensity 0
+                  }
                   texture ImageTexture {
                     url IS floorTexture
                     repeatS FALSE
                     repeatT FALSE
+                    filtering 1
                   }
                 }
                 geometry Plane {
@@ -74,7 +78,9 @@ PROTO Arena [
               }
             ]
             name "Floor"
-            boundingObject USE FLOOR
+            boundingObject Plane {
+              size IS size
+            }
             locked IS locked
           }
           Solid {  # Ceiling
