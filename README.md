@@ -1,6 +1,7 @@
 # sbot_simulator
 A simulator built around Webots to use the sbot library virtually
 
+![sbot_simulator](arena_overview.jpg)
 
 ### Work in progress
 
