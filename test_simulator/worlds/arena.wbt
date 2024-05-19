@@ -12,5 +12,13 @@ Background {
   ]
 }
 Robot {
+  children [
+    Camera {
+      # width 1280
+      # height 720
+      width 800
+      height 450
+    }
+  ]
   controller "test_runner"
 }
