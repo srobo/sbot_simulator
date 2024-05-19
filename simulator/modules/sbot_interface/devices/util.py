@@ -1,6 +1,7 @@
 import threading
 from dataclasses import dataclass
 from math import ceil
+from random import gauss
 from typing import TypeVar
 
 from controller import (
@@ -74,9 +75,9 @@ def get_globals() -> GlobalData:
 
 
 def map_to_range(
+    value: float,
     old_min_max: tuple[float, float],
     new_min_max: tuple[float, float],
-    value: float,
 ) -> float:
     """Maps a value from within one range of inputs to within a range of outputs."""
     old_min, old_max = old_min_max
@@ -89,3 +90,13 @@ def get_robot_device(robot: Robot, name: str, kind: type[TDevice]) -> TDevice:
     if not isinstance(device, kind):
         raise TypeError(f"Failed to get device: {name}.")
     return device
+
+
+def add_jitter(value: float, value_range: tuple[float, float], std_dev_percent: float=2.0) -> float:
+    """Adds normally distributed jitter to a given value."""
+    range_size = value_range[1] - value_range[0]
+    std_dev = range_size * (std_dev_percent / 100.0)
+
+    error = value + gauss(0, std_dev)
+    # Ensure the error is within the range
+    return max(value_range[0], min(value_range[1], value + error))

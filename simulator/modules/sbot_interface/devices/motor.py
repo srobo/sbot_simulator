@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from sbot_interface.devices.util import WebotsDevice, get_globals, get_robot_device, map_to_range
+from sbot_interface.devices.util import WebotsDevice, add_jitter, get_globals, get_robot_device, map_to_range
 
 MAX_POWER = 1000
 MIN_POWER = -1000
@@ -66,10 +66,14 @@ class Motor(BaseMotor):
         self._enabled = False
 
     def set_power(self, value: int) -> None:
+        if value != 0:
+            # Apply a small amount of variation to the power setting to simulate inaccuracies in the motor
+            value = add_jitter(value, (MIN_POWER, MAX_POWER))
+
         self._device.setVelocity(map_to_range(
+            value,
             (MIN_POWER, MAX_POWER),
             (-self._max_speed, self._max_speed),
-            value,
         ))
         self.power = value
         self._enabled = True

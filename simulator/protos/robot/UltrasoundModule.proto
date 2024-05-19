@@ -16,8 +16,9 @@ PROTO UltrasoundModule [
     numberOfRays 10
     aperture 0.3
     lookupTable [
-      0 0 0
-      %<= fields.range.value >% %<= fields.range.value * 1000 >% 0
+      # 2% standard deviation
+      0 0 %<= fields.range.value * 1000 * 0.02 >%
+      %<= fields.range.value >% %<= fields.range.value * 1000 >% %<= fields.range.value * 1000 * 0.02 >%
     ]
     children [
       Pose {

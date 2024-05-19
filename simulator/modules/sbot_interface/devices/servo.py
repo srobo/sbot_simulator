@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from sbot_interface.devices.util import WebotsDevice, get_globals, get_robot_device, map_to_range
+from sbot_interface.devices.util import WebotsDevice, add_jitter, get_globals, get_robot_device, map_to_range
 
 MAX_POSITION = 2000
 MIN_POSITION = 1000
@@ -64,10 +64,13 @@ class Servo(BaseServo):
         self._enabled = False
 
     def set_position(self, value: int) -> None:
+        # Apply a small amount of variation to the power setting to simulate inaccuracies in the servo
+        value = add_jitter(value, (MIN_POSITION, MAX_POSITION))
+
         self._device.setPosition(map_to_range(
+            value,
             (MIN_POSITION, MAX_POSITION),
             (self._min_position + 0.001, self._max_position - 0.001),
-            value,
         ))
         self.position = value
         self._enabled = True

@@ -10,22 +10,22 @@ A simulator built around Webots to use the sbot library virtually
 4. ~~webots devices~~
 5. ~~usercode runner~~
 6. ~~vision~~
-7. arena
+7. ~~arena~~
     - ~~box~~
     - ~~deck~~
     - ~~triangle deck~~
-    - floor texture
-        - line
-        - scoring lines
-        - starting zones
+    - ~~floor texture~~
+        - ~~line~~
+        - ~~scoring lines~~
+        - ~~starting zones~~
 8. ~~robot~~
-9. device jitter
-    - in Webots
-        - Ultrasound noise
-        - Reflectance sensor noise
-    - in python
-        - motor noise
-        - servo noise
+9. ~~device jitter~~
+    - ~~in Webots~~
+        - ~~Ultrasound noise~~
+        - ~~Reflectance sensor noise~~
+    - ~~in python~~
+        - ~~motor noise~~
+        - ~~servo noise~~
 10. documentation
     1. dev setup
     2. user usage

@@ -14,8 +14,9 @@ PROTO ReflectanceSensor [
         rotation 0 1 0 1.5708
         type "infra-red"
         lookupTable [
-          0 0 0
-          0.1 1023 0
+          # 2% standard deviation
+          0 0 0.02
+          0.1 1023 0.02
         ]
         children [
           Pose {
