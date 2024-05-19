@@ -5,6 +5,7 @@ EXTERNPROTO "../protos/arena/Arena.proto"
 EXTERNPROTO "../protos/arena/Deck.proto"
 EXTERNPROTO "../protos/arena/TriangleDeck.proto"
 EXTERNPROTO "../protos/props/Can.proto"
+EXTERNPROTO "../protos/props/Marker.proto"
 
 WorldInfo {
 }
@@ -95,4 +96,150 @@ DEF CANS Pose {
       translation 1.6 1.6 0
     }
   ]
+}
+
+Marker {
+  name "A0"
+  model "0"
+  size 0.1 0.1
+  translation -1.5798 2.39 0.07
+  rotation 0 0 1 1.5708
+  texture_url ["sim_markers/0.png"]
+  upright TRUE
+}
+Marker {
+  name "A1"
+  model "1"
+  size 0.1 0.1
+  translation -1.5798 2.09 0.07
+  rotation 0 0 1 1.5708
+  texture_url ["sim_markers/1.png"]
+  upright TRUE
+}
+Marker {
+  name "A2"
+  model "2"
+  size 0.1 0.1
+  translation -0.4192 0.001 0.07
+  rotation 0 0 1 3.1415
+  texture_url ["sim_markers/2.png"]
+  upright TRUE
+}
+Marker {
+  name "A3"
+  model "3"
+  size 0.1 0.1
+  translation -0.7192 0.001 0.07
+  rotation 0 0 1 3.1415
+  texture_url ["sim_markers/3.png"]
+  upright TRUE
+}
+Marker {
+  name "A4"
+  model "4"
+  size 0.1 0.1
+  translation -2.799 0.91 0.07
+  rotation 0 0 1 1.5708
+  texture_url ["sim_markers/4.png"]
+  upright TRUE
+}
+Marker {
+  name "A5"
+  model "5"
+  size 0.1 0.1
+  translation -2.799 0.61 0.07
+  rotation 0 0 1 1.5708
+  texture_url ["sim_markers/5.png"]
+  upright TRUE
+}
+Marker {
+  name "A6"
+  model "6"
+  size 0.1 0.1
+  translation -2.29545 -2.08335 0.07
+  rotation 0 0 1 2.3561
+  texture_url ["sim_markers/6.png"]
+  upright TRUE
+}
+Marker {
+  name "A7"
+  model "7"
+  size 0.1 0.1
+  translation -2.08335 -2.29545 0.07
+  rotation 0 0 1 2.3561
+  texture_url ["sim_markers/7.png"]
+  upright TRUE
+}
+
+Marker {
+  name "B0"
+  model "0"
+  size 0.1 0.1
+  translation 1.5798 -2.39 0.07
+  rotation 0 0 1 -1.5708
+  texture_url ["sim_markers/0.png"]
+  upright TRUE
+}
+Marker {
+  name "B1"
+  model "1"
+  size 0.1 0.1
+  translation 1.5798 -2.09 0.07
+  rotation 0 0 1 -1.5708
+  texture_url ["sim_markers/1.png"]
+  upright TRUE
+}
+Marker {
+  name "B2"
+  model "2"
+  size 0.1 0.1
+  translation 0.4192 -0.001 0.07
+  rotation 0 0 1 0
+  texture_url ["sim_markers/2.png"]
+  upright TRUE
+}
+Marker {
+  name "B3"
+  model "3"
+  size 0.1 0.1
+  translation 0.7192 -0.001 0.07
+  rotation 0 0 1 0
+  texture_url ["sim_markers/3.png"]
+  upright TRUE
+}
+Marker {
+  name "B4"
+  model "4"
+  size 0.1 0.1
+  translation 2.799 -0.91 0.07
+  rotation 0 0 1 -1.5708
+  texture_url ["sim_markers/4.png"]
+  upright TRUE
+}
+Marker {
+  name "B5"
+  model "5"
+  size 0.1 0.1
+  translation 2.799 -0.61 0.07
+  rotation 0 0 1 -1.5708
+  texture_url ["sim_markers/5.png"]
+  upright TRUE
+}
+Marker {
+  name "B6"
+  model "6"
+  size 0.1 0.1
+  translation 2.29545 2.08335 0.07
+  rotation 0 0 1 -0.7853
+  texture_url ["sim_markers/6.png"]
+  upright TRUE
+}
+Marker {
+  name "B7"
+  model "7"
+  size 0.1 0.1
+  translation 2.08335 2.29545 0.07
+  rotation 0 0 1 -0.7853
+  texture_url ["sim_markers/7.png"]
+  upright TRUE
 }

@@ -1,0 +1,99 @@
+#VRML_SIM R2022b utf8
+# template language: javascript
+# tags: nonDeterministic
+
+PROTO Marker [
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 1 0 0
+  field SFVec2f {0.08 0.08, 0.1 0.1, 0.15 0.15, 0.2 0.2} size 0.08 0.08
+  field SFString name ""
+  field SFString model ""
+  field MFString texture_url []
+  field SFBool add_recognition FALSE
+  field SFBool upright TRUE
+]
+{
+  %< if (fields.upright.value) { >%
+  Pose {
+    translation IS translation
+    rotation IS rotation
+    children [
+  %< } >%
+  Solid {
+    %<
+    import * as wbrandom from 'wbrandom.js';
+    wbrandom.seed(context.id);
+    const uid = wbrandom.integer();
+    >%
+    %< if (fields.upright.value) { >%
+    rotation 1 0 0 1.5708
+    %< } else { >%
+    translation IS translation
+    rotation IS rotation
+    %< } >%
+    children [
+      %<
+      if (fields.add_recognition.value) {
+        for (let corner of [['TL', 1, 1], ['TR', -1, 1], ['BR', -1, -1], ['BL', 1, -1]]) {
+        let corner_name = corner[0];
+        let horiz_sign = corner[1];
+        let vert_sign = corner[2];
+      >%
+      Solid {
+        translation %<= horiz_sign * fields.size.value.x / 2 >% %<= vert_sign * fields.size.value.y / 2 >% 0.001
+        children [
+          Shape {
+            appearance PBRAppearance {
+              transparency 1
+              metalness 0
+            }
+            geometry Plane {
+              # Make the detection corners one marker pixel in size
+              size %<= fields.size.value.x / 8 >% %<= fields.size.value.y / 8 >%
+            }
+            castShadows FALSE
+          }
+        ]
+        model %<= "\"" + uid + "_" + fields.model.value + "_" + corner_name + "\"" >%
+        name %<= "\"" + corner_name + "\"" >%
+        locked TRUE
+        recognitionColors [
+          0 0 1
+        ]
+      }
+      %< }} >%
+      Shape {
+        appearance PBRAppearance {
+          baseColorMap ImageTexture {
+            url IS texture_url
+            repeatS FALSE
+            repeatT FALSE
+          }
+          roughness 1
+          metalness 0
+        }
+        geometry Plane {
+          # The size of the marker including the white border
+          size %<= 1.25 * fields.size.value.x >% %<= 1.25 * fields.size.value.y >%
+        }
+        castShadows FALSE
+      }
+    ]
+    %< if (fields.name.value !== "") { >%
+    name IS name
+    %< } else { >%
+    name IS model
+    %< } >%
+    model %<= "\"" + uid + "_" + fields.model.value + "_base\"" >%
+    locked TRUE
+    %< if (fields.add_recognition.value) { >%
+    recognitionColors [
+      1 1 1
+    ]
+    %< } >%
+  }
+  %< if (fields.upright.value) { >%
+    ]
+  }
+  %< } >%
+}
