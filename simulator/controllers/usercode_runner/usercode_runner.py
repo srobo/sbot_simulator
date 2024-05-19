@@ -2,6 +2,7 @@ import os
 import runpy
 import subprocess
 import sys
+import threading
 from datetime import datetime
 from pathlib import Path
 
@@ -23,7 +24,7 @@ def get_robot_file(robot_zone: int) -> Path:
 
     # Check if the robot file exists
     if not robot_file.exists():
-        raise FileNotFoundError(f"Robot file {robot_file} does not exist")
+        raise FileNotFoundError(f"No robot controller found for zone {robot_file}")
 
     return robot_file
 
@@ -62,6 +63,8 @@ def start_devices() -> SocketServer:
 def run_usercode(robot_file: Path, robot_zone: int, game_mode: str) -> None:
     # Remove this folder from the path
     sys.path.remove(str(Path.cwd()))
+    # Remove our custom modules from the path
+    sys.path.remove(str(environment.MODULES_ROOT))
     # Add the usercode folder to the path
     sys.path.insert(0, str(robot_file.parent))
 
@@ -73,7 +76,8 @@ def run_usercode(robot_file: Path, robot_zone: int, game_mode: str) -> None:
     os.environ['GAME_MODE'] = game_mode
 
     # Run the usercode
-    runpy.run_path(str(robot_file))
+    # pass robot object to the usercode for keyboard robot control
+    runpy.run_path(str(robot_file), init_globals={'__robot__': robot})
 
 
 def main():
@@ -83,9 +87,10 @@ def main():
     # Get the robot file
     try:
         robot_file = get_robot_file(zone)
-    except FileNotFoundError:
-        # TODO handle the case when the robot file does not exist
-        return
+    except FileNotFoundError as e:
+        print(e.args[0])
+        # Not having a robot file is not an error in dev mode
+        return game_mode == 'comp'
 
     # Setup log file
     prefix_and_tee_streams(
@@ -102,6 +107,10 @@ def main():
     # Pass the devices to the usercode
     os.environ['WEBOTS_SIMULATOR'] = '1'
     os.environ['WEBOTS_ROBOT'] = devices.links_formatted()
+
+    # Start devices in a separate thread
+    thread = threading.Thread(target=devices.run)
+    thread.start()
 
     # Run the usercode
     run_usercode(robot_file, zone, game_mode)
