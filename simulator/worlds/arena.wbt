@@ -1,5 +1,4 @@
 #VRML_SIM R2023b utf8
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "../protos/arena/Arena.proto"
 EXTERNPROTO "../protos/arena/Deck.proto"
@@ -14,33 +13,37 @@ Viewpoint {
   orientation 0.43231 0.43231 -0.79134 1.80272
   position 0 9.1 13.8
 }
-TexturedBackground {
+DEF AMBIENT Background {
+  skyColor [
+    0.4 0.4 0.4
+  ]
+  luminosity 1.6
 }
 TexturedBackgroundLight {
 }
 
 SRObot {
   name "robot"
-  translation 0 2.1 0
+  translation 0.45 2 0
   rotation 0 0 1 3.1415
   flagColour 1 0 0
   controllerArgs ["0"]
 }
 
 Arena {
-  size 5.6 5.6
+  size 5.4 5.4
   locked TRUE
 }
 Deck {
   name "TL deck"
   size 1.2192 1.2192
-  translation 2.1904 -2.1904 0.085
+  translation 2.0904 -2.0904 0.085
   locked TRUE
 }
 Deck {
   name "BR deck"
   size 1.2192 1.2192
-  translation -2.1904 2.1904 0.085
+  translation -2.0904 2.0904 0.085
   locked TRUE
 }
 Deck {
@@ -58,13 +61,13 @@ Deck {
 TriangleDeck {
   name "TR deck"
   size 1.2192 1.2192
-  translation -2.1904 -2.1904 0.085
+  translation -2.0904 -2.0904 0.085
   locked TRUE
 }
 TriangleDeck {
   name "BL deck"
   size 1.2192 1.2192
-  translation 2.1904 2.1904 0.085
+  translation 2.0904 2.0904 0.085
   rotation 0 0 1 3.14159
   locked TRUE
 }
@@ -78,7 +81,7 @@ DEF CANS Pose {
     }
     Can {
       name "can2"
-      translation -1.6 1.3 0
+      translation -1.5 1.2 0
     }
     Can {
       name "can3"
@@ -86,11 +89,11 @@ DEF CANS Pose {
     }
     Can {
       name "can4"
-      translation -2.43 -0.04 0
+      translation -2.33 -0.04 0
     }
     Can {
       name "can5"
-      translation -1.6 -1.6 0
+      translation -1.5 -1.5 0
     }
 
     Can {
@@ -99,7 +102,7 @@ DEF CANS Pose {
     }
     Can {
       name "can7"
-      translation 1.6 -1.3 0
+      translation 1.5 -1.2 0
     }
     Can {
       name "can8"
@@ -107,11 +110,11 @@ DEF CANS Pose {
     }
     Can {
       name "can9"
-      translation 2.43 0.04 0
+      translation 2.33 0.04 0
     }
     Can {
       name "can10"
-      translation 1.6 1.6 0
+      translation 1.5 1.5 0
     }
   ]
 }
@@ -120,7 +123,7 @@ Marker {
   name "A0"
   model "0"
   size 0.1 0.1
-  translation -1.5798 2.39 0.07
+  translation -1.4798 2.29 0.07
   rotation 0 0 1 1.5708
   texture_url ["sim_markers/0.png"]
   upright TRUE
@@ -129,7 +132,7 @@ Marker {
   name "A1"
   model "1"
   size 0.1 0.1
-  translation -1.5798 2.09 0.07
+  translation -1.4798 1.99 0.07
   rotation 0 0 1 1.5708
   texture_url ["sim_markers/1.png"]
   upright TRUE
@@ -156,7 +159,7 @@ Marker {
   name "A4"
   model "4"
   size 0.1 0.1
-  translation -2.799 0.91 0.07
+  translation -2.699 0.91 0.07
   rotation 0 0 1 1.5708
   texture_url ["sim_markers/4.png"]
   upright TRUE
@@ -165,7 +168,7 @@ Marker {
   name "A5"
   model "5"
   size 0.1 0.1
-  translation -2.799 0.61 0.07
+  translation -2.699 0.61 0.07
   rotation 0 0 1 1.5708
   texture_url ["sim_markers/5.png"]
   upright TRUE
@@ -174,7 +177,7 @@ Marker {
   name "A6"
   model "6"
   size 0.1 0.1
-  translation -2.29545 -2.08335 0.07
+  translation -2.19545 -1.98335 0.07
   rotation 0 0 1 2.3561
   texture_url ["sim_markers/6.png"]
   upright TRUE
@@ -183,7 +186,7 @@ Marker {
   name "A7"
   model "7"
   size 0.1 0.1
-  translation -2.08335 -2.29545 0.07
+  translation -1.98335 -2.19545 0.07
   rotation 0 0 1 2.3561
   texture_url ["sim_markers/7.png"]
   upright TRUE
@@ -193,7 +196,7 @@ Marker {
   name "B0"
   model "0"
   size 0.1 0.1
-  translation 1.5798 -2.39 0.07
+  translation 1.4798 -2.29 0.07
   rotation 0 0 1 -1.5708
   texture_url ["sim_markers/0.png"]
   upright TRUE
@@ -202,7 +205,7 @@ Marker {
   name "B1"
   model "1"
   size 0.1 0.1
-  translation 1.5798 -2.09 0.07
+  translation 1.4798 -1.99 0.07
   rotation 0 0 1 -1.5708
   texture_url ["sim_markers/1.png"]
   upright TRUE
@@ -229,7 +232,7 @@ Marker {
   name "B4"
   model "4"
   size 0.1 0.1
-  translation 2.799 -0.91 0.07
+  translation 2.699 -0.81 0.07
   rotation 0 0 1 -1.5708
   texture_url ["sim_markers/4.png"]
   upright TRUE
@@ -238,7 +241,7 @@ Marker {
   name "B5"
   model "5"
   size 0.1 0.1
-  translation 2.799 -0.61 0.07
+  translation 2.699 -0.51 0.07
   rotation 0 0 1 -1.5708
   texture_url ["sim_markers/5.png"]
   upright TRUE
@@ -247,7 +250,7 @@ Marker {
   name "B6"
   model "6"
   size 0.1 0.1
-  translation 2.29545 2.08335 0.07
+  translation 2.19545 1.98335 0.07
   rotation 0 0 1 -0.7853
   texture_url ["sim_markers/6.png"]
   upright TRUE
@@ -256,7 +259,7 @@ Marker {
   name "B7"
   model "7"
   size 0.1 0.1
-  translation 2.08335 2.29545 0.07
+  translation 1.98335 2.19545 0.07
   rotation 0 0 1 -0.7853
   texture_url ["sim_markers/7.png"]
   upright TRUE
