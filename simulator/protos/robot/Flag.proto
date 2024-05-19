@@ -1,0 +1,51 @@
+#VRML_SIM R2023b utf8
+# template language: javascript
+
+PROTO Flag [
+  field SFString name ""
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 0 1 0
+  field SFColor flagColour 0.1 0.1 0.7
+] {
+  Solid {
+    translation IS translation
+    rotation IS rotation
+    name IS name
+    children [
+      Shape {  # pole
+        appearance PBRAppearance {
+          baseColor 0.0705882 0.0705882 0.0705882
+          roughness 0.4
+          metalness 0
+        }
+        geometry Cylinder {
+          height 0.2
+          radius 0.0075
+          subdivision 8
+          bottom FALSE
+        }
+      }
+      Solid {
+        translation -0.08 0 0.04925
+        children [
+          Shape {
+            appearance PBRAppearance {
+              metalness 0
+              baseColor IS flagColour
+            }
+            geometry Box {
+              size 0.15 0.005 0.1
+            }
+          }
+        ]
+        name %<= "\"" + fields.name.value + "flag\"" >%
+      }
+    ]
+    boundingObject Box {
+      size 0.015 0.015 0.2
+    }
+    physics Physics {
+      density 1000
+    }
+  }
+}

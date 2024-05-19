@@ -1,0 +1,39 @@
+#VRML_SIM R2023b utf8
+
+PROTO ReflectanceSensor [
+  field SFString name ""
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 0 1 0
+] {
+  Pose {
+    translation IS translation
+    rotation IS rotation
+    children [
+      DistanceSensor {
+        name IS name
+        rotation 0 1 0 1.5708
+        type "infra-red"
+        lookupTable [
+          0 0 0
+          0.1 1023 0
+        ]
+        children [
+          Pose {
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.1 0.1 1
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.002 0.045 0.02
+                }
+                castShadows FALSE
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

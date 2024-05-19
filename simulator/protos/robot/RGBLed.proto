@@ -1,0 +1,37 @@
+#VRML_SIM R2023b utf8
+
+PROTO RGBLed [
+  field SFString name ""
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 0 1 0
+] {
+  LED {
+    name IS name
+    translation IS translation
+    rotation IS rotation
+    children [
+      Shape {
+        appearance DEF APP_LED PBRAppearance {
+          baseColor 0.6 0.4 0.4
+          metalness 0
+          emissiveIntensity 100
+        }
+        geometry Box {
+          size 0.02 0.04 0.005
+        }
+        castShadows FALSE
+      }
+    ]
+    color [
+      1 0 0  # RED
+      1 1 0  # YELLOW
+      0 1 0  # GREEN
+      0 1 1  # CYAN
+      0 0 1  # BLUE
+      1 0 1  # MAGENTA
+      1 1 1  # WHITE
+    ]
+  }
+}
+
+

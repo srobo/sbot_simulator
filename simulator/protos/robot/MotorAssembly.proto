@@ -1,0 +1,83 @@
+#VRML_SIM R2023b utf8
+# template language: javascript
+
+PROTO MotorAssembly [
+  field SFString name ""
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 0 1 0
+  field SFFloat maxVelocity 25
+  field SFBool reversed FALSE
+] {
+  Pose {
+    translation IS translation
+    rotation IS rotation
+    children [
+      Solid {
+        translation 0 0.04 0
+        rotation -1 0 0 1.5708
+        name %<= "\"" + fields.name.value + " housing\"" >%
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.36 0.36 0.36
+              roughness 0.3
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.07
+              radius 0.015
+              subdivision 12
+            }
+          }
+        ]
+        boundingObject Box {
+          size 0.03 0.03 0.07
+        }
+        physics Physics {
+          density 8000  # steel
+        }
+      }
+      HingeJoint {
+        jointParameters HingeJointParameters {
+          position 0
+          %< if (fields.reversed.value) { >%
+          axis 0 -1 0
+          %< } else { >%
+          axis 0 1 0
+          %< } >%
+        }
+        device [
+          RotationalMotor {
+            name IS name
+            maxVelocity IS maxVelocity
+            sound ""
+          }
+          PositionSensor {
+            name %<= "\"" + fields.name.value + " sensor\"" >%
+          }
+        ]
+        endPoint Solid {
+          translation 0 0 0
+          rotation -1 0 0 1.5708
+          children [
+            DEF WHEEL_GEO Shape {
+              appearance PBRAppearance {
+                baseColor 0 0.0051864 0
+                roughness 0.3
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.021
+                radius 0.05
+                subdivision 24
+              }
+            }
+          ]
+          name IS name
+          boundingObject USE WHEEL_GEO
+          physics Physics {}
+        }
+      }
+    ]
+  }
+}

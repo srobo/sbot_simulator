@@ -1,0 +1,56 @@
+#VRML_SIM R2023b utf8
+
+PROTO RobotCamera [
+  field SFString name ""
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 0 1 0
+  field SFInt32 width 800
+  field SFInt32 height 450
+] {
+  Camera {
+    name IS name
+    translation IS translation
+    rotation IS rotation
+    children [
+      Pose {
+        translation 0 0 0
+        rotation 0 1 0 1.5708
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+            }
+            geometry Cylinder {
+              height 0.01
+              radius 0.01
+            }
+            castShadows FALSE
+          }
+        ]
+        translationStep 0.001
+      }
+      Pose {
+        translation -0.02 0 0
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.4 0.4 0.4
+              metalness 0
+            }
+            geometry Box {
+              size 0.03 0.03 0.03
+            }
+          }
+        ]
+      }
+    ]
+    # In radians, ~45 degrees
+    fieldOfView 0.82
+    width IS width
+    height IS height
+    recognition Recognition {
+      frameThickness 2
+      maxRange 6
+    }
+  }
+}
