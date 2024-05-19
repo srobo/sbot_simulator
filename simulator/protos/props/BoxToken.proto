@@ -1,0 +1,83 @@
+#VRML_SIM R2022b utf8
+# template language: javascript
+# tags: nonDeterministic
+
+EXTERNPROTO "./Marker.proto"
+
+PROTO BoxToken [
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 1 0 0
+  field SFVec3f size 0.12 0.12 0.12
+  field SFVec2f {0.08 0.08, 0.15 0.15, 0.2 0.2} marker_size 0.08 0.08
+  field SFColor colour 0.7 0.55 0.35
+  field SFString marker "0"
+  field SFString model ""
+  field SFFloat mass 0.100
+]
+{
+  Solid {
+    translation IS translation
+    rotation IS rotation
+    children [
+      Shape {
+        appearance DEF TOKEN_APPEARANCE PBRAppearance {
+          baseColor IS colour
+          metalness 0
+          roughness 1
+        }
+        geometry DEF TOKEN_GEOMETRY Box {
+          size IS size
+        }
+      }
+      Marker {
+        translation 0 %<= fields.size.value.y / 2 + 0.001 >% 0
+        rotation 1 0 0 -1.5708
+        size IS marker_size
+        name "front"
+        model IS marker
+      }
+      Marker {
+        translation 0 %<= -(fields.size.value.y / 2 + 0.001) >% 0
+        rotation 1 0 0 1.5708
+        size IS marker_size
+        name "back"
+        model IS marker
+      }
+      Marker {
+        translation %<= fields.size.value.x / 2 + 0.001 >% 0 0
+        rotation 0 1 0 1.5708
+        size IS marker_size
+        name "side-1"
+        model IS marker
+      }
+      Marker {
+        translation %<= -(fields.size.value.x / 2 + 0.001) >% 0 0
+        rotation 0 1 0 -1.5708
+        size IS marker_size
+        name "side-2"
+        model IS marker
+      }
+      Marker {
+        translation 0 0 %<= fields.size.value.z / 2 + 0.001 >%
+        rotation 0 0 1 0
+        size IS marker_size
+        name "top"
+        model IS marker
+      }
+      Marker {
+        translation 0 0 %<= -(fields.size.value.z / 2 + 0.001) >%
+        rotation 0 1 0 3.1416
+        size IS marker_size
+        name "bottom"
+        model IS marker
+      }
+    ]
+    name IS model
+    model IS model
+    boundingObject USE TOKEN_GEOMETRY
+    physics Physics {
+      density -1
+      mass IS mass
+    }
+  }
+}
