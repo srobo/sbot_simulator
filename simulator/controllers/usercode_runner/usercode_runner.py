@@ -1,3 +1,4 @@
+import json
 import os
 import runpy
 import subprocess
@@ -5,6 +6,7 @@ import sys
 import threading
 from datetime import datetime
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from controller import Robot
 
@@ -71,13 +73,17 @@ def run_usercode(robot_file: Path, robot_zone: int, game_mode: str) -> None:
     # Change the current directory to the usercode folder
     os.chdir(robot_file.parent)
 
-    # Setup metadata (zone, game_mode)
-    os.environ['ROBOT_ZONE'] = str(robot_zone)
-    os.environ['GAME_MODE'] = game_mode
+    with TemporaryDirectory() as tmpdir:
+        # Setup metadata (zone, game_mode)
+        Path(tmpdir).joinpath('metadata.json').write_text(json.dumps({
+            "zone": robot_zone,
+            "is_competition": game_mode == 'comp'
+        }))
+        os.environ['SBOT_METADATA_PATH'] = tmpdir
 
-    # Run the usercode
-    # pass robot object to the usercode for keyboard robot control
-    runpy.run_path(str(robot_file), init_globals={'__robot__': robot})
+        # Run the usercode
+        # pass robot object to the usercode for keyboard robot control
+        runpy.run_path(str(robot_file), init_globals={'__robot__': robot})
 
 
 def main():
