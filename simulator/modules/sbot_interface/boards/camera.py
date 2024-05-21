@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import struct
 
 from sbot_interface.devices.camera import BaseCamera
 
@@ -9,6 +10,7 @@ LOGGER = logging.getLogger(__name__)
 # *IDN?
 # *STATUS?
 # *RESET
+# CAM:CALIBRATION?
 # CAM:FRAME!
 
 
@@ -31,9 +33,14 @@ class CameraBoard:
             if len(args) < 2:
                 return 'NACK:Missing camera command'
 
-            if args[1] == 'FRAME!':
+            if args[1] == 'CALIBRATION?':
+                LOGGER.info(f'Getting calibration data from camera on board {self.asset_tag}')
+                return ':'.join(self.camera.get_calibration())
+            elif args[1] == 'FRAME!':
                 LOGGER.info(f'Getting image from camera on board {self.asset_tag}')
-                return self.camera.get_image()
+                resolution = self.camera.get_resolution()
+                img_len = resolution[0] * resolution[1] * 4  # 4 bytes per pixel
+                return struct.pack('>BI', 0, img_len) + self.camera.get_image()
             else:
                 return 'NACK:Unknown camera command'
         else:

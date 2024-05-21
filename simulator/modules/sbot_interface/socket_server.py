@@ -4,7 +4,6 @@ import atexit
 import logging
 import select
 import socket
-import struct
 from threading import Event
 from typing import Protocol
 
@@ -52,7 +51,7 @@ class DeviceServer:
             response = self.board.handle_command(command)
             if isinstance(response, bytes):
                 LOGGER.debug(f'< {len(response)} bytes')
-                return b'\0' + struct.pack('>I', len(response)) + response
+                return response
             else:
                 LOGGER.debug(f'< {response}')
                 return response + b'\n'

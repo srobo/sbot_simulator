@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from functools import cache
+from math import tan
 
 from sbot_interface.devices.util import WebotsDevice, get_globals, get_robot_device
 
@@ -16,6 +18,10 @@ class BaseCamera(ABC):
     def get_resolution(self) -> tuple[int, int]:
         pass
 
+    @abstractmethod
+    def get_calibration(self) -> tuple[float, float, float, float]:
+        pass
+
 
 class NullCamera(BaseCamera):
     def get_image(self) -> bytes:
@@ -23,6 +29,9 @@ class NullCamera(BaseCamera):
 
     def get_resolution(self) -> tuple[int, int]:
         return 0, 0
+
+    def get_calibration(self) -> tuple[float, float, float, float]:
+        return 0, 0, 0, 0
 
 
 # Camera
@@ -44,5 +53,15 @@ class Camera(BaseCamera):
 
         return image_data_raw
 
+    @cache
     def get_resolution(self) -> tuple[int, int]:
         return self._device.getWidth(), self._device.getHeight()
+
+    @cache
+    def get_calibration(self) -> tuple[float, float, float, float]:
+        return (
+            (self._device.getWidth() / 2) / tan(self._device.getFov() / 2),  # fx
+            (self._device.getWidth() / 2) / tan(self._device.getFov() / 2),  # fy
+            self._device.getWidth() // 2,  # cx
+            self._device.getHeight() // 2,  # cy
+        )
