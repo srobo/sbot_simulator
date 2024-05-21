@@ -11,6 +11,7 @@ LOGGER = logging.getLogger(__name__)
 # *STATUS?
 # *RESET
 # CAM:CALIBRATION?
+# CAM:RESOLUTION?
 # CAM:FRAME!
 
 
@@ -35,7 +36,11 @@ class CameraBoard:
 
             if args[1] == 'CALIBRATION?':
                 LOGGER.info(f'Getting calibration data from camera on board {self.asset_tag}')
-                return ':'.join(self.camera.get_calibration())
+                return ':'.join(map(str, self.camera.get_calibration()))
+            elif args[1] == 'RESOLUTION?':
+                LOGGER.info(f'Getting resolution from camera on board {self.asset_tag}')
+                resolution = self.camera.get_resolution()
+                return f'{resolution[0]}:{resolution[1]}'
             elif args[1] == 'FRAME!':
                 LOGGER.info(f'Getting image from camera on board {self.asset_tag}')
                 resolution = self.camera.get_resolution()

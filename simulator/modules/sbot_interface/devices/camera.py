@@ -39,7 +39,7 @@ class Camera(BaseCamera):
     def __init__(self, device_name: str, frame_rate: int) -> None:
         self._device = get_robot_device(g.robot, device_name, WebotsDevice.Camera)
         # round down to the nearest timestep
-        self.sample_time = ((1000 / frame_rate) // g.timestep) * g.timestep
+        self.sample_time = int(((1000 / frame_rate) // g.timestep) * g.timestep)
 
     def get_image(self) -> bytes:
         # A frame is only captured every sample_time milliseconds the camera is enabled
