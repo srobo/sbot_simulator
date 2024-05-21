@@ -28,6 +28,8 @@ SRObot {
   rotation 0 0 1 3.1415
   flagColour 1 0 0
   controllerArgs ["0"]
+  controller "usercode_runner"
+  customData "start"
 }
 
 Arena {
