@@ -32,10 +32,10 @@ A simulator built around Webots to use the sbot library virtually
     2. user usage
     3. how it works
 11. sbot updates
-    1. simulator discovery
-    2. vision
+    1. ~~simulator discovery~~
+    2. ~~vision~~
     3. leds
-    4. sleep & time
+    4. ~~sleep & time~~
 12. keyboard robot
 13. setup script
 14. simulator tests
