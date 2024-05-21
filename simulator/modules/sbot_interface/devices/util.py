@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import threading
 from dataclasses import dataclass
 from math import ceil
@@ -51,10 +53,10 @@ class GlobalData:
             raise ValueError("Sleep duration must be non-negative.")
 
         # Convert to a multiple of the timestep
-        secs = ceil((secs * 1000) / self.timestep) * self.timestep
+        msecs = ceil((secs * 1000) / self.timestep) * self.timestep
 
         # Sleep for the given duration
-        result = self.robot.step(secs)
+        result = self.robot.step(msecs)
 
         # If the simulation has stopped, set the stop event
         if (result == -1) and (self.stop_event is not None):
@@ -69,7 +71,7 @@ def get_globals() -> GlobalData:
 
         __GLOBALS = GlobalData(
             robot=robot,
-            timestep=int(robot.getBasicTimeStep() * 1000),
+            timestep=int(robot.getBasicTimeStep()),
         )
     return __GLOBALS
 

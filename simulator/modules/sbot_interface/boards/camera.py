@@ -45,3 +45,4 @@ class CameraBoard:
                 return 'NACK:Unknown camera command'
         else:
             return f'NACK:Unknown command {command}'
+        return 'NACK:Command failed'

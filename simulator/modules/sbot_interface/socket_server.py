@@ -54,7 +54,7 @@ class DeviceServer:
                 return response
             else:
                 LOGGER.debug(f'< {response}')
-                return response + b'\n'
+                return response.encode() + b'\n'
         except Exception as e:
             LOGGER.exception(f'Error processing command: {command}')
             return f'NACK:{e}\n'.encode()
@@ -118,14 +118,19 @@ class SocketServer:
             # select on all server sockets and device sockets
             sockets = [device.socket() for device in self.devices]
 
-            readable, _, _ = select.select(sockets, [], [])
+            readable, _, _ = select.select(sockets, [], [], 0.5)
 
             for device in self.devices:
                 if device.server_socket in readable:
                     device.accept()
 
                 if device.device_socket in readable:
-                    data = device.device_socket.recv(4096)
+                    try:
+                        data = device.device_socket.recv(4096)
+                    except ConnectionError:
+                        device.disconnect_device()
+                        continue
+
                     if not data:
                         device.disconnect_device()
                     else:
@@ -144,6 +149,6 @@ class SocketServer:
 
     def links_formatted(self, address='localhost') -> str:
         return '\n'.join(
-            f"socket://{address}:{data['port']}/{data['board_type']}/{asset_tag};"
+            f"socket://{address}:{data['port']}/{data['board_type']}/{asset_tag}"
             for asset_tag, data in self.links().items()
         )

@@ -52,8 +52,10 @@ class PowerBoard:
         elif args[0] == 'BTN':
             if len(args) < 2:
                 return 'NACK:Missing button command'
-            if args[1] == 'START:GET?':
-                return f'{self.button.get_state()}:0'
+            if args[1] == 'START' and args[2] == 'GET?':
+                return f'{self.button.get_state():d}:0'
+            else:
+                return 'NACK:Unknown button command'
         elif args[0] == 'OUT':
             if len(args) < 2:
                 return 'NACK:Missing output number'
@@ -84,6 +86,8 @@ class PowerBoard:
                 return '1' if self.outputs[output_number].get_output() else '0'
             elif args[2] == 'I?':
                 return str(self.outputs[output_number].get_current())
+            else:
+                return 'NACK:Unknown output command'
         elif args[0] == 'BATT':
             if len(args) < 2:
                 return 'NACK:Missing battery command'
@@ -91,6 +95,8 @@ class PowerBoard:
                 return str(self.battery_voltage)
             elif args[1] == 'I?':
                 return str(self.current())
+            else:
+                return 'NACK:Unknown battery command'
         elif args[0] == 'LED':
             if len(args) < 3:
                 return 'NACK:Missing LED command'
@@ -142,6 +148,7 @@ class PowerBoard:
                 return 'ACK'
         else:
             return f'NACK:Unknown command {command.strip()}'
+        return 'NACK:Command failed'
 
     def current(self):
         return sum(output.get_current() for output in self.outputs)

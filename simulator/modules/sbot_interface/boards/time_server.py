@@ -18,7 +18,7 @@ class TimeServer:
     def handle_command(self, command: str) -> str:
         args = command.split(':')
         if args[0] == '*IDN?':
-            return f'SourceBots:Arduino:{self.asset_tag}:{self.software_version}'
+            return f'SourceBots:TimeServer:{self.asset_tag}:{self.software_version}'
         elif args[0] == '*STATUS?':
             return "Yes"
         elif args[0] == '*RESET':
@@ -39,3 +39,4 @@ class TimeServer:
             return 'ACK'
         else:
             return f'NACK:Unknown command {command.strip()}'
+        return 'NACK:Command failed'

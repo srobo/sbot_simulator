@@ -69,6 +69,7 @@ class ServoBoard:
                 return 'NACK:Unknown servo command'
         else:
             return f'NACK:Unknown command {command.strip()}'
+        return 'NACK:Command failed'
 
     def current(self):
         return sum(servo.get_current() for servo in self.servos)

@@ -44,6 +44,8 @@ class Arduino:
                     LOGGER.info(f'Setting pin {pin_number} of arduino {self.asset_tag} to mode {mode}')
                     self.pins[pin_number].set_mode(mode)
                     return 'ACK'
+                else:
+                    return 'NACK:Unknown mode command'
             elif args[2] == 'DIGITAL':
                 if args[3] == 'GET?':
                     return self.pins[pin_number].get_digital()
@@ -56,9 +58,13 @@ class Arduino:
                     LOGGER.info(f'Setting pin {pin_number} of arduino {self.asset_tag} to digital value {value}')
                     self.pins[pin_number].set_digital(bool(value))
                     return 'ACK'
+                else:
+                    return 'NACK:Unknown pin command'
             elif args[2] == 'ANALOG':
                 if args[3] == 'GET?':
                     return self.pins[pin_number].get_analog()
+                else:
+                    return 'NACK:Unknown pin command'
             else:
                 return 'NACK:Unknown pin command'
         elif args[0] == 'ULTRASOUND':
@@ -80,3 +86,4 @@ class Arduino:
                 return 'NACK:Unknown ultrasound command'
         else:
             return f'NACK:Unknown command {command.strip()}'
+        return 'NACK:Command failed'

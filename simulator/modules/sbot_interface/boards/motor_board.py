@@ -17,7 +17,7 @@ class MotorBoard:
     def handle_command(self, command: str) -> str:
         args = command.split(':')
         if args[0] == '*IDN?':
-            return f'Student Robotics:MBv4B:{self.asset_tag}:{self.software_version}'
+            return f'Student Robotics:MCv4B:{self.asset_tag}:{self.software_version}'
         elif args[0] == '*STATUS?':
             # Output faults are unsupported
             return "0,0:12000"
@@ -62,8 +62,11 @@ class MotorBoard:
                 return 'ACK'
             elif args[2] == 'I?':
                 return str(self.current())
+            else:
+                return 'NACK:Unknown motor command'
         else:
             return f'NACK:Unknown command {command.strip()}'
+        return 'NACK:Command failed'
 
     def current(self):
         return sum(motor.get_current() for motor in self.motors)

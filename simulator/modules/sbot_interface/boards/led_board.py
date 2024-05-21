@@ -88,5 +88,8 @@ class LedBoard:
                 elif args[2] == 'GET?':
                     colour = RGB_COLOURS[self.leds[led_number].get_colour()]
                     return f"{colour[0]:d}:{colour[1]:d}:{colour[2]:d}"
+                else:
+                    return 'NACK:Unknown LED command'
         else:
             return f'NACK:Unknown command {command.strip()}'
+        return 'NACK:Command failed'

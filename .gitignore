@@ -162,3 +162,5 @@ cython_debug/
 # Webots
 .arena.wbproj
 .arena.jpg
+
+/zone_*
