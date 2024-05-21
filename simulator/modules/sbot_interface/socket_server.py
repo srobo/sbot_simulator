@@ -28,7 +28,7 @@ class DeviceServer:
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.bind(('localhost', 0))
         self.server_socket.listen(1)  # only allow one connection per device
-        self.server_socket.setblocking(False)
+        self.server_socket.setblocking(True)
         LOGGER.info(f'Started server for {self.board_type} ({self.board.asset_tag}) on port {self.port}')
 
         self.device_socket: socket.socket | None = None
@@ -78,7 +78,7 @@ class DeviceServer:
         if self.device_socket is not None:
             self.disconnect_device()
         self.device_socket, _ = self.server_socket.accept()
-        self.device_socket.setblocking(False)
+        self.device_socket.setblocking(True)
         LOGGER.info(f'Connected to {self.asset_tag} from {self.device_socket.getpeername()}')
 
     def disconnect_device(self) -> None:
@@ -126,7 +126,7 @@ class SocketServer:
 
                 if device.device_socket in readable:
                     try:
-                        data = device.device_socket.recv(4096)
+                        data = device.device_socket.recv(4096, socket.MSG_DONTWAIT)
                     except ConnectionError:
                         device.disconnect_device()
                         continue
