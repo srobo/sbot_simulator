@@ -121,22 +121,29 @@ class SocketServer:
             readable, _, _ = select.select(sockets, [], [], 0.5)
 
             for device in self.devices:
-                if device.server_socket in readable:
-                    device.accept()
+                try:
+                    if device.server_socket in readable:
+                        device.accept()
 
-                if device.device_socket in readable:
-                    try:
-                        data = device.device_socket.recv(4096, socket.MSG_DONTWAIT)
-                    except ConnectionError:
-                        device.disconnect_device()
-                        continue
+                    if device.device_socket in readable:
+                        try:
+                            data = device.device_socket.recv(4096, socket.MSG_DONTWAIT)
+                        except ConnectionError:
+                            device.disconnect_device()
+                            continue
 
-                    if not data:
-                        device.disconnect_device()
-                    else:
-                        response = device.process_data(data)
-                        if response is not None:
-                            device.device_socket.sendall(response)
+                        if not data:
+                            device.disconnect_device()
+                        else:
+                            response = device.process_data(data)
+                            if response is not None:
+                                try:
+                                    device.device_socket.sendall(response)
+                                except ConnectionError:
+                                    device.disconnect_device()
+                                    continue
+                except Exception as e:
+                    LOGGER.exception(f"Failure in simulated boards: {e}")
 
     def links(self) -> dict[str, dict[str, str]]:
         return {
