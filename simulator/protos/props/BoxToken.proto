@@ -1,4 +1,4 @@
-#VRML_SIM R2022b utf8
+#VRML_SIM R2023b utf8
 # template language: javascript
 # tags: nonDeterministic
 
@@ -13,6 +13,7 @@ PROTO BoxToken [
   field SFString marker "0"
   field SFString model ""
   field SFFloat mass 0.100
+  field MFString texture_url []
 ]
 {
   Solid {
@@ -35,6 +36,7 @@ PROTO BoxToken [
         size IS marker_size
         name "front"
         model IS marker
+        texture_url IS texture_url
       }
       Marker {
         translation 0 %<= -(fields.size.value.y / 2 + 0.001) >% 0
@@ -42,6 +44,7 @@ PROTO BoxToken [
         size IS marker_size
         name "back"
         model IS marker
+        texture_url IS texture_url
       }
       Marker {
         translation %<= fields.size.value.x / 2 + 0.001 >% 0 0
@@ -49,6 +52,7 @@ PROTO BoxToken [
         size IS marker_size
         name "side-1"
         model IS marker
+        texture_url IS texture_url
       }
       Marker {
         translation %<= -(fields.size.value.x / 2 + 0.001) >% 0 0
@@ -56,6 +60,7 @@ PROTO BoxToken [
         size IS marker_size
         name "side-2"
         model IS marker
+        texture_url IS texture_url
       }
       Marker {
         translation 0 0 %<= fields.size.value.z / 2 + 0.001 >%
@@ -63,6 +68,7 @@ PROTO BoxToken [
         size IS marker_size
         name "top"
         model IS marker
+        texture_url IS texture_url
       }
       Marker {
         translation 0 0 %<= -(fields.size.value.z / 2 + 0.001) >%
@@ -70,6 +76,7 @@ PROTO BoxToken [
         size IS marker_size
         name "bottom"
         model IS marker
+        texture_url IS texture_url
       }
     ]
     name IS model

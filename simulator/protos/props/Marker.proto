@@ -10,7 +10,7 @@ PROTO Marker [
   field SFString model ""
   field MFString texture_url []
   field SFBool add_recognition FALSE
-  field SFBool upright TRUE
+  field SFBool upright FALSE
 ]
 {
   %< if (fields.upright.value) { >%
