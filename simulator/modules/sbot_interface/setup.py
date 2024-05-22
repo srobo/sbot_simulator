@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 
 from sbot_interface.boards import Arduino, CameraBoard, LedBoard, MotorBoard, PowerBoard, ServoBoard, TimeServer
@@ -10,7 +12,7 @@ from sbot_interface.devices.power import Output, NullBuzzer, StartButton
 from sbot_interface.socket_server import DeviceServer, SocketServer
 
 
-def setup_devices(log_level: int = logging.WARNING) -> SocketServer:
+def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
     device_logger = logging.getLogger('sbot_interface')
     device_logger.setLevel(log_level)
 

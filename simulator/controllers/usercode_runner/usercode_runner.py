@@ -1,5 +1,6 @@
 import atexit
 import json
+import logging
 import os
 import runpy
 import subprocess
@@ -20,6 +21,8 @@ from sbot_interface.socket_server import SocketServer
 # Get the robot object that was created when setting up the environment
 robot = Robot.created
 assert robot is not None, "Robot object not created"
+
+LOGGER = logging.getLogger('usercode_runner')
 
 
 def get_robot_file(robot_zone: int) -> Path:
@@ -60,7 +63,10 @@ def print_simulation_version():
 
 
 def start_devices() -> SocketServer:
-    return setup_devices()
+    if log_level := os.environ.get('WEBOTS_DEVICE_LOGGING'):
+        return setup_devices(log_level)
+    else:
+        return setup_devices()
 
 
 def run_usercode(robot_file: Path, robot_zone: int, game_mode: str) -> None:
