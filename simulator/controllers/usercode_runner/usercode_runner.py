@@ -119,10 +119,11 @@ def main():
     thread.start()
 
     # Run the usercode
-    run_usercode(robot_file, zone, game_mode)
-
-    # Cleanup devices
-    devices.stop_event.set()
+    try:
+        run_usercode(robot_file, zone, game_mode)
+    finally:
+        # Cleanup devices
+        devices.stop_event.set()
 
 
 if __name__ == '__main__':
