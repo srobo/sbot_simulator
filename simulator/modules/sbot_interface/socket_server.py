@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 import logging
 import select
 import socket
@@ -128,7 +129,10 @@ class SocketServer:
 
                     if device.device_socket in readable:
                         try:
-                            data = device.device_socket.recv(4096, socket.MSG_DONTWAIT)
+                            if sys.platform == 'win32':
+                                data = device.device_socket.recv(4096)
+                            else:
+                                data = device.device_socket.recv(4096, socket.MSG_DONTWAIT)
                         except ConnectionError:
                             device.disconnect_device()
                             continue
