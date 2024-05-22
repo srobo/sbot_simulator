@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import atexit
 import logging
 import select
 import socket
@@ -33,7 +32,6 @@ class DeviceServer:
 
         self.device_socket: socket.socket | None = None
         self.buffer = b''
-        atexit.register(self.close)
 
     def process_data(self, data: bytes) -> bytes | None:
         self.buffer += data
@@ -91,6 +89,9 @@ class DeviceServer:
     def close(self) -> None:
         self.disconnect_device()
         self.server_socket.close()
+
+    def __del__(self) -> None:
+        self.close()
 
     @property
     def port(self) -> int:

@@ -1,3 +1,4 @@
+import atexit
 import json
 import os
 import runpy
@@ -122,6 +123,8 @@ def main():
     try:
         run_usercode(robot_file, zone, game_mode)
     finally:
+        # Run cleanup code registered in the usercode
+        atexit._run_exitfuncs()
         # Cleanup devices
         devices.stop_event.set()
 
