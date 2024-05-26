@@ -46,18 +46,22 @@ def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
         ),
         Arduino(
             pins=[
-                EmptyPin(),
-                EmptyPin(),
-                ReflectanceSensor('reflectance sensor 1'),
-                ReflectanceSensor('reflectance sensor 2'),
-                UltrasonicSensor('ultrasound front'),
-                UltrasonicSensor('ultrasound left'),
-                UltrasonicSensor('ultrasound right'),
-                UltrasonicSensor('ultrasound back'),
-                MicroSwitch('front left bump sensor'),
-                MicroSwitch('front right bump sensor'),
-                MicroSwitch('rear left bump sensor'),
-                MicroSwitch('rear right bump sensor'),
+                EmptyPin(),  # pin 0
+                EmptyPin(),  # pin 1
+                EmptyPin(),  # ultrasonic trigger pin, pin 2
+                UltrasonicSensor('ultrasound front'),  # pin 3
+                EmptyPin(),  # ultrasonic trigger pin, pin 4
+                UltrasonicSensor('ultrasound left'),  # pin 5
+                EmptyPin(),  # ultrasonic trigger pin, pin 6
+                UltrasonicSensor('ultrasound right'),  # pin 6
+                EmptyPin(),  # ultrasonic trigger pin, pin 8
+                UltrasonicSensor('ultrasound back'),  # pin 9
+                MicroSwitch('front left bump sensor'),  # pin 10
+                MicroSwitch('front right bump sensor'),  # pin 11
+                MicroSwitch('rear left bump sensor'),  # pin 12
+                MicroSwitch('rear right bump sensor'),  # pin 13
+                ReflectanceSensor('reflectance sensor 1'),  # pin A0
+                ReflectanceSensor('reflectance sensor 2'),  # pin A1
             ],
             asset_tag='Arduino1',
         ),
