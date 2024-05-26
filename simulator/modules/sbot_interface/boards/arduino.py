@@ -48,7 +48,7 @@ class Arduino:
                     return 'NACK:Unknown mode command'
             elif args[2] == 'DIGITAL':
                 if args[3] == 'GET?':
-                    return self.pins[pin_number].get_digital()
+                    return f"{self.pins[pin_number].get_digital():d}"
                 elif args[3] == 'SET':
                     if len(args) < 5:
                         return 'NACK:Missing value'
@@ -62,7 +62,7 @@ class Arduino:
                     return 'NACK:Unknown pin command'
             elif args[2] == 'ANALOG':
                 if args[3] == 'GET?':
-                    return self.pins[pin_number].get_analog()
+                    return str(self.pins[pin_number].get_analog())
                 else:
                     return 'NACK:Unknown pin command'
             else:
@@ -80,7 +80,7 @@ class Arduino:
             if args[3] == 'MEASURE?':
                 ultrasound_sensor = self.pins[echo_pin]
                 if isinstance(ultrasound_sensor, UltrasonicSensor):
-                    return ultrasound_sensor.get_distance()
+                    return str(ultrasound_sensor.get_distance())
                 return 'NACK:UltraSound sensor not connected'
             else:
                 return 'NACK:Unknown ultrasound command'

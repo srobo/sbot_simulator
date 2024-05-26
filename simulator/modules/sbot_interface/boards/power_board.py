@@ -118,7 +118,7 @@ class PowerBoard:
                 else:
                     return 'NACK:Invalid LED state'
             elif args[2] == 'GET?':
-                return self.leds[led_type].get_colour()
+                return str(self.leds[led_type].get_colour())
             else:
                 return 'NACK:Invalid LED command'
         elif args[0] == 'NOTE':
