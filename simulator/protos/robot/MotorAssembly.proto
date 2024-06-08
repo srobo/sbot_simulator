@@ -75,7 +75,9 @@ PROTO MotorAssembly [
           ]
           name IS name
           boundingObject USE WHEEL_GEO
-          physics Physics {}
+          physics Physics {
+            density 2000
+          }
         }
       }
     ]

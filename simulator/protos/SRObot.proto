@@ -43,7 +43,7 @@ PROTO SRObot [
             translation -0.13 0 -0.045
           }
           DEF BASE Solid {
-            translation -0.05 0 -0.02
+            translation -0.045 0 -0.02
             children [
               Shape {
                 appearance PBRAppearance {
@@ -52,13 +52,13 @@ PROTO SRObot [
                   metalness 0
                 }
                 geometry Box {
-                  size 0.2 0.16 0.02
+                  size 0.21 0.16 0.02
                 }
               }
             ]
             name "Chassis"
             boundingObject DEF BASE_GEO Box {
-              size 0.2 0.16 0.02
+              size 0.21 0.16 0.02
             }
             physics Physics {
               density 3000  # Aluminium
@@ -140,11 +140,11 @@ PROTO SRObot [
           }
           BumpSensor {
             name "front left bump sensor"
-            translation 0.05 0.05 -0.02
+            translation 0.06 0.05 -0.02
           }
           BumpSensor {
             name "front right bump sensor"
-            translation 0.05 -0.05 -0.02
+            translation 0.06 -0.05 -0.02
           }
           BumpSensor {
             name "rear left bump sensor"
@@ -163,7 +163,7 @@ PROTO SRObot [
       }
     ]
     boundingObject Pose {
-      translation -0.05 0 0.029
+      translation -0.045 0 0.029
       children [USE BASE_GEO]
     }
     physics Physics {}
