@@ -8,6 +8,7 @@ EXTERNPROTO "../protos/props/Marker.proto"
 EXTERNPROTO "../protos/SRObot.proto"
 
 WorldInfo {
+  basicTimeStep 8
 }
 Viewpoint {
   orientation 0.43231 0.43231 -0.79134 1.80272
