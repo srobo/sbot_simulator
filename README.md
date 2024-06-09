@@ -36,10 +36,28 @@ A simulator built around Webots to use the sbot library virtually
     2. ~~vision~~
     3. leds
     4. ~~sleep & time~~
+    5. Windows startup performance
 12. keyboard robot
 13. setup script
+    1. create virtual environment
+    2. install dependencies
+    3. set python path in runtime.ini
+    4. repopulate zone 0 with example code if robot.py is missing
 14. simulator tests
+    - vision position
+    - vision orientation
+    - distance sensor
+    - reflectance sensor
+    - bump sensor
+    - motor
+    - servo
 15. releases
+    - copy simulator folder
+    - add version file
+    - add user readme
+    - create zone folders
+    - add example code
+    - add setup script to root
 16. linting
 17. report currents
 18. supervisor
