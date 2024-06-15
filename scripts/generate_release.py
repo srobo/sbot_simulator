@@ -19,6 +19,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from shutil import which
 from tempfile import TemporaryDirectory
 
 # Add the simulator directory to the path
@@ -48,9 +49,28 @@ with TemporaryDirectory() as temp_dir:
     shutil.copytree(project_root / "simulator", temp_dir / "simulator")
     shutil.copy(project_root / "requirements.txt", temp_dir / "simulator/requirements.txt")
 
-    logger.info("Copying LICENSE and user_readme.txt to temp directory")
+    logger.info("Copying LICENSE to temp directory")
     shutil.copy(project_root / "LICENSE", temp_dir / "LICENSE")
-    shutil.copy(project_root / "assets/user_readme.txt", temp_dir / "readme.txt")
+
+    logger.info("Adding README to temp directory")
+    if which("pandoc"):
+        logger.info(" Converting markdown to HTML using pandoc")
+        subprocess.run(
+            [
+                "pandoc",
+                "--standalone",
+                "--embed-resources",  # Embed images in the HTML
+                "--metadata",
+                'pagetitle="title"',
+                str(project_root / "assets/user_readme.md"),
+                "--output",
+                str(temp_dir / "readme.html"),
+            ],
+            check=True,
+        )
+    else:
+        logger.warning("Pandoc is not available, just copying markdown files")
+        shutil.copy(project_root / "assets/user_readme.md", temp_dir / "readme.md")
 
     logger.info("Copying helper scripts to temp directory")
     shutil.copy(project_root / "scripts/setup.py", temp_dir / "setup.py")
@@ -69,6 +89,6 @@ with TemporaryDirectory() as temp_dir:
     (temp_dir / "simulator/VERSION").write_text(version)
 
     logger.info("Packaging project")
-    shutil.make_archive(f"sbot-simulator-{version}", "zip", temp_dir, logger=logger)
+    shutil.make_archive(f"sbot-simulator-{version}", "zip", temp_dir)
     logger.info("Project packaged successfully")
     logger.info(f"Output file: sbot-simulator-{version}.zip")
