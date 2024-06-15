@@ -55,6 +55,8 @@ try:
     for line in prev_runtime_content:
         if line == "[python]":
             in_python_section = True
+            if runtime_content and runtime_content[-1] == "":
+                runtime_content.pop()
         elif in_python_section and line.startswith("["):
             in_python_section = False
         elif not in_python_section:
@@ -64,6 +66,7 @@ try:
         "",
         "[python]",
         f"COMMAND = {(venv_dir / 'bin/python').absolute()}",
+        "",
     ])
 
     runtime_ini.write_text('\n'.join(runtime_content))
