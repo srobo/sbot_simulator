@@ -46,6 +46,7 @@ with TemporaryDirectory() as temp_dir:
     temp_dir = Path(temp_dir)
     logger.info("Copying simulator folder to temp directory")
     shutil.copytree(project_root / "simulator", temp_dir / "simulator")
+    shutil.copy(project_root / "requirements.txt", temp_dir / "simulator/requirements.txt")
 
     logger.info("Copying LICENSE and user_readme.txt to temp directory")
     shutil.copy(project_root / "LICENSE", temp_dir / "LICENSE")
@@ -54,7 +55,6 @@ with TemporaryDirectory() as temp_dir:
     logger.info("Copying helper scripts to temp directory")
     shutil.copy(project_root / "scripts/setup.py", temp_dir / "setup.py")
     shutil.copy(project_root / "scripts/run_simulator.py", temp_dir / "run_simulator.py")
-    shutil.copy(project_root / "requirements.txt", temp_dir / "requirements.txt")
 
     logger.info("Copying example code to temp directory")
     shutil.copytree(project_root / "example_robots", temp_dir / "example_robots")
@@ -66,7 +66,7 @@ with TemporaryDirectory() as temp_dir:
     shutil.copy(project_root / "example_robots/basic_robot.py", temp_dir / "zone_0/robot.py")
 
     logger.info("Creating VERSION file")
-    (temp_dir / "VERSION").write_text(version)
+    (temp_dir / "simulator/VERSION").write_text(version)
 
     logger.info("Packaging project")
     shutil.make_archive(f"sbot-simulator-{version}", "zip", temp_dir, logger=logger)

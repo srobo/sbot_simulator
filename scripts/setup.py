@@ -17,12 +17,13 @@ from venv import create
 if (Path(__file__).parent / 'simulator/VERSION').exists():
     # This is running from a release
     project_root = Path(__file__).parent
+    requirements = project_root / "simulator/requirements.txt"
 else:
     # This is running from the repository
     project_root = Path(__file__).parents[1]
+    requirements = project_root / "requirements.txt"
 
 venv_dir = project_root / "venv"
-requirements = project_root / "requirements.txt"
 
 print(f"Creating virtual environment in {venv_dir.absolute()}")
 create(venv_dir, with_pip=True)
