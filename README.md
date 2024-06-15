@@ -14,6 +14,7 @@ A simulator built around Webots to use the sbot library virtually
 
 - linting/typing
 - running tests
+- WEBOTS_DEVICE_LOGGING
 
 ### Releases
 
@@ -23,6 +24,9 @@ A simulator built around Webots to use the sbot library virtually
 ## How it works
 
 - sbot interface
+    - WEBOTS_ROBOT
+    - WEBOTS_SIMULATOR
+    - SBOT_METADATA_PATH
 - vision
 - world design
     - base arena
