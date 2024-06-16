@@ -1,3 +1,10 @@
+"""
+A simulator for the SRO Arduino board.
+
+Provides a message parser that simulates the behavior of an Arduino board.
+
+Based on the Arduino v2.0 firmware.
+"""
 from __future__ import annotations
 
 import logging
@@ -7,14 +14,31 @@ from sbot_interface.devices.arduino_devices import BasePin, GPIOPinMode, Ultraso
 LOGGER = logging.getLogger(__name__)
 
 
-## Based on the Arduino v2.0 firmware
 class Arduino:
-    def __init__(self, pins: list[BasePin], asset_tag: str, software_version: str='2.0'):
+    """
+    A simulator for the SRO Arduino board.
+
+    :param pins: A list of simulated devices connected to the Arduino board.
+                 The list is indexed by the pin number and EmptyPin is used for
+                 unconnected pins.
+    :param asset_tag: The asset tag to report for the Arduino board.
+    :param software_version: The software version to report for the Arduino board.
+    """
+
+    def __init__(self, pins: list[BasePin], asset_tag: str, software_version: str = '2.0'):
         self.pins = pins
         self.asset_tag = asset_tag
         self.software_version = software_version
 
     def handle_command(self, command: str) -> str:
+        """
+        Process a command string and return the response.
+
+        Executes the appropriate action on any specified pins automatically.
+
+        :param command: The command string to process.
+        :return: The response to the command.
+        """
         args = command.split(':')
         if args[0] == '*IDN?':
             return f'SourceBots:Arduino:{self.asset_tag}:{self.software_version}'
@@ -41,7 +65,9 @@ class Arduino:
                         mode = GPIOPinMode(args[4])
                     except ValueError:
                         return 'NACK:Invalid mode'
-                    LOGGER.info(f'Setting pin {pin_number} of arduino {self.asset_tag} to mode {mode}')
+                    LOGGER.info(
+                        f'Setting pin {pin_number} of arduino {self.asset_tag} to mode {mode}'
+                    )
                     self.pins[pin_number].set_mode(mode)
                     return 'ACK'
                 else:
@@ -55,7 +81,10 @@ class Arduino:
                     value = args[4]
                     if value not in ['0', '1']:
                         return 'NACK:Invalid value'
-                    LOGGER.info(f'Setting pin {pin_number} of arduino {self.asset_tag} to digital value {value}')
+                    LOGGER.info(
+                        f'Setting pin {pin_number} of arduino {self.asset_tag} '
+                        f'to digital value {value}'
+                    )
                     self.pins[pin_number].set_digital(bool(value))
                     return 'ACK'
                 else:

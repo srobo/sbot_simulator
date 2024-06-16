@@ -1,18 +1,45 @@
+"""
+Setup the devices connected to the robot.
+
+The main configuration for the devices connected to the robot is the devices
+list in the setup_devices function.
+"""
 from __future__ import annotations
 
 import logging
 
-from sbot_interface.boards import Arduino, CameraBoard, LedBoard, MotorBoard, PowerBoard, ServoBoard, TimeServer
-from sbot_interface.devices.arduino_devices import EmptyPin, ReflectanceSensor, MicroSwitch, UltrasonicSensor
+from sbot_interface.boards import (
+    Arduino,
+    CameraBoard,
+    LedBoard,
+    MotorBoard,
+    PowerBoard,
+    ServoBoard,
+    TimeServer,
+)
+from sbot_interface.devices.arduino_devices import (
+    EmptyPin,
+    MicroSwitch,
+    ReflectanceSensor,
+    UltrasonicSensor,
+)
 from sbot_interface.devices.camera import Camera
 from sbot_interface.devices.led import Led, NullLed
 from sbot_interface.devices.motor import Motor
+from sbot_interface.devices.power import NullBuzzer, Output, StartButton
 from sbot_interface.devices.servo import NullServo
-from sbot_interface.devices.power import Output, NullBuzzer, StartButton
 from sbot_interface.socket_server import DeviceServer, SocketServer
 
 
 def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
+    """
+    Setup the devices connected to the robot.
+
+    Contains the main configuration for the devices connected to the robot.
+
+    :param log_level: The logging level to use for the device logger.
+    :return: The socket server which will handle all connections and commands.
+    """
     device_logger = logging.getLogger('sbot_interface')
     device_logger.setLevel(log_level)
 
@@ -80,11 +107,17 @@ def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
         # connect each device to a socket to receive commands from sbot
         device_servers.append(DeviceServer(device))
 
-    # collect all device servers into a single server which will handle all connections and commands
+    # collect all device servers into a single server which will handle all connections
+    # and commands
     return SocketServer(device_servers)
 
 
 def main() -> None:
+    """
+    Main function to setup and run the devices. Only used for testing.
+
+    This function will setup the devices and start the select loop to handle all connections.
+    """
     server = setup_devices(logging.DEBUG)
     # generate and print the socket url and information for each device
     print(server.links_formatted())

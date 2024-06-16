@@ -1,3 +1,12 @@
+"""
+The entry point for all robot controllers.
+
+This script is responsible for setting up the environment, starting the devices,
+and running the usercode.
+
+The board simulators are run in a separate thread to allow the usercode to run
+in the main thread. This provides the interface between the sbot module and Webots.
+"""
 import atexit
 import json
 import logging
@@ -26,6 +35,13 @@ LOGGER = logging.getLogger('usercode_runner')
 
 
 def get_robot_file(robot_zone: int) -> Path:
+    """
+    Get the path to the robot file for the given zone.
+
+    :param robot_zone: The zone number
+    :return: The path to the robot file
+    :raises FileNotFoundError: If no robot controller is found for the given zone
+    """
     robot_file = environment.ZONE_ROOT / f'zone_{robot_zone}' / 'robot.py'
 
     # Check if the robot file exists
@@ -36,6 +52,13 @@ def get_robot_file(robot_zone: int) -> Path:
 
 
 def get_game_mode() -> str:
+    """
+    Get the game mode from the game mode file.
+
+    Default to 'dev' if the file does not exist.
+
+    :return: The game mode
+    """
     if environment.GAME_MODE_FILE.exists():
         game_mode = environment.GAME_MODE_FILE.read_text().strip()
     else:
@@ -47,6 +70,14 @@ def get_game_mode() -> str:
 
 
 def print_simulation_version():
+    """
+    Print the version of the simulator that is running.
+
+    Uses a VERSION file in the root of the simulator to determine the version.
+    For development, the version is uses the git describe command.
+
+    The version is printed to the console.
+    """
     version_file = environment.SIM_ROOT / 'VERSION'
     if version_file.exists():
         version = version_file.read_text().strip()
@@ -63,6 +94,15 @@ def print_simulation_version():
 
 
 def start_devices() -> SocketServer:
+    """
+    Create the board simulators and return the SocketServer object.
+
+    Using the links or links_formatted method of the SocketServer object, the
+    devices' socket addresses can be accessed and passed to the usercode.
+
+    The WEBOTS_DEVICE_LOGGING environment variable, overrides the log level used.
+    Default is WARNING.
+    """
     if log_level := os.environ.get('WEBOTS_DEVICE_LOGGING'):
         return setup_devices(log_level)
     else:
@@ -70,6 +110,18 @@ def start_devices() -> SocketServer:
 
 
 def run_usercode(robot_file: Path, robot_zone: int, game_mode: str) -> None:
+    """
+    Run the user's code from the given file.
+
+    Metadata is created in a temporary directory and passed to the usercode.
+    The system path is modified to avoid the controller modules being imported
+    in the usercode.
+
+    :param robot_file: The path to the robot file
+    :param robot_zone: The zone number
+    :param game_mode: The game mode string ('dev' or 'comp')
+    :raises Exception: If the usercode raises an exception
+    """
     # Remove this folder from the path
     sys.path.remove(str(Path.cwd()))
     # Remove our custom modules from the path
@@ -94,6 +146,17 @@ def run_usercode(robot_file: Path, robot_zone: int, game_mode: str) -> None:
 
 
 def main():
+    """
+    The main entry point for the usercode runner.
+
+    This function is responsible for setting up the environment, starting the
+    devices, and running the usercode.
+
+    The zone number is passed as the first argument to the script using
+    controllerArgs on the robot.
+
+    On completion, the devices are stopped and atexit functions are run.
+    """
     zone = int(sys.argv[1])
     game_mode = get_game_mode()
 
@@ -130,7 +193,7 @@ def main():
         run_usercode(robot_file, zone, game_mode)
     finally:
         # Run cleanup code registered in the usercode
-        atexit._run_exitfuncs()
+        atexit._run_exitfuncs()  # noqa: SLF001
         # Cleanup devices
         devices.stop_event.set()
 

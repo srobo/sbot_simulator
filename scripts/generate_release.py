@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-This script is used to package the project to be run by end users.
+A script to package the project to be run by end users.
 
 This strips down the project to the essentials, removing any unnecessary files
 and folders, and zips the project for distribution.
@@ -13,8 +13,8 @@ The included files are:
 - An example code file in zone_0
 - A setup script to install the project into a virtual environment
 """
-import os
 import logging
+import os
 import shutil
 import subprocess
 import sys

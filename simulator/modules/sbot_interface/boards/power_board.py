@@ -1,3 +1,10 @@
+"""
+A simulator for the SRv4 Power Board.
+
+Provides a message parser that simulates the behavior of a power board.
+
+Based on the Power Board v4.4.2sb firmware.
+"""
 from __future__ import annotations
 
 import logging
@@ -7,15 +14,26 @@ from sbot_interface.devices.power import BaseButton, BaseBuzzer, Output
 
 LOGGER = logging.getLogger(__name__)
 
-NUM_OUTPUTS = 7  # 6 12V outputs, 1 5V output
+NUM_OUTPUTS = 7  # 6 12V outputs, 1 5V output
 SYS_OUTPUT = 6  # 5V output for the brain
 
 RUN_LED = 0
 ERR_LED = 1
 
 
-## Based on the Power Board v4.4.2sb firmware
 class PowerBoard:
+    """
+    A simulator for the SRv4 Power Board.
+
+    :param outputs: A list of simulated outputs connected to the power board.
+                        The list is indexed by the output number.
+    :param buzzer: A simulated buzzer connected to the power board.
+    :param button: A simulated button connected to the power board.
+    :param leds: A tuple of simulated LEDs connected to the power board.
+    :param asset_tag: The asset tag to report for the power board.
+    :param software_version: The software version to report for the power board.
+    """
+
     def __init__(
         self,
         outputs: list[Output],
@@ -23,7 +41,7 @@ class PowerBoard:
         button: BaseButton,
         leds: tuple[BaseLed, BaseLed],
         asset_tag: str,
-        software_version: str='4.4.2',
+        software_version: str = '4.4.2',
     ):
         self.outputs = outputs
         self.buzzer = buzzer
@@ -35,6 +53,15 @@ class PowerBoard:
         self.battery_voltage = 12000
 
     def handle_command(self, command: str) -> str:
+        """
+        Process a command string and return the response.
+
+        Executes the appropriate action on any specified outputs, LEDs,
+        or the buzzer automatically.
+
+        :param command: The command string to process.
+        :return: The response to the command.
+        """
         args = command.split(':')
         if args[0] == '*IDN?':
             return f'Student Robotics:PBv4B:{self.asset_tag}:{self.software_version}'
@@ -79,7 +106,9 @@ class PowerBoard:
                     return 'NACK:Invalid output state'
                 if state not in [0, 1]:
                     return 'NACK:Invalid output state'
-                LOGGER.info(f'Setting output {output_number} on board {self.asset_tag} to {state}')
+                LOGGER.info(
+                    f'Setting output {output_number} on board {self.asset_tag} to {state}'
+                )
                 self.outputs[output_number].set_output(state)
                 return 'ACK'
             elif args[2] == 'GET?':
@@ -109,7 +138,9 @@ class PowerBoard:
                 if len(args) < 4:
                     return 'NACK:Missing LED state'
                 if args[3] in ['0', '1', 'F']:
-                    LOGGER.info(f'Setting {args[1]} LED on board {self.asset_tag} to {args[3]}')
+                    LOGGER.info(
+                        f'Setting {args[1]} LED on board {self.asset_tag} to {args[3]}'
+                    )
                     if args[3] == 'F':
                         self.leds[led_type].set_colour(1)
                     else:
@@ -143,7 +174,9 @@ class PowerBoard:
                 if dur < 0:
                     return 'NACK:Invalid note duration'
 
-                LOGGER.info(f'Setting buzzer on board {self.asset_tag} to {freq}Hz for {dur}ms')
+                LOGGER.info(
+                    f'Setting buzzer on board {self.asset_tag} to {freq}Hz for {dur}ms'
+                )
                 self.buzzer.set_note(freq, dur)
                 return 'ACK'
         else:
@@ -151,4 +184,9 @@ class PowerBoard:
         return 'NACK:Command failed'
 
     def current(self):
+        """
+        Get the total current draw of all outputs.
+
+        :return: The total current draw of all outputs in mA.
+        """
         return sum(output.get_current() for output in self.outputs)
