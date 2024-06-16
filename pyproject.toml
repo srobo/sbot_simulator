@@ -1,0 +1,56 @@
+# ### Linting Rules ###
+[tool.ruff]
+target-version = "py39"
+line-length = 95
+lint.select = [
+    "D",  # pydocstyle
+    "E",  # pycodestyle error
+    "F",  # pyflakes
+    "I",  # isort
+    "W",  # pycodestyle warning
+    "RUF",  # ruff-specific
+    "B006",  # mutable default argument
+    "B021",  # f-string docstring
+    "COM818",  # warn about implicitly creating a tuple
+    "SLF001",  # warn about accessing private members, these can be noqa'd when necessary
+]
+lint.preview = true  # Enable preview to get the rest of pycodestyle errors
+lint.ignore = [
+    "D104",  # Ignore missing docstring in public package
+    "D105",  # Ignore missing docstring in magic method
+    "D107",  # Ignore missing docstring in __init__
+    "D401",  # Ignore first line of docstring should be in imperative mood
+    "D203",  # Ignore 1 blank line required before class docstring
+    "D212",  # Ignore Multi-line docstring summary should start at the first line
+    "RUF005",  # Allow alternate iterable unpacking
+    "RUF015",  # Allow + concatenation
+]
+extend-exclude = ["zone_*/**.py"]  # Exclude actual robot code from linting
+
+[tool.ruff.lint.per-file-ignores]
+# Ignore not having docstrings in example code
+"example_robots/*.py" = ["D1"]
+
+# ### Tasks ###
+[tool.poe.env]
+PYFOLDERS = "example_robots/ simulator/ test_simulator/ scripts/"
+
+[tool.poe.tasks.lint]
+help = "Run ruff against the project to check for linting errors."
+cmd = "ruff check $PYFOLDERS"
+
+[tool.poe.tasks.fix]
+help = "Use ruff to fix any auto-fixable linting errors."
+cmd = "ruff check --fix-only $PYFOLDERS"
+
+[tool.poe.tasks.release]
+help = "Build the release archive."
+cmd = "python -m ./scripts/generate_release.py"
+
+[tool.poe.tasks.setup]
+help = "Setup the virtual environment for running Webots."
+cmd = "python -m ./scripts/setup.py"
+
+[tool.poe.tasks.clean]
+help = "Clean the project of previous release artifacts."
+script = "shutil:rmtree('dist', ignore_errors=1)"
