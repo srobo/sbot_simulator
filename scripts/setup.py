@@ -36,8 +36,10 @@ try:
     logger.info(f"Installing dependencies from {requirements.absolute()}")
     if platform.system() == "Windows":
         pip = venv_dir / "Scripts/pip.exe"
+        venv_python = venv_dir / "Scripts/python"
     else:
         pip = venv_dir / "bin/pip"
+        venv_python = venv_dir / "bin/python"
     run([str(pip), "install", "-r", str(requirements)], cwd=venv_dir)
 
     logger.info("Setting up Webots Python location")
@@ -65,7 +67,7 @@ try:
     runtime_content.extend([
         "",
         "[python]",
-        f"COMMAND = {(venv_dir / 'bin/python').absolute()}",
+        f"COMMAND = {venv_python.absolute()}",
         "",
     ])
 

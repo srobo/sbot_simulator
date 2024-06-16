@@ -28,7 +28,7 @@ try:
         if platform.system() == "Darwin":
             webots = "/Applications/Webots.app/Contents/MacOS/webots"
         elif platform.system() == "Windows":
-            webots = "C:\\Program Files\\Webots\\msys64\\bin\\webotsw.exe"
+            webots = "C:\\Program Files\\Webots\\msys64\\mingw64\\bin\\webotsw.exe"
         elif platform.system() == "Linux":
             webots = "/usr/bin/webots"
         else:

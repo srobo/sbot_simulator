@@ -8,7 +8,7 @@ robot.motor_board.motors[1].power = 1
 # measure the distance of the right ultrasound sensor
 # pin 6 is the trigger pin, pin 7 is the echo pin
 distance = robot.arduino.ultrasound_measure(6, 7)
-print(f"Right ultrasound distance: {distance} meters")
+print(f"Right ultrasound distance: {distance / 1000} meters")
 
 # motor board, channel 0 to half power forward
 robot.motor_board.motors[0].power = 0.5
