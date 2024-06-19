@@ -1,3 +1,4 @@
+"""Utility functions for the devices module."""
 from __future__ import annotations
 
 import threading
@@ -7,9 +8,26 @@ from random import gauss
 from typing import TypeVar
 
 from controller import (
-    Accelerometer, Camera, Compass, DistanceSensor, Emitter, GPS, Gyro,
-    InertialUnit, LED, Lidar, LightSensor, Motor, PositionSensor, Radar,
-    RangeFinder, Receiver, Robot, Speaker, TouchSensor, VacuumGripper,
+    GPS,
+    LED,
+    Accelerometer,
+    Camera,
+    Compass,
+    DistanceSensor,
+    Emitter,
+    Gyro,
+    InertialUnit,
+    Lidar,
+    LightSensor,
+    Motor,
+    PositionSensor,
+    Radar,
+    RangeFinder,
+    Receiver,
+    Robot,
+    Speaker,
+    TouchSensor,
+    VacuumGripper,
 )
 from controller.device import Device
 
@@ -18,6 +36,12 @@ __GLOBALS: 'GlobalData' | None = None
 
 
 class WebotsDevice:
+    """
+    A collection of Webots device classes.
+
+    Each class represents a different device that can be attached to the robot.
+    """
+
     Accelerometer = Accelerometer
     Camera = Camera
     Compass = Compass
@@ -41,6 +65,17 @@ class WebotsDevice:
 
 @dataclass
 class GlobalData:
+    """
+    Global data and functions for the simulator.
+
+    When accessed through the get_globals function, a single instance of this
+    class is created and stored in the module's global scope.
+
+    :param robot: The robot object.
+    :param timestep: The timestep size of the simulation.
+    :param stop_event: The event to stop the simulation.
+    """
+
     robot: Robot
     timestep: int
     stop_event: threading.Event | None = None
@@ -88,13 +123,29 @@ def map_to_range(
 
 
 def get_robot_device(robot: Robot, name: str, kind: type[TDevice]) -> TDevice:
+    """
+    A helper function to get a device from the robot.
+
+    Raises a TypeError if the device is not found or is not of the correct type.
+    Weboots normally just returns None if the device is not found.
+
+    :param robot: The robot object.
+    :param name: The name of the device.
+    :param kind: The type of the device.
+    :return: The device object.
+    :raises TypeError: If the device is not found or is not of the correct type.
+    """
     device = robot.getDevice(name)
     if not isinstance(device, kind):
         raise TypeError(f"Failed to get device: {name}.")
     return device
 
 
-def add_jitter(value: float, value_range: tuple[float, float], std_dev_percent: float=2.0) -> float:
+def add_jitter(
+    value: float,
+    value_range: tuple[float, float],
+    std_dev_percent: float = 2.0,
+) -> float:
     """Adds normally distributed jitter to a given value."""
     range_size = value_range[1] - value_range[0]
     std_dev = range_size * (std_dev_percent / 100.0)

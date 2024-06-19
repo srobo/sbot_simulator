@@ -1,3 +1,10 @@
+"""
+A simulator for the SRv4 Servo Board.
+
+Provides a message parser that simulates the behavior of a servo board.
+
+Based on the Servo Board v4.4 firmware.
+"""
 from __future__ import annotations
 
 import logging
@@ -7,9 +14,17 @@ from sbot_interface.devices.servo import MAX_POSITION, MIN_POSITION, BaseServo
 LOGGER = logging.getLogger(__name__)
 
 
-## Based on the Servo Board v4.4 firmware
 class ServoBoard:
-    def __init__(self, servos: list[BaseServo], asset_tag: str, software_version: str='4.4'):
+    """
+    A simulator for the SRv4 Servo Board.
+
+    :param servos: A list of simulated servos connected to the servo board.
+                        The list is indexed by the servo number.
+    :param asset_tag: The asset tag to report for the servo board.
+    :param software_version: The software version to report for the servo board.
+    """
+
+    def __init__(self, servos: list[BaseServo], asset_tag: str, software_version: str = '4.4'):
         self.servos = servos
         self.asset_tag = asset_tag
         self.software_version = software_version
@@ -17,6 +32,14 @@ class ServoBoard:
         self.pgood = True
 
     def handle_command(self, command: str) -> str:
+        """
+        Process a command string and return the response.
+
+        Executes the appropriate action on any specified servos automatically.
+
+        :param command: The command string to process.
+        :return: The response to the command.
+        """
         args = command.split(':')
         if args[0] == '*IDN?':
             return f'Student Robotics:SBv4B:{self.asset_tag}:{self.software_version}'
@@ -62,7 +85,9 @@ class ServoBoard:
                 if not (MIN_POSITION <= setpoint <= MAX_POSITION):
                     return 'NACK:Invalid servo setpoint'
 
-                LOGGER.info(f'Setting servo {servo_number} on board {self.asset_tag} to {setpoint}')
+                LOGGER.info(
+                    f'Setting servo {servo_number} on board {self.asset_tag} to {setpoint}'
+                )
                 self.servos[servo_number].set_position(setpoint)
                 return 'ACK'
             else:
@@ -72,4 +97,9 @@ class ServoBoard:
         return 'NACK:Command failed'
 
     def current(self):
+        """
+        Get the total current draw of all servos.
+
+        :return: The total current draw of all servos in mA.
+        """
         return sum(servo.get_current() for servo in self.servos)

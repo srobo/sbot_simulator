@@ -1,7 +1,7 @@
 import math
 
-from sbot import AnalogPins, Robot
 from controller import Keyboard
+from sbot import AnalogPins, Robot
 
 # Any keys still pressed in the following period will be handled again
 # leading to rprinting sensors multiple times

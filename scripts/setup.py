@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-This script is used to setup the environment for running the project in Webots.
+A script to setup the environment for running the project in Webots.
 
 It will:
 1. Create a virtual environment in the project root, if it does not exist
@@ -79,7 +79,7 @@ try:
         logger.info("Repopulating zone 0 with example code")
         zone_0.mkdir(exist_ok=True)
         shutil.copy(project_root / "example_roobts/basic_robot.py", zone_0 / "robot.py")
-except Exception as e:
+except Exception:
     logger.exception("Setup failed due to an error.")
     input("An error occurred, press enter to close.")
 else:

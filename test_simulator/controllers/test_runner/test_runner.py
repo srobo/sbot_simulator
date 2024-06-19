@@ -1,10 +1,15 @@
+"""
+Test runner for the simulator.
+
+Testing the performance of sending camera images over a socket.
+"""
 import os
 import socket
 import sys
 import threading
 from pprint import pprint
 
-from controller import Robot, Camera
+from controller import Camera, Robot
 
 FRAME_TIME = 64
 
@@ -12,6 +17,7 @@ robot = Robot()
 
 sys.path.insert(0, robot.getProjectPath())
 import environment  # noqa: E402
+
 environment.setup_environment()
 
 print(f"{robot.getProjectPath()=}")
@@ -32,17 +38,22 @@ pprint(sys.path)
 camera: Camera = robot.getDevice("camera")
 camera.enable(FRAME_TIME)
 
+
 def test_recv_setup():
+    """Set up a socket to receive data."""
     soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     soc.bind(('localhost', 0))
     soc.listen(1)
     return soc
 
+
 def recv_runner(soc):
+    """Run a receiver for the socket that just accepts data."""
     while True:
         client = soc.accept()
         while client[0].recv(4096):
             pass
+
 
 srv_soc = test_recv_setup()
 srv_port = srv_soc.getsockname()[1]

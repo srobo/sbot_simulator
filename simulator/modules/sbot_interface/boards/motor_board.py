@@ -1,3 +1,10 @@
+"""
+A simulator for the SRv4 Motor Board.
+
+Provides a message parser that simulates the behavior of a motor board.
+
+Based on the Motor Board v4.4.1 firmware.
+"""
 from __future__ import annotations
 
 import logging
@@ -7,14 +14,35 @@ from sbot_interface.devices.motor import MAX_POWER, MIN_POWER, BaseMotor
 LOGGER = logging.getLogger(__name__)
 
 
-## Based on the Motor Board v4.4.1 firmware
 class MotorBoard:
-    def __init__(self, motors: list[BaseMotor], asset_tag: str, software_version: str='4.4.1'):
+    """
+    A simulator for the SRv4 Motor Board.
+
+    :param motors: A list of simulated motors connected to the motor board.
+                     The list is indexed by the motor number.
+    :param asset_tag: The asset tag to report for the motor board.
+    :param software_version: The software version to report for the motor board.
+    """
+
+    def __init__(
+        self,
+        motors: list[BaseMotor],
+        asset_tag: str,
+        software_version: str = '4.4.1'
+    ):
         self.motors = motors
         self.asset_tag = asset_tag
         self.software_version = software_version
 
     def handle_command(self, command: str) -> str:
+        """
+        Process a command string and return the response.
+
+        Executes the appropriate action on any specified motors automatically.
+
+        :param command: The command string to process.
+        :return: The response to the command.
+        """
         args = command.split(':')
         if args[0] == '*IDN?':
             return f'Student Robotics:MCv4B:{self.asset_tag}:{self.software_version}'
@@ -48,7 +76,9 @@ class MotorBoard:
                     return 'NACK:Invalid motor power'
                 if not (MIN_POWER <= power <= MAX_POWER):
                     return 'NACK:Invalid motor power'
-                LOGGER.info(f'Setting motor {motor_number} on board {self.asset_tag} to {power}')
+                LOGGER.info(
+                    f'Setting motor {motor_number} on board {self.asset_tag} to {power}'
+                )
                 self.motors[motor_number].set_power(power)
                 return 'ACK'
             elif args[2] == 'GET?':
@@ -68,5 +98,10 @@ class MotorBoard:
             return f'NACK:Unknown command {command.strip()}'
         return 'NACK:Command failed'
 
-    def current(self):
+    def current(self) -> int:
+        """
+        Get the total current draw of all motors.
+
+        :return: The total current draw of all motors in mA.
+        """
         return sum(motor.get_current() for motor in self.motors)

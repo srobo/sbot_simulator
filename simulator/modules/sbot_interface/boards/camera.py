@@ -1,3 +1,9 @@
+"""
+A simulator for the SRO Camera interface.
+
+Provides a message parser that simulates the behavior of a Camera.
+Interfaces to a WebotsRemoteCameraSource in the sbot package.
+"""
 from __future__ import annotations
 
 import logging
@@ -16,12 +22,28 @@ LOGGER = logging.getLogger(__name__)
 
 
 class CameraBoard:
-    def __init__(self, camera: BaseCamera, asset_tag: str, software_version: str='1.0'):
+    """
+    A simulator for the SRO Camera interface.
+
+    :param camera: The camera object to interface with.
+    :param asset_tag: The asset tag to report for the camera board.
+    :param software_version: The software version to report for the camera board.
+    """
+
+    def __init__(self, camera: BaseCamera, asset_tag: str, software_version: str = '1.0'):
         self.asset_tag = asset_tag
         self.software_version = software_version
         self.camera = camera
 
     def handle_command(self, command: str) -> str | bytes:
+        """
+        Process a command string and return the response.
+
+        Executes the appropriate action on the camera automatically.
+
+        :param command: The command string to process.
+        :return: The response to the command.
+        """
         args = command.split(':')
         if args[0] == '*IDN?':
             return f'Student Robotics:CAMv1a:{self.asset_tag}:{self.software_version}'

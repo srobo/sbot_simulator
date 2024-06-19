@@ -1,3 +1,8 @@
+"""
+A simulator for handling time based commands using simulated time.
+
+Provides a message parser that simulates the behavior of sleep and time.
+"""
 from __future__ import annotations
 
 import logging
@@ -10,12 +15,31 @@ g = get_globals()
 
 
 class TimeServer:
-    def __init__(self, asset_tag: str, software_version: str='1.0', start_time: str='2024-06-01T00:00:00+00:00'):
+    """
+    A simulator for handling time based commands using simulated time.
+
+    :param asset_tag: The asset tag to report for the time server.
+    :param software_version: The software version to report for the time server.
+    :param start_time: The start time for the time server (reported time to simulator time 0).
+    """
+
+    def __init__(
+        self,
+        asset_tag: str,
+        software_version: str = '1.0',
+        start_time: str = '2024-06-01T00:00:00+00:00',
+    ):
         self.asset_tag = asset_tag
         self.software_version = software_version
         self.start_time = datetime.fromisoformat(start_time)
 
     def handle_command(self, command: str) -> str:
+        """
+        Process a command string and return the response.
+
+        :param command: The command string to process.
+        :return: The response to the command.
+        """
         args = command.split(':')
         if args[0] == '*IDN?':
             return f'SourceBots:TimeServer:{self.asset_tag}:{self.software_version}'

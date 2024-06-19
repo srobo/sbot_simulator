@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-This script is used to run the project in Webots.
+A script to run the project in Webots.
 
 Largely just a shortcut to running the arena world in Webots.
 Only functional in releases.
@@ -39,7 +39,8 @@ try:
         print("Webots executable not found.")
         raise RuntimeError
 
-    # Run the world file in Webots, detaching the process so it does not close when this script does
+    # Run the world file in Webots,
+    # detaching the process so it does not close when this script does
     if platform.system() == "Windows":
         Popen([webots, world_file], creationflags=DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP)
     else:

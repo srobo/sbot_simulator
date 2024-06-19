@@ -1,3 +1,8 @@
+"""
+A simulator for the SRO LED hat.
+
+Provides a message parser that simulates the behavior of the LED hat.
+"""
 from __future__ import annotations
 
 import logging
@@ -18,12 +23,29 @@ LED_START = 4
 
 
 class LedBoard:
-    def __init__(self, leds: list[BaseLed], asset_tag: str, software_version: str='1.0'):
+    """
+    A simulator for the SRO LED hat.
+
+    :param leds: A list of simulated LEDs connected to the LED hat.
+                    The list is indexed by the LED number.
+    :param asset_tag: The asset tag to report for the LED hat.
+    :param software_version: The software version to report for the LED hat.
+    """
+
+    def __init__(self, leds: list[BaseLed], asset_tag: str, software_version: str = '1.0'):
         self.leds = leds
         self.asset_tag = asset_tag
         self.software_version = software_version
 
     def handle_command(self, command: str) -> str:
+        """
+        Process a command string and return the response.
+
+        Executes the appropriate action on any specified LEDs automatically.
+
+        :param command: The command string to process.
+        :return: The response to the command.
+        """
         args = command.split(':')
         if args[0] == '*IDN?':
             return f'Student Robotics:KCHv1B:{self.asset_tag}:{self.software_version}'

@@ -15,7 +15,8 @@ robot.motor_board.motors[0].power = 0.5
 
 # motor board, channel 1 to half power forward,
 robot.motor_board.motors[1].power = 0.5
-# minimal time has passed at this point so the robot will appear to move forward instead of turning
+# minimal time has passed at this point,
+# so the robot will appear to move forward instead of turning
 
 # sleep for 2 second
 robot.sleep(2)
