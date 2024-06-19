@@ -33,4 +33,4 @@ In order to use the simulator a few set-up steps need to be done.
     - disable anti-aliasing
 - common issues
     - remember to sleep
-    - reopening the camera overlay ![camera overlay menu](images/camera_overlay.png)
+    - reopening the camera overlay ![camera overlay menu](images/camera-overlays.png)

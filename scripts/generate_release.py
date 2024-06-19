@@ -66,6 +66,7 @@ with TemporaryDirectory() as temp_dir:
                 "--output",
                 str(temp_dir / "readme.html"),
             ],
+            cwd=str(project_root / "assets"),
             check=True,
         )
     else:
