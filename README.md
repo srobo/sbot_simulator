@@ -15,6 +15,7 @@ A simulator built around Webots to use the sbot library virtually
 - linting/typing
 - running tests
 - WEBOTS_DEVICE_LOGGING
+- poe
 
 ### Releases
 
@@ -83,7 +84,7 @@ A simulator built around Webots to use the sbot library virtually
     - bump sensor
     - motor
     - servo
-16. linting
+16. ~~linting~~
 17. CI
 18. report currents
 19. supervisor
