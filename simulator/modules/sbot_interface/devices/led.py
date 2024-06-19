@@ -22,7 +22,7 @@ RGB_COLOURS = [
 class BaseLed(ABC):
     """Base class for LED devices."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.colour = 0
 
     @abstractmethod
@@ -39,7 +39,7 @@ class BaseLed(ABC):
 class NullLed(BaseLed):
     """Null LED device. Allows the robot to run without an LED device attached."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.colour = 0
 
     def set_colour(self, colour: int) -> None:

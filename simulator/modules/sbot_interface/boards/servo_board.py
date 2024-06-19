@@ -96,7 +96,7 @@ class ServoBoard:
             return f'NACK:Unknown command {command.strip()}'
         return 'NACK:Command failed'
 
-    def current(self):
+    def current(self) -> int:
         """
         Get the total current draw of all servos.
 

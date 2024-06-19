@@ -94,16 +94,16 @@ class LedBoard:
                     if len(args) < 6:
                         return 'NACK:Missing LED colour'
                     try:
-                        r = int(args[3])
-                        g = int(args[4])
-                        b = int(args[5])
+                        r = bool(int(args[3]))
+                        g = bool(int(args[4]))
+                        b = bool(int(args[5]))
                     except ValueError:
                         return 'NACK:Invalid LED colour'
                     if r not in [0, 1] or g not in [0, 1] or b not in [0, 1]:
                         return 'NACK:Invalid LED colour'
                     LOGGER.info(
                         f'Setting LED {led_number} on board {self.asset_tag} to '
-                        f'{r}:{g}:{b} (colour {RGB_COLOURS.index((r, g, b))}',
+                        f'{r:d}:{g:d}:{b:d} (colour {RGB_COLOURS.index((r, g, b))}',
                     )
                     self.leds[led_number].set_colour(RGB_COLOURS.index((r, g, b)))
                     return 'ACK'

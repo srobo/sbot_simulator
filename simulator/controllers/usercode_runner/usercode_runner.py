@@ -69,7 +69,7 @@ def get_game_mode() -> str:
     return game_mode
 
 
-def print_simulation_version():
+def print_simulation_version() -> None:
     """
     Print the version of the simulator that is running.
 
@@ -145,7 +145,7 @@ def run_usercode(robot_file: Path, robot_zone: int, game_mode: str) -> None:
         runpy.run_path(str(robot_file), init_globals={'__robot__': robot})
 
 
-def main():
+def main() -> bool:
     """
     The main entry point for the usercode runner.
 
@@ -196,6 +196,8 @@ def main():
         atexit._run_exitfuncs()  # noqa: SLF001
         # Cleanup devices
         devices.stop_event.set()
+
+    return True
 
 
 if __name__ == '__main__':

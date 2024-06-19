@@ -17,7 +17,7 @@ class Tee(IO[str]):
     def __init__(self, *streams: IO[str]) -> None:
         self.streams = streams
 
-    def write(self, data: str) -> None:
+    def write(self, data: str) -> None:  # type: ignore[override]
         """
         Writes the given data to all streams in the logger.
 
@@ -45,10 +45,10 @@ class InsertPrefix(IO[str]):
         if not self.prefix:
             return ''
 
-        prefix = self.prefix() if isinstance(self.prefix, Callable) else self.prefix
+        prefix = self.prefix() if callable(self.prefix) else self.prefix
         return prefix
 
-    def write(self, data: str) -> None:
+    def write(self, data: str) -> None:  # type: ignore[override]
         """
         Writes the given data to the stream, applying a prefix to each line if necessary.
 

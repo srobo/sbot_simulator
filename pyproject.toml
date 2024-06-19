@@ -31,13 +31,55 @@ extend-exclude = ["zone_*/**.py"]  # Exclude actual robot code from linting
 # Ignore not having docstrings in example code
 "example_robots/*.py" = ["D1"]
 
+# ### Formatting Rules ###
+[tool.mypy]
+# mypy_path = "stubs"
+
+warn_unused_ignores = true
+warn_return_any = true
+show_error_codes = true
+
+strict_optional = true
+implicit_optional = true
+
+disallow_any_unimported = true
+disallow_subclassing_any = true
+#disallow_any_generics = true
+
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+
+check_untyped_defs = true
+
+
+
 # ### Tasks ###
 [tool.poe.env]
 PYFOLDERS = "example_robots/ simulator/ test_simulator/ scripts/"
+MYPYFOLDERS = "simulator/ scripts/"
 
 [tool.poe.tasks.lint]
 help = "Run ruff against the project to check for linting errors."
 cmd = "ruff check $PYFOLDERS"
+
+[tool.poe.tasks.type]
+help = "Run mypy against the project to check for type errors."
+cmd = "python -m mypy $MYPYFOLDERS"
+
+# [tool.poe.tasks.test]
+# help = "Run pytest against the project to check for test errors."
+# cmd = "python -m pytest --cov=$PYMODULE --cov-report=term --cov-report=xml tests"
+
+# [tool.poe.tasks.webots-test]
+# help = "Run tests in Webots against the project to check for test errors."
+# cmd = ""
+
+[tool.poe.tasks.check]
+help = "Check the project for linting, type and test errors."
+sequence = ["lint", "type"]
+# sequence = ["lint", "type", "test"]
 
 [tool.poe.tasks.fix]
 help = "Use ruff to fix any auto-fixable linting errors."

@@ -14,7 +14,7 @@ GAME_MODE_FILE = SIM_ROOT / 'mode.txt'
 NUM_ZONES = 1
 
 
-def setup_environment():
+def setup_environment() -> None:
     """
     Set up the environment for the simulator.
 

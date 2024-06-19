@@ -5,13 +5,13 @@ A script to run the project in Webots.
 Largely just a shortcut to running the arena world in Webots.
 Only functional in releases.
 """
-import platform
+import sys
 import traceback
 from pathlib import Path
 from shutil import which
 from subprocess import Popen
 
-if platform.system() == "Windows":
+if sys.platform == "win32":
     from subprocess import CREATE_NEW_PROCESS_GROUP, DETACHED_PROCESS
 
 try:
@@ -25,11 +25,11 @@ try:
 
     # Find the webots executable, if it is not in the PATH
     if webots is None:
-        if platform.system() == "Darwin":
+        if sys.platform == "darwin":
             webots = "/Applications/Webots.app/Contents/MacOS/webots"
-        elif platform.system() == "Windows":
+        elif sys.platform == "win32":
             webots = "C:\\Program Files\\Webots\\msys64\\bin\\webotsw.exe"
-        elif platform.system() == "Linux":
+        elif sys.platform.startswith("linux"):
             webots = "/usr/bin/webots"
         else:
             print("Unsupported platform.")
@@ -41,7 +41,7 @@ try:
 
     # Run the world file in Webots,
     # detaching the process so it does not close when this script does
-    if platform.system() == "Windows":
+    if sys.platform == "win32":
         Popen([webots, world_file], creationflags=DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP)
     else:
         Popen([webots, world_file], start_new_session=True)

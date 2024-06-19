@@ -109,7 +109,7 @@ class PowerBoard:
                 LOGGER.info(
                     f'Setting output {output_number} on board {self.asset_tag} to {state}'
                 )
-                self.outputs[output_number].set_output(state)
+                self.outputs[output_number].set_output(bool(state))
                 return 'ACK'
             elif args[2] == 'GET?':
                 return '1' if self.outputs[output_number].get_output() else '0'
@@ -183,7 +183,7 @@ class PowerBoard:
             return f'NACK:Unknown command {command.strip()}'
         return 'NACK:Command failed'
 
-    def current(self):
+    def current(self) -> int:
         """
         Get the total current draw of all outputs.
 

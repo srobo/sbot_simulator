@@ -43,8 +43,8 @@ except subprocess.CalledProcessError:
 (project_root / "dist").mkdir(exist_ok=True)
 os.chdir(str(project_root / "dist"))
 
-with TemporaryDirectory() as temp_dir:
-    temp_dir = Path(temp_dir)
+with TemporaryDirectory() as temp_dir_str:
+    temp_dir = Path(temp_dir_str)
     logger.info("Copying simulator folder to temp directory")
     shutil.copytree(project_root / "simulator", temp_dir / "simulator")
     shutil.copy(project_root / "requirements.txt", temp_dir / "simulator/requirements.txt")
