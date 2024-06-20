@@ -1,0 +1,72 @@
+name: Lint & generate release zip
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        py_version: ["3.8", "3.9", "3.10", "3.11"]
+        include:
+          - os: windows-latest
+            py_version: "3.8"
+          - os: windows-latest
+            py_version: "3.11"
+          - os: macos-latest
+            py_version: "3.8"
+          - os: macos-latest
+            py_version: "3.11"
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.py_version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install -r dev-requirements.txt
+    - name: Lint
+      run: |
+        poe lint
+    - name: Typecheck
+      run: |
+        poe type
+    # - name: Run tests
+    #   run: |
+    #     poe test
+
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+    - name: Install release dependencies
+      run: |
+        # pandoc is required for README.rst -> README.md conversion
+        apt-get update
+        apt-get install -y pandoc
+        python -m pip install --upgrade pip
+        python -m pip install -r dev-requirements.txt
+    - name: Make release
+      run: |
+        poe release
+    # TODO unzip release to avoid the double zip, but
+    - name: Save built release
+      uses: actions/upload-artifact@v4
+      with:
+        name: release
+        path: |
+          dist/*.zip
