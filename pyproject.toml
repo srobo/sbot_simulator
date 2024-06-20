@@ -35,8 +35,8 @@ extend-exclude = ["zone_*/**.py"]  # Exclude actual robot code from linting
 [tool.mypy]
 # Add Webots controller path to mypy
 mypy_path = """
-/Applications/Webots.app/Contents/lib/controller/python;\
-/usr/local/webopts/lib/controller/python;\
+/Applications/Webots.app/Contents/lib/controller/python:\
+/usr/local/webopts/lib/controller/python:\
 C:/Program Files/Webots/lib/controller/python\
 """
 
