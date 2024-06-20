@@ -128,7 +128,7 @@ class DeviceServer:
         """Return the port number of the server socket."""
         if self.server_socket is None:
             return -1
-        return self.server_socket.getsockname()[1]
+        return int(self.server_socket.getsockname()[1])
 
     @property
     def asset_tag(self) -> str:
@@ -170,7 +170,7 @@ class SocketServer:
                     if device.server_socket in readable:
                         device.accept()
 
-                    if device.device_socket in readable:
+                    if device.device_socket in readable and device.device_socket is not None:
                         try:
                             if sys.platform == 'win32':
                                 data = device.device_socket.recv(4096)
@@ -203,7 +203,7 @@ class SocketServer:
             for device in self.devices
         }
 
-    def links_formatted(self, address='localhost') -> str:
+    def links_formatted(self, address: str = 'localhost') -> str:
         """
         Return a formatted string of all the links to the devices.
 

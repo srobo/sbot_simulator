@@ -21,15 +21,17 @@ from tempfile import TemporaryDirectory
 
 from controller import Robot
 
-sys.path.insert(0, Robot().getProjectPath())
+# Robot constructor lacks a return type annotation in R2023b
+sys.path.insert(0, Robot().getProjectPath())  # type: ignore[no-untyped-call]
 import environment  # configure path to include modules
 from robot_logging import prefix_and_tee_streams
 from sbot_interface.setup import setup_devices
 from sbot_interface.socket_server import SocketServer
 
 # Get the robot object that was created when setting up the environment
-robot = Robot.created
-assert robot is not None, "Robot object not created"
+_robot = Robot.created
+assert _robot is not None, "Robot object not created"
+robot = _robot
 
 LOGGER = logging.getLogger('usercode_runner')
 
@@ -69,7 +71,7 @@ def get_game_mode() -> str:
     return game_mode
 
 
-def print_simulation_version():
+def print_simulation_version() -> None:
     """
     Print the version of the simulator that is running.
 
@@ -145,7 +147,7 @@ def run_usercode(robot_file: Path, robot_zone: int, game_mode: str) -> None:
         runpy.run_path(str(robot_file), init_globals={'__robot__': robot})
 
 
-def main():
+def main() -> bool:
     """
     The main entry point for the usercode runner.
 
@@ -196,6 +198,8 @@ def main():
         atexit._run_exitfuncs()  # noqa: SLF001
         # Cleanup devices
         devices.stop_event.set()
+
+    return True
 
 
 if __name__ == '__main__':

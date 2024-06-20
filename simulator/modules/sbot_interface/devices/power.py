@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from typing import Callable
 
 from sbot_interface.devices.util import get_globals
 
@@ -16,7 +17,7 @@ class Output:
     :param downstream_current: A function to get the current draw of the downstream device.
     """
 
-    def __init__(self, downstream_current=None) -> None:
+    def __init__(self, downstream_current: Callable[[], int] | None = None) -> None:
         self._enabled = False
         self._current_func = downstream_current
 
@@ -103,4 +104,4 @@ class StartButton(BaseButton):
                 g.robot.setCustomData('ready')
             self._initialized = True
 
-        return g.robot.getCustomData() == 'start'
+        return bool(g.robot.getCustomData() == 'start')

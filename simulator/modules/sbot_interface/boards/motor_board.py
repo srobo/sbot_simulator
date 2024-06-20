@@ -82,10 +82,10 @@ class MotorBoard:
                 self.motors[motor_number].set_power(power)
                 return 'ACK'
             elif args[2] == 'GET?':
-                return ':'.join(
+                return ':'.join([
                     f'{int(self.motors[motor_number].enabled())}',
                     f'{self.motors[motor_number].get_power()}',
-                )
+                ])
             elif args[2] == 'DISABLE':
                 LOGGER.info(f'Disabling motor {motor_number} on board {self.asset_tag}')
                 self.motors[motor_number].disable()

@@ -28,7 +28,7 @@ from sbot_interface.devices.led import Led, NullLed
 from sbot_interface.devices.motor import Motor
 from sbot_interface.devices.power import NullBuzzer, Output, StartButton
 from sbot_interface.devices.servo import NullServo
-from sbot_interface.socket_server import DeviceServer, SocketServer
+from sbot_interface.socket_server import Board, DeviceServer, SocketServer
 
 
 def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
@@ -44,12 +44,12 @@ def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
     device_logger.setLevel(log_level)
 
     # this is the configuration of devices connected to the robot
-    devices = [
+    devices: list[Board] = [
         PowerBoard(
             outputs=[Output() for _ in range(7)],
             buzzer=NullBuzzer(),
             button=StartButton(),
-            leds=[NullLed() for _ in range(2)],
+            leds=(NullLed(), NullLed()),
             asset_tag='PWR',
         ),
         MotorBoard(
@@ -101,7 +101,7 @@ def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
         ),
     ]
 
-    device_servers = []
+    device_servers: list[DeviceServer] = []
 
     for device in devices:
         # connect each device to a socket to receive commands from sbot

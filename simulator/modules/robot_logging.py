@@ -7,25 +7,28 @@ destinations.
 from __future__ import annotations
 
 import sys
+from io import TextIOWrapper
 from pathlib import Path
-from typing import IO, Callable
+from typing import Callable, TextIO
 
 
-class Tee(IO[str]):
+class Tee(TextIOWrapper):
     """Forwards calls from its `write` and `flush` methods to each of the given targets."""
 
-    def __init__(self, *streams: IO[str]) -> None:
+    def __init__(self, *streams: TextIO) -> None:
         self.streams = streams
 
-    def write(self, data: str) -> None:
+    def write(self, data: str, /) -> int:
         """
         Writes the given data to all streams in the logger.
 
         :param data: The data to be written to the stream.
         """
+        written = 0
         for stream in self.streams:
-            stream.write(data)
+            written = stream.write(data)
         self.flush()
+        return written
 
     def flush(self) -> None:
         """Flushes all the streams in the logger."""
@@ -33,10 +36,10 @@ class Tee(IO[str]):
             stream.flush()
 
 
-class InsertPrefix(IO[str]):
+class InsertPrefix(TextIOWrapper):
     """Inserts a prefix into the data written to the stream."""
 
-    def __init__(self, stream: IO[str], prefix: Callable[[], str] | str | None) -> None:
+    def __init__(self, stream: TextIO, prefix: Callable[[], str] | str | None) -> None:
         self.stream = stream
         self.prefix = prefix
         self._line_start = True
@@ -45,10 +48,10 @@ class InsertPrefix(IO[str]):
         if not self.prefix:
             return ''
 
-        prefix = self.prefix() if isinstance(self.prefix, Callable) else self.prefix
+        prefix = self.prefix() if callable(self.prefix) else self.prefix
         return prefix
 
-    def write(self, data: str) -> None:
+    def write(self, data: str, /) -> int:
         """
         Writes the given data to the stream, applying a prefix to each line if necessary.
 
@@ -56,8 +59,7 @@ class InsertPrefix(IO[str]):
         """
         prefix = self._get_prefix()
         if not prefix:
-            self.stream.write(data)
-            return
+            return self.stream.write(data)
 
         if self._line_start:
             data = prefix + data
@@ -70,7 +72,7 @@ class InsertPrefix(IO[str]):
         if self._line_start:
             data = data[:-len(prefix)]
 
-        self.stream.write(data)
+        return self.stream.write(data)
 
     def flush(self) -> None:
         """

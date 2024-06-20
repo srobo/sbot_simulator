@@ -151,7 +151,7 @@ class MicroSwitch(BasePin):
 
     def get_analog(self) -> int:
         """Get the analog input value of the pin, either 0 or 1023."""
-        return 1023 if self._digital else 0
+        return 1023 if self.get_digital() else 0
 
 
 class PressureSensor(BasePin):
