@@ -21,15 +21,17 @@ from tempfile import TemporaryDirectory
 
 from controller import Robot
 
-sys.path.insert(0, Robot().getProjectPath())
+# Robot constructor lacks a return type annotation in R2023b
+sys.path.insert(0, Robot().getProjectPath())  # type: ignore[no-untyped-call]
 import environment  # configure path to include modules
 from robot_logging import prefix_and_tee_streams
 from sbot_interface.setup import setup_devices
 from sbot_interface.socket_server import SocketServer
 
 # Get the robot object that was created when setting up the environment
-robot = Robot.created
-assert robot is not None, "Robot object not created"
+_robot = Robot.created
+assert _robot is not None, "Robot object not created"
+robot = _robot
 
 LOGGER = logging.getLogger('usercode_runner')
 

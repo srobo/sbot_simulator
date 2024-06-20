@@ -32,28 +32,39 @@ extend-exclude = ["zone_*/**.py"]  # Exclude actual robot code from linting
 "example_robots/*.py" = ["D1"]
 
 # ### Formatting Rules ###
-# [tool.mypy]
-# # mypy_path = "stubs"
+[tool.mypy]
+# Add Webots controller path to mypy
+mypy_path = """
+/Applications/Webots.app/Contents/lib/controller/python;\
+/usr/local/webopts/lib/controller/python;\
+C:/Program Files/Webots/lib/controller/python\
+"""
 
-# warn_unused_ignores = true
-# warn_return_any = true
-# show_error_codes = true
+warn_unused_ignores = true
+warn_return_any = true
+show_error_codes = true
 
-# strict_optional = true
-# implicit_optional = true
+strict_optional = true
+implicit_optional = true
 
-# disallow_any_unimported = true
-# disallow_subclassing_any = true
-# #disallow_any_generics = true
+disallow_any_unimported = true
+disallow_subclassing_any = true
+#disallow_any_generics = true
 
-# disallow_untyped_calls = true
-# disallow_untyped_defs = true
-# disallow_incomplete_defs = true
-# disallow_untyped_decorators = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
 
-# check_untyped_defs = true
+check_untyped_defs = true
 
-
+[[tool.mypy.overrides]]
+# Webots controller code is not fully typed
+module = [
+    "controller",
+    "controller.*"
+]
+ignore_errors = true
 
 # ### Tasks ###
 [tool.poe.env]
@@ -64,9 +75,9 @@ MYPYFOLDERS = "simulator/ scripts/"
 help = "Run ruff against the project to check for linting errors."
 cmd = "ruff check $PYFOLDERS"
 
-# [tool.poe.tasks.type]
-# help = "Run mypy against the project to check for type errors."
-# cmd = "python -m mypy $MYPYFOLDERS"
+[tool.poe.tasks.type]
+help = "Run mypy against the project to check for type errors."
+cmd = "python -m mypy $MYPYFOLDERS"
 
 # [tool.poe.tasks.test]
 # help = "Run pytest against the project to check for test errors."
@@ -76,8 +87,9 @@ cmd = "ruff check $PYFOLDERS"
 # help = "Run tests in Webots against the project to check for test errors."
 # cmd = ""
 
-# [tool.poe.tasks.check]
-# help = "Check the project for linting, type and test errors."
+[tool.poe.tasks.check]
+help = "Check the project for linting, type and test errors."
+sequence = ["lint", "type"]
 # sequence = ["lint", "type", "test"]
 
 [tool.poe.tasks.fix]

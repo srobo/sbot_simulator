@@ -84,7 +84,8 @@ class Camera(BaseCamera):
         g.sleep(self.sample_time / 1000)
 
         image_data_raw = self._device.getImage()
-        self._device.disable()
+        # Disable the camera to save computation
+        self._device.disable()  # type: ignore[no-untyped-call]
 
         return image_data_raw
 

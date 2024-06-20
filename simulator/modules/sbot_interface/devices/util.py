@@ -102,7 +102,8 @@ def get_globals() -> GlobalData:
     """Returns the global dictionary."""
     global __GLOBALS
     if __GLOBALS is None:
-        robot = Robot() if Robot.created is None else Robot.created
+        # Robot constructor lacks a return type annotation in R2023b
+        robot = Robot() if Robot.created is None else Robot.created  # type: ignore[no-untyped-call]
 
         __GLOBALS = GlobalData(
             robot=robot,
