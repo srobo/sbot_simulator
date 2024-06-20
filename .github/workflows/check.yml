@@ -32,7 +32,31 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install -r dev-requirements.txt
+        python -m pip install -r dev_requirements.txt
+    - name: Download & install Webots (Linux)
+      if: runner.os == 'Linux'
+      run: |
+        wget -O ./webots.deb \
+        https://github.com/cyberbotics/webots/releases/download/R2023b/webots_2023b_amd64.deb
+        sudo apt-get install --yes ./webots.deb
+    - name: Download & extract Webots (Windows)
+      # Windows install was problematic so we just extract the python library for typehints
+      if: runner.os == 'Windows'
+      shell: bash
+      run: |
+        mkdir stubs
+        C:\\msys64\\usr\\bin\\wget.exe -O ./webots.tar.bz2 \
+          https://github.com/cyberbotics/webots/releases/download/R2023b/webots-R2023b-x86-64.tar.bz2
+        C:\\msys64\\usr\\bin\\tar.exe xvf webots.tar.bz2 --strip-components=4 \
+          --directory=stubs webots/lib/controller/python/controller
+    - name: Download & install Webots (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        wget -O ./webots.dmg \
+        https://github.com/cyberbotics/webots/releases/download/R2023b/webots-R2023b.dmg
+        hdiutil mount ./webots.dmg
+        sudo cp -R /Volumes/Webots/Webots.app /Applications
+        hdiutil unmount /Volumes/Webots
     - name: Lint
       run: |
         poe lint
@@ -42,6 +66,10 @@ jobs:
     # - name: Run tests
     #   run: |
     #     poe test
+    # - name: Run Webots tests
+    #   if: runner.os != 'Windows'
+    #   run: |
+    #     poe webots-test
 
   release:
     runs-on: ubuntu-latest
@@ -56,10 +84,10 @@ jobs:
     - name: Install release dependencies
       run: |
         # pandoc is required for README.rst -> README.md conversion
-        apt-get update
-        apt-get install -y pandoc
+        sudo apt-get update
+        sudo apt-get install -y pandoc
         python -m pip install --upgrade pip
-        python -m pip install -r dev-requirements.txt
+        python -m pip install -r dev_requirements.txt
     - name: Make release
       run: |
         poe release

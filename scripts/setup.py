@@ -8,6 +8,8 @@ It will:
 3. Set the python path in runtime.ini to the virtual environment python
 4. Repopulate the zone 0 folder with basic_robot.py if robot.py is missing
 """
+from __future__ import annotations
+
 import logging
 import platform
 import shutil

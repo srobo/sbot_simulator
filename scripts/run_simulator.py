@@ -30,7 +30,14 @@ try:
         elif sys.platform == "win32":
             webots = "C:\\Program Files\\Webots\\msys64\\bin\\webotsw.exe"
         elif sys.platform.startswith("linux"):
-            webots = "/usr/bin/webots"
+            possible_paths = ["/usr/local/bin/webots", "/usr/bin/webots"]
+            for path in possible_paths:
+                if Path(path).exists():
+                    webots = path
+                    break
+            else:
+                print("Webots executable not found.")
+                raise RuntimeError
         else:
             print("Unsupported platform.")
             raise RuntimeError

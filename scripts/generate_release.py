@@ -58,8 +58,7 @@ with TemporaryDirectory() as temp_dir_str:
         subprocess.run(
             [
                 "pandoc",
-                "--standalone",
-                "--embed-resources",  # Embed images in the HTML
+                "--self-contained",  # Embed images in the HTML
                 "--metadata",
                 'pagetitle="title"',
                 str(project_root / "assets/user_readme.md"),
