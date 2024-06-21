@@ -36,8 +36,9 @@ extend-exclude = ["zone_*/**.py"]  # Exclude actual robot code from linting
 # Add Webots controller path to mypy
 mypy_path = """
 /Applications/Webots.app/Contents/lib/controller/python:\
-/usr/local/webopts/lib/controller/python:\
-C:/Program Files/Webots/lib/controller/python\
+/usr/local/webots/lib/controller/python:\
+C:/Program Files/Webots/lib/controller/python:\
+stubs\
 """
 
 warn_unused_ignores = true
@@ -98,7 +99,7 @@ cmd = "ruff check --fix-only $PYFOLDERS"
 
 [tool.poe.tasks.release]
 help = "Build the release archive."
-cmd = "python -m ./scripts/generate_release.py"
+cmd = "python ./scripts/generate_release.py"
 
 [tool.poe.tasks.setup]
 help = "Setup the virtual environment for running Webots."

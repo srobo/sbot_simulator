@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from functools import cache
+from functools import lru_cache
 from math import tan
 
 from sbot_interface.devices.util import WebotsDevice, get_globals, get_robot_device
@@ -89,12 +89,12 @@ class Camera(BaseCamera):
 
         return image_data_raw
 
-    @cache
+    @lru_cache
     def get_resolution(self) -> tuple[int, int]:
         """Get the resolution of the camera in pixels, width x height."""
         return self._device.getWidth(), self._device.getHeight()
 
-    @cache
+    @lru_cache
     def get_calibration(self) -> tuple[float, float, float, float]:
         """Return the intrinsic camera calibration parameters fx, fy, cx, cy."""
         return (
