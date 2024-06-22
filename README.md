@@ -29,22 +29,24 @@ pip install -e ../sbot
 
 ## Development
 
-- WEBOTS_DEVICE_LOGGING
+When debugging the simulator, you can use the `WEBOTS_DEVICE_LOGGING` environment variable to set the logging level of the devices in the simulator.
+By default, this is set to `WARNING`, setting it to `INFO` will log most device interactions and setting it to `DEBUG` will log all socket communication.
+This can be achieved using the [runtime.ini file](https://cyberbotics.com/doc/guide/controller-programming#environment-variables) in Webots.
+
 - linting/typing
+To run the CI checks locally, you can install the development requirements and run the check commands.
 ```bash
 pip install -r dev_requirements.txt
-```
-```bash
 poe lint
 poe type
 ```
-- running tests
-```bash
-poe test
-```
-```bash
-poe webots-test
-```
+
+Linting errors can also be observed in real-time using the vscode extension charliermarsh.ruff after installing the development requirements.
+
+__FUTURE FEATURE__
+
+Unit and integration tests are grouped into two categories: those that don't require Webots and those that do.
+The former can be run using the `poe test` command, while the latter can be run using the `poe webots-test` command.
 
 ### Releases
 
