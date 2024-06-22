@@ -7,31 +7,71 @@ A simulator built around Webots to use the sbot library virtually
 
 ## Installation
 
-- install
-- install for sbot development
+First, you need to install Webots. You can download the latest version from the [Webots website](https://cyberbotics.com/#download).
+After cloning the repository, you can install the simulator using the setup script.
+```bash
+./scripts/setup.py
+```
+This script will create a virtual environment, install the required dependencies and set up Webots to use this virtual environment.
+Alternatively, you can install the simulator manually by following the steps below.
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+You will also need to set the Python paramter in the Webots preferences to point at the python binary in the virtual environment.
+
+If you are intending to develop the API components of the simulator, you can install the sbot library in development mode as this is where the competitor facing API is defined.
+```bash
+git clone https://github.com/sourcebots/sbot.git
+pip install -e ../sbot
+```
 
 ## Development
 
-- linting/typing
-- running tests
 - WEBOTS_DEVICE_LOGGING
-- poe
+- linting/typing
+```bash
+pip install -r dev_requirements.txt
+```
+```bash
+poe lint
+poe type
+```
+- running tests
+```bash
+poe test
+```
+```bash
+poe webots-test
+```
 
 ### Releases
 
 - tags
 - release script (run by CI)
+```bash
+# If you installed dev_requirements.txt
+poe release
+# Else
+./scripts/generate_release.py
+```
 
 ## How it works
 
 - sbot interface
-    - WEBOTS_ROBOT
-    - WEBOTS_SIMULATOR
+    - ![simulator-sbot interface](assets/simulator-design.png)
+    - WEBOTS_ROBOT - device urls
+    - WEBOTS_SIMULATOR == 1 - simulator running
     - SBOT_METADATA_PATH
 - vision
+    - ![vision design](assets/vision-interface.png)
 - world design
     - base arena
     - markers
+    - rebot design
+        - bounding box
+        - shadows
 
 ## Project Structure
 
@@ -85,7 +125,7 @@ A simulator built around Webots to use the sbot library virtually
     - motor
     - servo
 16. ~~linting~~
-17. CI
+17. ~~CI~~
 18. report currents
 19. supervisor
 20. comp match running
