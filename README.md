@@ -1,5 +1,5 @@
 # sbot_simulator
-A simulator built around Webots to use the sbot library virtually
+A simulator built around Webots to use the sbot library virtually.
 
 ![sbot_simulator](assets/arena_overview.jpg)
 
@@ -96,9 +96,11 @@ This uses a plane to define the marker, without casting any shadows, or includin
 
 ## Project Structure
 
-- separate test world
-- main world project under simulator folder
-- simplified project output for releases
+In order to keep the released simulator tidy and easy to use, the project is split into a few key folders. The main simulator code is in the `simulator` folder which should only contain the code that is used to run the simulator. The `example_robots` folder contains a simple robot that can be used to start coding with the simulator and a keyboard controlled robot to explore the available sensors. Additionally the `scripts` folder contains the setup script and other utility scripts for the competitiors.
+
+Alongside these folders that are placed in the releases, the `assets` folder contains images and other resources that are used in the documentation. These are used to render an HTML page user facing readme that is included in the release archive.
+
+Of the the folders that are not included in the release, the `tests` folder contains the unit and integration tests for the simulator that don't require running webots and the `test_simulator` folder contains a separate webots world that is used to test the simulator.
 
 ## Project Status
 
