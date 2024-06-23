@@ -58,6 +58,9 @@ with TemporaryDirectory() as temp_dir_str:
         subprocess.run(
             [
                 "pandoc",
+                "--toc",  # Add a table of contents
+                "--from", "gfm+definition_lists",  # Use GitHub Flavored Markdown
+                "--shift-heading-level-by=-1",  # Make the level 1 heading the title
                 "--self-contained",  # Embed images in the HTML
                 "--metadata",
                 'pagetitle="title"',
