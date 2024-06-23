@@ -89,12 +89,17 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r dev_requirements.txt
     - name: Make release
+      id: release
       run: |
         poe release
-    # TODO unzip release to avoid the double zip, but
+        # Log the release name for later use
+        echo "RELEASE_NAME=$(ls dist/)"| sed 's/\.zip//' > "$GITHUB_OUTPUT"
+        # Extract the release the release to avoid the double zip
+        unzip dist/*.zip -d dist/
+        rm dist/sbot-simulator*.zip
     - name: Save built release
       uses: actions/upload-artifact@v4
       with:
-        name: release
+        name: ${{ steps.release.outputs.RELEASE_NAME }}
         path: |
-          dist/*.zip
+          dist/*
