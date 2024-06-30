@@ -1,3 +1,3 @@
 sbot @ git+https://github.com/sourcebots/sbot@sim
-april_vision @ git+https://github.com/willb97/april_vision@colourspace
+april_vision==2.2.0a1
 opencv-python-headless >=4,<5
