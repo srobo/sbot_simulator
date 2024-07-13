@@ -3,7 +3,7 @@ A simulator for the SRv4 Power Board.
 
 Provides a message parser that simulates the behavior of a power board.
 
-Based on the Power Board v4.4.2sb firmware.
+Based on the Power Board v4.4.2 firmware.
 """
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ from sbot_interface.devices.power import BaseButton, BaseBuzzer, Output
 LOGGER = logging.getLogger(__name__)
 
 NUM_OUTPUTS = 7  # 6 12V outputs, 1 5V output
-SYS_OUTPUT = 6  # 5V output for the brain
+SYS_OUTPUT = 4  # L2 output for the brain
 
 RUN_LED = 0
 ERR_LED = 1
