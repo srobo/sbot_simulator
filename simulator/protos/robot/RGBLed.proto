@@ -13,7 +13,7 @@ PROTO RGBLed [
       Shape {
         appearance DEF APP_LED PBRAppearance {
           baseColor 0.6 0.4 0.4
-          metalness 0
+          roughness 1
           emissiveIntensity 100
         }
         geometry Box {

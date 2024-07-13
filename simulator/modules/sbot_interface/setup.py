@@ -65,9 +65,9 @@ def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
         ),
         LedBoard(
             leds=[
-                Led('led 1'),
-                Led('led 2'),
-                Led('led 3'),
+                Led('led 1', num_colours=8),
+                Led('led 2', num_colours=8),
+                Led('led 3', num_colours=8),
             ],
             asset_tag='LED',
         ),

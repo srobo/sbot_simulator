@@ -129,7 +129,7 @@ Of the the folders that are not included in the release, the `tests` folder cont
 10. sbot updates
     1. ~~simulator discovery~~
     2. ~~vision~~
-    3. leds
+    3. ~~leds~~
     4. ~~sleep & time~~
     5. Windows startup performance
 11. ~~keyboard robot~~

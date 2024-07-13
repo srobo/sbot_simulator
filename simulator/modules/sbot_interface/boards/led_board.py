@@ -85,7 +85,7 @@ class LedBoard:
                     led_number = int(args[1])
                 except ValueError:
                     return 'NACK:Invalid LED number'
-                if not (0 <= led_number < len(self.leds) - 1):
+                if not (0 <= led_number < len(self.leds)):
                     return 'NACK:Invalid LED number'
 
                 if len(args) < 3:
