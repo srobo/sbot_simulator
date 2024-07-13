@@ -80,7 +80,7 @@ def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
                 EmptyPin(),  # ultrasonic trigger pin, pin 4
                 UltrasonicSensor('ultrasound left'),  # pin 5
                 EmptyPin(),  # ultrasonic trigger pin, pin 6
-                UltrasonicSensor('ultrasound right'),  # pin 6
+                UltrasonicSensor('ultrasound right'),  # pin 7
                 EmptyPin(),  # ultrasonic trigger pin, pin 8
                 UltrasonicSensor('ultrasound back'),  # pin 9
                 MicroSwitch('front left bump sensor'),  # pin 10
