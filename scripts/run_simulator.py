@@ -28,7 +28,7 @@ try:
         if sys.platform == "darwin":
             webots = "/Applications/Webots.app/Contents/MacOS/webots"
         elif sys.platform == "win32":
-            webots = "C:\\Program Files\\Webots\\msys64\\bin\\webotsw.exe"
+            webots = "C:\\Program Files\\Webots\\msys64\\mingw64\\bin\\webotsw.exe"
         elif sys.platform.startswith("linux"):
             possible_paths = ["/usr/local/bin/webots", "/usr/bin/webots"]
             for path in possible_paths:
