@@ -146,11 +146,12 @@ def add_jitter(
     value: float,
     value_range: tuple[float, float],
     std_dev_percent: float = 2.0,
+    offset_percent: float = 0.0,
 ) -> float:
     """Adds normally distributed jitter to a given value."""
-    range_size = value_range[1] - value_range[0]
-    std_dev = range_size * (std_dev_percent / 100.0)
+    std_dev = value * (std_dev_percent / 100.0)
+    mean_offset = value * (offset_percent / 100.0)
 
-    error = value + gauss(0, std_dev)
+    error = value + gauss(mean_offset, std_dev)
     # Ensure the error is within the range
     return max(value_range[0], min(value_range[1], value + error))
