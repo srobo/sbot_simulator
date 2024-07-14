@@ -41,7 +41,7 @@ class DeviceServer:
         self.board = board
         # create TCP socket server
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server_socket.bind(('localhost', 0))
+        self.server_socket.bind(('127.0.0.1', 0))
         self.server_socket.listen(1)  # only allow one connection per device
         self.server_socket.setblocking(True)
         LOGGER.info(
@@ -203,7 +203,7 @@ class SocketServer:
             for device in self.devices
         }
 
-    def links_formatted(self, address: str = 'localhost') -> str:
+    def links_formatted(self, address: str = '127.0.0.1') -> str:
         """
         Return a formatted string of all the links to the devices.
 
