@@ -27,7 +27,7 @@ PROTO ReflectanceSensor [
                   metalness 0
                 }
                 geometry Box {
-                  size 0.002 0.045 0.02
+                  size 0.002 0.045 0.015
                 }
                 castShadows FALSE
               }

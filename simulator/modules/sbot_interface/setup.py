@@ -87,8 +87,9 @@ def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
                 MicroSwitch('front right bump sensor'),  # pin 11
                 MicroSwitch('rear left bump sensor'),  # pin 12
                 MicroSwitch('rear right bump sensor'),  # pin 13
-                ReflectanceSensor('reflectance sensor 1'),  # pin A0
-                ReflectanceSensor('reflectance sensor 2'),  # pin A1
+                ReflectanceSensor('left reflectance sensor'),  # pin A0
+                ReflectanceSensor('center reflectance sensor'),  # pin A1
+                ReflectanceSensor('right reflectance sensor'),  # pin A2
             ],
             asset_tag='Arduino1',
         ),

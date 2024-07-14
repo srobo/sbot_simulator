@@ -131,12 +131,19 @@ PROTO SRObot [
             translation -0.12 -0.05 -0.008
           }
           ReflectanceSensor {
-            name "reflectance sensor 1"
+            name "left reflectance sensor"
             translation 0.03 0.02 -0.03
+            rotation 0 0 1 1.5708
           }
           ReflectanceSensor {
-            name "reflectance sensor 2"
+            name "center reflectance sensor"
+            translation 0.03 0 -0.03
+            rotation 0 0 1 1.5708
+          }
+          ReflectanceSensor {
+            name "right reflectance sensor"
             translation 0.03 -0.02 -0.03
+            rotation 0 0 1 1.5708
           }
           BumpSensor {
             name "front left bump sensor"
