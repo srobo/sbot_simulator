@@ -90,6 +90,9 @@ def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
                 ReflectanceSensor('left reflectance sensor'),  # pin A0
                 ReflectanceSensor('center reflectance sensor'),  # pin A1
                 ReflectanceSensor('right reflectance sensor'),  # pin A2
+                EmptyPin(),  # pin A3
+                EmptyPin(),  # pin A4
+                EmptyPin(),  # pin A5
             ],
             asset_tag='Arduino1',
         ),
