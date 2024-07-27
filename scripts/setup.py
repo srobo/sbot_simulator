@@ -80,7 +80,7 @@ try:
     if not (zone_0 / "robot.py").exists():
         logger.info("Repopulating zone 0 with example code")
         zone_0.mkdir(exist_ok=True)
-        shutil.copy(project_root / "example_roobts/basic_robot.py", zone_0 / "robot.py")
+        shutil.copy(project_root / "example_robots/basic_robot.py", zone_0 / "robot.py")
 except Exception:
     logger.exception("Setup failed due to an error.")
     input("An error occurred, press enter to close.")
