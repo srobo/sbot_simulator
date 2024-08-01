@@ -136,9 +136,9 @@ Of the the folders that are not included in the release, the `tests` folder cont
 12. ~~setup script~~
 13. ~~releases~~
 14. documentation
-    1. dev setup
+    1. ~~dev setup~~
     2. user usage
-    3. how it works
+    3. ~~how it works~~
 15. simulator tests
     - vision position
     - vision orientation
