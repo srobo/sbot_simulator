@@ -89,11 +89,11 @@ DEF CANS Pose {
     }
     Can {
       name "can3"
-      translation -1.5892 -0.04 0
+      translation -1.5892 0.06 0
     }
     Can {
       name "can4"
-      translation -2.33 -0.04 0
+      translation -2.33 -0.06 0
     }
     Can {
       name "can5"
@@ -110,11 +110,11 @@ DEF CANS Pose {
     }
     Can {
       name "can8"
-      translation 1.5892 0.04 0
+      translation 1.5892 -0.06 0
     }
     Can {
       name "can9"
-      translation 2.33 0.04 0
+      translation 2.33 0.06 0
     }
     Can {
       name "can10"
