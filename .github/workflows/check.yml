@@ -85,7 +85,8 @@ jobs:
       run: |
         # pandoc is required for README.rst -> README.md conversion
         sudo apt-get update
-        sudo apt-get install -y pandoc
+        wget https://github.com/jgm/pandoc/releases/download/3.3/pandoc-3.3-1-amd64.deb
+        sudo apt-get ./pandoc-3.3-1-amd64.deb
         python -m pip install --upgrade pip
         python -m pip install -r dev_requirements.txt
     - name: Make release
