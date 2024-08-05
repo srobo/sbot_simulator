@@ -42,6 +42,10 @@ try:
     else:
         pip = venv_dir / "bin/pip"
         venv_python = venv_dir / "bin/python"
+    run(
+        [str(venv_python), "-m", "pip", "install", "--upgrade", "pip", "setuptools", "wheel"],
+        cwd=venv_dir,
+    )
     run([str(pip), "install", "-r", str(requirements)], cwd=venv_dir)
 
     logger.info("Setting up Webots Python location")
