@@ -81,6 +81,9 @@ class Arduino:
                     value = args[4]
                     if value not in ['0', '1']:
                         return 'NACK:Invalid value'
+                    mode = self.pins[pin_number].get_mode()
+                    if mode != GPIOPinMode.OUTPUT:
+                        return f'NACK:Digital write is not supported in {mode.value}'
                     LOGGER.info(
                         f'Setting pin {pin_number} of arduino {self.asset_tag} '
                         f'to digital value {value}'
@@ -91,6 +94,9 @@ class Arduino:
                     return 'NACK:Unknown pin command'
             elif args[2] == 'ANALOG':
                 if args[3] == 'GET?':
+                    mode = self.pins[pin_number].get_mode()
+                    if mode != GPIOPinMode.INPUT:
+                        return f'NACK:Analog read is not supported in {mode.value}'
                     return str(self.pins[pin_number].get_analog())
                 else:
                     return 'NACK:Unknown pin command'
