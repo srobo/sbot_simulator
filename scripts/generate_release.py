@@ -77,7 +77,8 @@ with TemporaryDirectory() as temp_dir_str:
 
     logger.info("Copying helper scripts to temp directory")
     shutil.copy(project_root / "scripts/setup.py", temp_dir / "setup.py")
-    shutil.copy(project_root / "scripts/run_simulator.py", temp_dir / "run_simulator.py")
+    for script in project_root.glob("scripts/run_*.py"):
+        shutil.copy(script, temp_dir)
 
     logger.info("Copying example code to temp directory")
     shutil.copytree(project_root / "example_robots", temp_dir / "example_robots")
