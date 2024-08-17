@@ -136,11 +136,13 @@ def run_usercode(robot_file: Path, robot_zone: int, game_mode: str) -> None:
 
     with TemporaryDirectory() as tmpdir:
         # Setup metadata (zone, game_mode)
-        Path(tmpdir).joinpath('metadata.json').write_text(json.dumps({
+        Path(tmpdir).joinpath('astoria.json').write_text(json.dumps({
+            "arena": "simulator",
             "zone": robot_zone,
-            "is_competition": game_mode == 'comp'
+            "mode": 'COMP' if game_mode == 'comp' else 'DEV',
         }))
         os.environ['SBOT_METADATA_PATH'] = tmpdir
+        os.environ['SBOT_USBKEY_PATH'] = str(Path.cwd())
 
         # Run the usercode
         # pass robot object to the usercode for keyboard robot control
