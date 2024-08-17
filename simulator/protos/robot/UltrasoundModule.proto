@@ -21,6 +21,8 @@ PROTO UltrasoundModule [
       0.01 10 0.01
       %<= fields.range.value * 0.99 >% %<= fields.range.value * 1000 * 0.99 >% 0.01
       %<= fields.range.value >% %<= fields.range.value * 1000 >% 0
+      # Return 0 for out of range values
+      %<= fields.range.value + 0.001 >% 0 0
     ]
     children [
       Pose {
