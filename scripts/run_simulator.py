@@ -46,6 +46,10 @@ try:
         print("Webots executable not found.")
         raise RuntimeError
 
+    if not (Path(__file__).parent / "venv").exists():
+        print("Please run the setup.py script before running the simulator.")
+        raise RuntimeError
+
     # Run the world file in Webots,
     # detaching the process so it does not close when this script does
     if sys.platform == "win32":
