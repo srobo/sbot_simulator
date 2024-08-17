@@ -4,6 +4,7 @@ A wrapper for the Webots motor device.
 The motor will apply a small amount of variation to the power setting to simulate
 inaccuracies in the motor.
 """
+import logging
 from abc import ABC, abstractmethod
 
 from sbot_interface.devices.util import (
@@ -110,9 +111,15 @@ class Motor(BaseMotor):
         :param value: The power setting for the motor. A value between -1000 and 1000.
         """
         if value != 0:
-            # Apply a small amount of variation to the power setting to simulate
-            # inaccuracies in the motor
-            value = int(add_jitter(value, (MIN_POWER, MAX_POWER)))
+            if abs(value) < 0.05:
+                logging.warning(
+                    "Motor power is too low, values below 0.05 will not move the motor."
+                )
+                value = 0
+            else:
+                # Apply a small amount of variation to the power setting to simulate
+                # inaccuracies in the motor
+                value = int(add_jitter(value, (MIN_POWER, MAX_POWER)))
 
         self._device.setVelocity(map_to_range(
             value,
