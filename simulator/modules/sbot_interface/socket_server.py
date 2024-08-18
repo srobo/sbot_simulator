@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import logging
+import os
 import select
+import signal
 import socket
 import sys
 from threading import Event
@@ -192,6 +194,13 @@ class SocketServer:
                                     continue
                 except Exception as e:
                     LOGGER.exception(f"Failure in simulated boards: {e}")
+
+        LOGGER.info('Stopping server')
+        for device in self.devices:
+            device.close()
+
+        # Stop the usercode
+        os.kill(os.getpid(), signal.SIGINT)
 
     def links(self) -> dict[str, dict[str, str]]:
         """Return a mapping of asset tags to ports, grouped by board type."""
