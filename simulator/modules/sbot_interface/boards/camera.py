@@ -2,7 +2,7 @@
 A simulator for the SRO Camera interface.
 
 Provides a message parser that simulates the behavior of a Camera.
-Interfaces to a WebotsRemoteCameraSource in the sbot package.
+Interfaces to a WebotsRemoteCameraSource in the sr-robot3 package.
 """
 from __future__ import annotations
 

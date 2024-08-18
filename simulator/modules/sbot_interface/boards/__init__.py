@@ -1,7 +1,7 @@
 """
 A set of board simulators for the SRO robot.
 
-When connected to the SocketServer, these can be used with the sbot project.
+When connected to the SocketServer, these can be used with the sr-robot3 project.
 """
 from sbot_interface.boards.arduino import Arduino
 from sbot_interface.boards.camera import CameraBoard

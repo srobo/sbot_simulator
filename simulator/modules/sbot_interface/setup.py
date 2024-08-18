@@ -108,7 +108,7 @@ def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
     device_servers: list[DeviceServer] = []
 
     for device in devices:
-        # connect each device to a socket to receive commands from sbot
+        # connect each device to a socket to receive commands from sr-robot3
         device_servers.append(DeviceServer(device))
 
     # collect all device servers into a single server which will handle all connections

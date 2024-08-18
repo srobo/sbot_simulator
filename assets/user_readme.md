@@ -2,12 +2,14 @@
 
 ---
 
-The robotics simulator for sbot used by the SRO society, powered by Webots.
+The robotics simulator for sr-robot3 used by Student Robotics, powered by Webots.
+This simulator was originally developed by the [Southampton Robotics Outreach society](https://roboticsoutreach.org/) for the Smallpeice competition and has been adapted for use by
+Student Robotics.
 
 The simulator is a useful development tool that allows you to become familiar with our API and test out robotics concepts even if you haven't finished building your robot yet.
 
 The simulator is built around the [Webots](https://cyberbotics.com/#download) platform, which runs the simulation.
-You control the virtual robot using the [sbot API](https://pypi.org/project/sbot/), just like on the physical robots.
+You control the virtual robot using the [sr-robot3 API](https://pypi.org/project/sr-robot3/), just like on the physical robots.
 
 ## Setup
 In order to use the simulator a few set-up steps need to be done.
@@ -35,7 +37,7 @@ The contents of the folder should look like this:
 ### Setting up the Environment
 
 Now that you have downloaded and extracted the simulator, you need to set up the environment to run the simulator.
-Since the simulator uses the sbot library, there are a series of python packages that need to be installed and Webots needs to be configured to use the correct version of Python.
+Since the simulator uses the sr-robot3 library, there are a series of python packages that need to be installed and Webots needs to be configured to use the correct version of Python.
 We have provided a script that will set up this environment for you.
 
 Starting in the folder you extracted the simulator into, run the script called `setup.py and it will set up the environment for you.
@@ -155,14 +157,14 @@ Generally, it is best practice to have a `robot.sleep` in every loop, even if it
 
 ## The Simulated Robot
 
-The simulator contains a pre-built robot model that can be controlled using the sbot library.
+The simulator contains a pre-built robot model that can be controlled using the sr-robot3 library.
 The robot is a differential drive robot with a camera and a variety of sensors.
 
 ![Simulated Robot](images/robot.png)
 
 ### Attached Boards
 
-The robot has a number of boards attached to it that can be interacted with using the sbot library.
+The robot has a number of boards attached to it that can be interacted with using the sr-robot3 library.
 These boards include:
 
 - Power Board (serial number: `PWR`)

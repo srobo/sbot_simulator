@@ -1,5 +1,5 @@
 # sbot_simulator
-A simulator built around Webots to use the sbot library virtually.
+A simulator built around Webots to use the sr-robot3 library virtually.
 
 ![sbot_simulator](assets/arena_overview.jpg)
 
@@ -21,10 +21,10 @@ pip install -r requirements.txt
 ```
 You will also need to set the Python paramter in the Webots preferences to point at the python binary in the virtual environment.
 
-If you are intending to develop the API components of the simulator, you can install the sbot library in development mode as this is where the competitor facing API is defined.
+If you are intending to develop the API components of the simulator, you can install the sr-robot3 library in development mode as this is where the competitor facing API is defined.
 ```bash
-git clone https://github.com/sourcebots/sbot.git
-pip install -e ../sbot
+git clone https://github.com/srobo/sr-robot3.git
+pip install -e ../sr-robot3
 ```
 
 ## Development
@@ -67,21 +67,21 @@ poe release
 
 ## How it works
 
-This repository itself does not provide a user-facing API, but instead uses the [sbot library](https://github.com/sourcebots/sbot) to provide the API.
-Since the sbot library is also used for the physical robots, this avoids the common issue of the simulator and physical robots having different APIs.
+This repository itself does not provide a user-facing API, but instead uses the [sr-robot3 library](https://github.com/srobo/sr-robot3) to provide the API.
+Since the sr-robot3 library is also used for the physical robots, this avoids the common issue of the simulator and physical robots having different APIs.
 The simulator is built around Webots, a popular robotics simulator, and uses the Python API to interact with the devices in the simulator.
 
-This interaction with Webots and sbot is achieved by using the pyserial library's ability to connect to a socket in the same way it would connect to a serial port. This allows the sbot library to interact with the devices in the simulator in the same way it would interact with the physical devices.
+This interaction with Webots and sr-robot3 is achieved by using the pyserial library's ability to connect to a socket in the same way it would connect to a serial port. This allows the sr-robot3 library to interact with the devices in the simulator in the same way it would interact with the physical devices.
 
-This mode of operation is enabled in sbot by setting the `WEBOTS_SIMULATOR` environment variable to `1`. Once this is set, the sbot library will use the value of the `WEBOTS_ROBOT` environment variable to determine the device URLs to connect to instead of attempting to discover boards connected to physical serial ports. The abstraction layers inside the simulator then follow the diagram below. The board wrapper classes implement an equivalent message handler to those in the physical board firmwares, while the device wrapper classes handle the Webots API calls to interact with the devices in the simulator.
+This mode of operation is enabled in sr-robot3 by setting the `WEBOTS_SIMULATOR` environment variable to `1`. Once this is set, the sr-robot3 library will use the value of the `WEBOTS_ROBOT` environment variable to determine the device URLs to connect to instead of attempting to discover boards connected to physical serial ports. The abstraction layers inside the simulator then follow the diagram below. The board wrapper classes implement an equivalent message handler to those in the physical board firmwares, while the device wrapper classes handle the Webots API calls to interact with the devices in the simulator.
 
 ![simulator-sbot interface](assets/simulator-design.png)
 
-A few devices don't normally use a serial port but do interface with sockets to the simulator, these include the LED board, the camera interface and the sleep command. The way vision is handled in the simulator is by creating a new frame source in sbot that reads the camera image from the simulator and processes it in the same way as the physical camera, as shown in the diagram below.
+A few devices don't normally use a serial port but do interface with sockets to the simulator, these include the LED board, the camera interface and the sleep command. The way vision is handled in the simulator is by creating a new frame source in sr-robot3 that reads the camera image from the simulator and processes it in the same way as the physical camera, as shown in the diagram below.
 
 ![vision design](assets/vision-interface.png)
 
-Whilst this does mean that a large amount of data is sent over the socket, the simulator is designed to run on the same machine as the sbot library, so this is not a significant issue.
+Whilst this does mean that a large amount of data is sent over the socket, the simulator is designed to run on the same machine as the sr-robot3 library, so this is not a significant issue.
 
 Metadata is handled by setting the `SBOT_METADATA_PATH` environment variable to a temporary directory. This directory acts like the metadata USB sticks in the physical robots, and has a `metadata.json` file containing the zone and mode of the robot.
 

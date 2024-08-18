@@ -1,7 +1,7 @@
 import math
 
 from controller import Keyboard
-from sbot import AnalogPins, Robot
+from sr.robot3 import A0, A1, A2, Robot
 
 # Any keys still pressed in the following period will be handled again
 # leading to rprinting sensors multiple times
@@ -70,8 +70,9 @@ def print_sensors(robot: Robot) -> None:
         (8, 9): "Back",
     }
     reflectance_sensor_names = {
-        AnalogPins.A0: "Left",
-        AnalogPins.A1: "Right",
+        A0: "Left",
+        A1: "Center",
+        A2: "Right",
     }
     touch_sensor_names = {
         10: "Front Left",

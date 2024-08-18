@@ -5,7 +5,7 @@ This script is responsible for setting up the environment, starting the devices,
 and running the usercode.
 
 The board simulators are run in a separate thread to allow the usercode to run
-in the main thread. This provides the interface between the sbot module and Webots.
+in the main thread. This provides the interface between the sr-robot3 module and Webots.
 """
 import atexit
 import json
