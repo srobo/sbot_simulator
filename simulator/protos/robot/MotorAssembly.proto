@@ -49,7 +49,24 @@ PROTO MotorAssembly [
         device [
           RotationalMotor {
             name IS name
-            maxVelocity IS maxVelocity
+            %<
+              import * as wbrandom from 'wbrandom.js';
+              const motorVariation = 0.01;
+              // equivalent to Java's String.hashCode()
+              // https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
+              function hashCode(s) {
+                var h = 0, l = s.length, i = 0;
+                if ( l > 0 )
+                  while (i < l)
+                    h = (h << 5) - h + s.charCodeAt(i++) | 0;
+                return h;
+              };
+              wbrandom.seed(hashCode(fields.name.value));
+              let motorCoeff = 1 + wbrandom.real() * motorVariation;
+            >%
+            # seed the random number generator with the name of the motor
+            # Add 1% variation between motors
+            maxVelocity %<= fields.maxVelocity.value * motorCoeff >%
             sound ""
           }
           PositionSensor {
