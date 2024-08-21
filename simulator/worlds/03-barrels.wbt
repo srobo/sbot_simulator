@@ -1,0 +1,263 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "../protos/SRObot.proto"
+
+WorldInfo {
+  basicTimeStep 8
+  contactProperties [
+    ContactProperties {
+      material1 "caster"
+      coulombFriction 0.1
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.02936033433828936 0.026662168089029287 -0.9992132402847435 1.6678297235388524
+  position -0.3248239736669367 3.8157276734431735 0.49293579666156173
+  near 0.1
+  ambientOcclusionRadius 0.3
+  bloomThreshold 100
+}
+DEF SUN DirectionalLight {
+  color 1 0.98 0.76
+  direction 0.2 0.1 -1
+  intensity 2
+  castShadows TRUE
+}
+DEF AMBIENT Background {
+  skyColor [
+    0.45 0.7 0.8
+  ]
+  luminosity 1.2
+}
+SRObot {
+  name "robot"
+  translation -0.5 0.055 0.0105
+  rotation 0 1 0 0
+  flagColour 1 0 0
+  controllerArgs ["0"]
+  controller "usercode_runner"
+  customData "start"
+}
+Solid {
+  children [
+    DEF RAILS Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../assets/obj/barrels/rails.obj"
+        ]
+      }
+    }
+  ]
+  name "Rails"
+  boundingObject USE RAILS
+  locked TRUE
+}
+Solid {
+  translation -0.5 0.115 -0.165
+  children [
+    DEF FLOOR Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.9 0.058 0.38
+      }
+    }
+  ]
+  name "Floor3"
+  contactMaterial "caster"
+  boundingObject USE FLOOR
+  locked TRUE
+}
+Solid {
+  translation -0.5 -0.005 -0.165
+  children [
+    DEF FLOOR Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.9 0.058 0.38
+      }
+    }
+  ]
+  name "Floor4"
+  contactMaterial "caster"
+  boundingObject USE FLOOR
+  locked TRUE
+}
+Solid {
+  translation -0.5 0.115 -0.165
+  children [
+    DEF FLOOR Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.9 0.11 0.345
+      }
+    }
+  ]
+  name "Floor1"
+  boundingObject USE FLOOR
+  locked TRUE
+}
+Solid {
+  translation -0.5 -0.005 -0.165
+  children [
+    DEF FLOOR Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.9 0.11 0.345
+      }
+    }
+  ]
+  name "Floor2"
+  boundingObject USE FLOOR
+  locked TRUE
+}
+Solid {
+  translation -0.5 -5.084891 0.079942
+  rotation -1 0 0 0.01745
+  children [
+    DEF SLIDINGFLOOR Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.9 9.98 0.075
+      }
+    }
+  ]
+  name "SlidingFloor"
+  boundingObject USE SLIDINGFLOOR
+  locked TRUE
+}
+Solid {
+  translation -0.675 -4 0.25
+  rotation 0 1 0 1.57087
+  children [
+    DEF LONGBARREL Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.5
+        radius 0.15
+      }
+    }
+  ]
+  name "LongBarrel2"
+  boundingObject USE LONGBARREL
+  physics Physics {
+    density -1
+    mass 75
+  }
+}
+Solid {
+  translation -0.304992 -8.54 0.32998
+  rotation 0 1 0 1.57087
+  children [
+    DEF LONGBARREL Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.5
+        radius 0.15
+      }
+    }
+  ]
+  name "LongBarrel4"
+  boundingObject USE LONGBARREL
+  physics Physics {
+    density -1
+    mass 75
+  }
+}
+Solid {
+  translation -0.5 -1.5 0.20636
+  rotation 0 1 0 1.57087
+  children [
+    DEF BARREL Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.2
+        radius 0.15
+      }
+    }
+  ]
+  name "Barrel1"
+  boundingObject USE BARREL
+  physics Physics {
+    density -1
+    mass 75
+  }
+}
+Solid {
+  translation -0.84 -5.9 0.27718
+  rotation 0 1 0 1.57087
+  children [
+    DEF BARREL Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.2
+        radius 0.15
+      }
+    }
+  ]
+  name "Barrel3Left"
+  boundingObject USE BARREL
+  physics Physics {
+    density -1
+    mass 75
+  }
+}
+Solid {
+  translation -0.16 -5.9 0.27718
+  rotation 0 1 0 1.57087
+  children [
+    DEF BARREL Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Cylinder {
+        height 0.2
+        radius 0.15
+      }
+    }
+  ]
+  name "Barrel3Right"
+  boundingObject USE BARREL
+  physics Physics {
+    density -1
+    mass 75
+  }
+}

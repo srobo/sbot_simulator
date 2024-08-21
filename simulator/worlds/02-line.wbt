@@ -1,0 +1,267 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "../protos/SRObot.proto"
+
+WorldInfo {
+  basicTimeStep 8
+  contactProperties [
+    ContactProperties {
+      material1 "caster"
+      coulombFriction 0.1
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.18820706677456372 0.08301141062978949 -0.9786149425189499 2.3266433791805627
+  position 1.0259524860385207 7.9931643833437604 2.140920533643392
+  near 0.1
+  ambientOcclusionRadius 0.3
+  bloomThreshold 100
+}
+DEF SUN DirectionalLight {
+  color 1 0.98 0.76
+  direction 0.2 0.1 -1
+  intensity 2
+  castShadows TRUE
+}
+DEF AMBIENT Background {
+  skyColor [
+    0.45 0.7 0.8
+  ]
+  luminosity 1.2
+}
+SRObot {
+  name "robot"
+  translation -4.191210817452741 1.1771202727075718 0.025653014243316043
+  rotation 0 0 1 1.8700000025584504
+  flagColour 1 0 0
+  controllerArgs ["0"]
+  controller "usercode_runner"
+  customData "start"
+}
+Solid {
+  children [
+    DEF FLOOR Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../assets/obj/line/v2_floor.obj"
+        ]
+      }
+    }
+  ]
+  contactMaterial "floor"
+  name "floor"
+  boundingObject Group {
+    children [
+      Pose {
+        translation -1.971 3.453 -0.5
+        rotation 0 0 1 0.0135170113153
+        children [
+          Shape {
+            geometry Box {
+              size 0.7 3.698 1.05
+            }
+          }
+        ]
+      }
+      Pose {
+        translation -4.3 1.552 -0.5
+        rotation 0 0 1 0.2761634981569
+        children [
+          Shape {
+            geometry Box {
+              size 0.8 1.4 1.05
+            }
+          }
+        ]
+      }
+      Pose {
+        translation -3.7700 2.4300 -0.5
+        children [
+          Shape {
+            geometry Cylinder {
+              radius 1.1500
+              height 1.05
+            }
+          }
+        ]
+      }
+      Pose {
+        translation -2.5710 1.5910 -0.5
+        children [
+          Shape {
+            geometry Cylinder {
+              radius 0.9750
+              height 1.05
+            }
+          }
+        ]
+      }
+      Pose {
+        translation -2.4460 5.2910 -0.5
+        children [
+          Shape {
+            geometry Cylinder {
+              radius 0.8000
+              height 1.05
+            }
+          }
+        ]
+      }
+      Pose {
+        translation -2.8770 4.2770 -0.5
+        children [
+          Shape {
+            geometry Cylinder {
+              radius 0.7000
+              height 1.05
+            }
+          }
+        ]
+      }
+      Pose {
+        translation -3.6280 4.7770 -0.5
+        children [
+          Shape {
+            geometry Cylinder {
+              radius 0.5750
+              height 1.05
+            }
+          }
+        ]
+      }
+      Pose {
+        translation -4.0170 4.2200 -0.5
+        children [
+          Shape {
+            geometry Cylinder {
+              radius 0.4500
+              height 1.05
+            }
+          }
+        ]
+      }
+      Pose {
+        translation -4.4390 4.2900 -0.5
+        children [
+          Shape {
+            geometry Cylinder {
+              radius 0.3750
+              height 1.05
+            }
+          }
+        ]
+      }
+      Pose {
+        translation -4.7400 4.1960 -0.5
+        children [
+          Shape {
+            geometry Cylinder {
+              radius 0.2750
+              height 1.05
+            }
+          }
+        ]
+      }
+    ]
+  }
+  locked TRUE
+}
+Solid {
+  children [
+    DEF WALLS Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../assets/obj/line/v2_wall.obj"
+        ]
+      }
+    }
+  ]
+  name "Walls"
+  boundingObject USE WALLS
+  locked TRUE
+}
+Solid {
+  children [
+    DEF BIG_INNER_WALL Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../assets/obj/line/v2_big_inner_wall.obj"
+        ]
+      }
+    }
+  ]
+  name "Big Inner Wall"
+  boundingObject USE BIG_INNER_WALL
+  locked TRUE
+}
+Solid {
+  children [
+    DEF MEDIUM_INNER_WALL Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../assets/obj/line/v2_medium_inner_wall.obj"
+        ]
+      }
+    }
+  ]
+  name "Medium Inner Wall"
+  boundingObject USE MEDIUM_INNER_WALL
+  locked TRUE
+}
+Solid {
+  children [
+    DEF SMALL_INNER_WALL Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../assets/obj/line/v2_small_inner_wall.obj"
+        ]
+      }
+    }
+  ]
+  name "Small Inner Wall"
+  boundingObject USE SMALL_INNER_WALL
+  locked TRUE
+}
+Solid {
+  children [
+    DEF LINE Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../assets/obj/line/v2_line.obj"
+        ]
+      }
+    }
+  ]
+  name "Line"
+  locked TRUE
+}

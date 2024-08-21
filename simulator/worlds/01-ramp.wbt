@@ -1,0 +1,220 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "../protos/SRObot.proto"
+
+WorldInfo {
+  basicTimeStep 8
+  contactProperties [
+    ContactProperties {
+      material1 "floor"
+      coulombFriction 10
+    }
+    ContactProperties {
+      material1 "slide"
+      coulombFriction 0.1
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.2168237840123528 0.08439159881969603 -0.9725561704781992 2.4194997014836463
+  position 9.902998291165634 14.625277868816427 10.486783320254197
+  near 0.1
+  ambientOcclusionRadius 0.3
+  bloomThreshold 100
+}
+DEF SUN DirectionalLight {
+  castShadows TRUE
+  color 1 0.98 0.76
+  intensity 2
+  direction 0.2 0.1 -1
+}
+DEF AMBIENT Background {
+  skyColor [
+    0.45 0.7 0.8
+  ]
+  luminosity 1.2
+}
+SRObot {
+  name "robot"
+  translation 0 0.3749083901096622 5.821429458531397
+  rotation 0 0 -1 -1.57079632679
+  flagColour 1 0 0
+  controllerArgs ["0"]
+  controller "usercode_runner"
+  customData "start"
+}
+Solid {
+  name "Ramp Start"
+  contactMaterial "floor"
+  boundingObject Pose {
+    translation 0 0.345 2.82
+    children [
+      Shape {
+        geometry Box {
+          size 1.5 1.25 6
+        }
+      }
+    ]
+  }
+}
+Solid {
+  children [
+    DEF RAMP Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../assets/obj/ramp/ramp.obj"
+          # CAD model: 
+          # https://cad.onshape.com/documents/6f3539dce311ee369ea0f883/w/464fa708fb0128c47975b4df/e/c591a1060107675e92250695
+        ]
+      }
+    },
+  ]
+  name "Ramp"
+  contactMaterial "slide"
+  boundingObject Group {
+      children [
+        Pose {
+          translation 0 0.3426 5.3203
+          rotation 1 0 0 0.0000
+          children [
+            Shape {
+              geometry Box {
+                size 1.5 1.2500 1.0000
+              }
+            }
+          ]
+        }
+        Pose {
+          translation 0 0.9063 5.2972
+          rotation 1 0 0 -0.4363
+          children [
+            Shape {
+              geometry Box {
+                size 1.5 0.3310 1.0000
+              }
+            }
+          ]
+        }
+        Pose {
+          translation 0 2.0580 3.9605
+          rotation 1 0 0 -0.8727
+          children [
+            Shape {
+              geometry Box {
+                size 1.5 3.6512 1.0000
+              }
+            }
+          ]
+        }
+        Pose {
+          translation 0 3.5234 2.3201
+          rotation 1 0 0 -0.6632
+          children [
+            Shape {
+              geometry Box {
+                size 1.5 0.5500 1.0000
+              }
+            }
+          ]
+        }
+        Pose {
+          translation 0 4.0535 1.9858
+          rotation 1 0 0 -0.4538
+          children [
+            Shape {
+              geometry Box {
+                size 1.5 0.5000 1.0000
+              }
+            }
+          ]
+        }
+        Pose {
+          translation 0 4.5704 1.7921
+          rotation 1 0 0 -0.2443
+          children [
+            Shape {
+              geometry Box {
+                size 1.5 0.4000 1.0000
+              }
+            }
+          ]
+        }
+        Pose {
+          translation 0 5.1179 1.7205
+          rotation 1 0 0 -0.0349
+          children [
+            Shape {
+              geometry Box {
+                size 1.5 0.5000 1.0000
+              }
+            }
+          ]
+        }
+        Pose {
+          translation 0 5.7428 1.7668
+          rotation 1 0 0 0.1745
+          children [
+            Shape {
+              geometry Box {
+                size 1.5 0.5500 1.0000
+              }
+            }
+          ]
+        }
+        Pose {
+          translation 0 6.3923 1.9557
+          rotation 1 0 0 0.3840
+          children [
+            Shape {
+              geometry Box {
+                size 1.5 0.6000 1.0000
+              }
+            }
+          ]
+        }
+      ]
+    }
+  locked TRUE
+}
+Solid {
+  children [
+    DEF GUARDS Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../assets/obj/ramp/guards.obj"
+        ]
+      }
+    }
+  ]
+  name "Guards"
+  boundingObject USE GUARDS
+  locked TRUE
+}
+Solid {
+  children [
+    DEF HOOP Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../assets/obj/ramp/hoop.obj"
+        ]
+      }
+    }
+  ]
+  name "Hoop"
+  boundingObject USE HOOP
+  locked TRUE
+}
