@@ -206,6 +206,9 @@ Solid {
         ]
       }
     }
+    DEF FIRE Shape {
+      # It's a methanol fire, you can't see it. Trust me, it's on fire.
+    }
   ]
   name "Hoop"
   boundingObject USE HOOP
