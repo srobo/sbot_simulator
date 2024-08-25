@@ -1,6 +1,5 @@
 #VRML_SIM R2023b utf8
 
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "../protos/SRObot.proto"
 
 WorldInfo {
@@ -20,16 +19,18 @@ Viewpoint {
   orientation 0.2 0.1 -1 2.4195
   position 9.9 14.6 10
 }
-
+DEF SUN DirectionalLight {
+  castShadows TRUE
+  color 1 0.98 0.76
+  intensity 2
+  direction 0.2 0.1 -1
+}
 DEF AMBIENT Background {
   skyColor [
     0.45 0.7 0.8
   ]
-  luminosity 1.6
+  luminosity 1.2
 }
-TexturedBackgroundLight {
-}
-
 SRObot {
   name "robot"
   translation 0 0.3749083901096622 5.821429458531397
@@ -63,7 +64,7 @@ Solid {
       geometry Mesh {
         url [
           "../obj/ramp/ramp.obj"
-          # CAD model:
+          # CAD model: 
           # https://cad.onshape.com/documents/6f3539dce311ee369ea0f883/w/464fa708fb0128c47975b4df/e/c591a1060107675e92250695
         ]
       }

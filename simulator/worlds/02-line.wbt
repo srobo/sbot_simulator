@@ -1,6 +1,5 @@
 #VRML_SIM R2023b utf8
 
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "../protos/SRObot.proto"
 
 WorldInfo {
@@ -10,15 +9,18 @@ Viewpoint {
   orientation 0.41 0 -0.9 3.14
   position 2.4 3.4 6.3
 }
+DEF SUN DirectionalLight {
+  color 1 0.98 0.76
+  direction 0.2 0.1 -1
+  intensity 2
+  castShadows TRUE
+}
 DEF AMBIENT Background {
   skyColor [
     0.45 0.7 0.8
   ]
-  luminosity 1.6
+  luminosity 1.2
 }
-TexturedBackgroundLight {
-}
-
 SRObot {
   name "robot"
   translation -4.191210817452741 1.1771202727075718 0.025653014243316043
