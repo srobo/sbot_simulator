@@ -9,9 +9,6 @@ WorldInfo {
 Viewpoint {
   orientation 0.22711707965124375 0.22040376349882387 -0.9485989738378622 1.6534756163969666
   position 0.3815384285143171 10.937585105159702 3.4362772812754736
-  near 0.1
-  ambientOcclusionRadius 0.3
-  bloomThreshold 100
 }
 DEF SUN DirectionalLight {
   color 1 0.98 0.76
