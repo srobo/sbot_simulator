@@ -26,9 +26,11 @@ Once you have installed these, for the rest of this guide you will want to start
 The contents of the folder should look like this:
 ![File contents of a release](images/release-contents.png)
 
+For this early release, the `run_simulator.py` script is replaced by a group of scripts that are numbered `run_activity_X.py` to open te world for each activity.
+
 - The `simulator` folder contains our code to support running your code in the simulator.
 - The `zone_0` folder is where you will write your code, and it must contain a file called `robot.py`.
-- The `setup.py` and `run_simulator.py` files are used to set up the environment and run the simulator respectively.
+- The `setup.py` and `run_activity_X.py` files are used to set up the environment and run the simulator respectively.
 - The `readme.html` file contains a single page guide to using the simulator, similar to this one.
 
 **Note:**
@@ -57,7 +59,7 @@ This also configures the Webots settings to use the correct version of Python.
 
 Before you can start using the simulator, you need to have followed the steps in the [Setting up the Simulator](#setting-up-the-environment) section.
 
-To open the arena, you need to start in the folder you extracted the simulator during setup and run the `run_simulator.py` script.
+To open the arena, you need to start in the folder you extracted the simulator during setup and run one of the `run_activity_X.py` scripts.
 This will open Webots with the arena loaded and ready to run your code.
 
 **Note:**
