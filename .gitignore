@@ -160,7 +160,7 @@ cython_debug/
 #.idea/
 
 # Webots
-.arena.wbproj
+.*.wbproj
 .arena.jpg
 
 /simulator/controllers/usercode_runner/runtime.ini
