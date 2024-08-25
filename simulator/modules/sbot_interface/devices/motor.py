@@ -119,7 +119,7 @@ class Motor(BaseMotor):
             else:
                 # Apply a small amount of variation to the power setting to simulate
                 # inaccuracies in the motor
-                value = int(add_jitter(value, (MIN_POWER, MAX_POWER)))
+                value = int(add_jitter(value, (MIN_POWER, MAX_POWER), std_dev_percent=1))
 
         self._device.setVelocity(map_to_range(
             value,
