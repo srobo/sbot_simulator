@@ -6,12 +6,6 @@ EXTERNPROTO "../protos/props/Marker.proto"
 
 WorldInfo {
   basicTimeStep 8
-  contactProperties [
-    ContactProperties {
-      material1 "caster"
-      coulombFriction 0.1
-    }
-  ]
 }
 Viewpoint {
   orientation 0.22711707965124375 0.22040376349882387 -0.9485989738378622 1.6534756163969666

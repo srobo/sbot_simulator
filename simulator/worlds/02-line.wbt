@@ -5,12 +5,6 @@ EXTERNPROTO "../protos/SRObot.proto"
 
 WorldInfo {
   basicTimeStep 8
-  contactProperties [
-    ContactProperties {
-      material1 "caster"
-      coulombFriction 0.1
-    }
-  ]
 }
 Viewpoint {
   orientation 0.18820706677456372 0.08301141062978949 -0.9786149425189499 2.3266433791805627

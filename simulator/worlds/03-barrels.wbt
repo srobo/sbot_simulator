@@ -7,7 +7,7 @@ WorldInfo {
   basicTimeStep 8
   contactProperties [
     ContactProperties {
-      material1 "caster"
+      material1 "slide_rail"
       coulombFriction 0.1
     }
   ]
@@ -67,7 +67,7 @@ Solid {
     }
   ]
   name "Floor3"
-  contactMaterial "caster"
+  contactMaterial "slide_rail"
   boundingObject USE FLOOR
   locked TRUE
 }
@@ -85,7 +85,7 @@ Solid {
     }
   ]
   name "Floor4"
-  contactMaterial "caster"
+  contactMaterial "slide_rail"
   boundingObject USE FLOOR
   locked TRUE
 }
