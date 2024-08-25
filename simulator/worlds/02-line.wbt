@@ -7,8 +7,8 @@ WorldInfo {
   basicTimeStep 8
 }
 Viewpoint {
-  orientation 0.18820706677456372 0.08301141062978949 -0.9786149425189499 2.3266433791805627
-  position 1.0259524860385207 7.9931643833437604 2.140920533643392
+  orientation 0.41 0 -0.9 3.14
+  position 2.4 3.4 6.3
 }
 DEF AMBIENT Background {
   skyColor [
