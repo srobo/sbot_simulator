@@ -385,32 +385,32 @@ DEF MARKERS Group {
         rotation 0 0 -1 5.497787139
         upright TRUE
         size 0.08 0.08
-        texture_url ["sim_markers/0.png"]
-        model "0"
+        texture_url ["sim_markers/100.png"]
+        model "100"
     }
     Marker {
         translation 1.1278 4.2391 -0.3000
         rotation 0 0 -1 7.068583465
         upright TRUE
         size 0.08 0.08
-        texture_url ["sim_markers/1.png"]
-        model "1"
+        texture_url ["sim_markers/101.png"]
+        model "101"
     }
     Marker {
         translation 3.7950 3.1113 -0.5500
         rotation 0 0 -1 7.853981628
         upright TRUE
         size 0.08 0.08
-        texture_url ["sim_markers/2.png"]
-        model "2"
+        texture_url ["sim_markers/102.png"]
+        model "102"
     }
     Marker {
         translation -0.0213 5.3425 -0.8
         rotation 0 0 -1 5.497787139
         upright TRUE
         size 0.08 0.08
-        texture_url ["sim_markers/3.png"]
-        model "3"
+        texture_url ["sim_markers/103.png"]
+        model "103"
     }
   ]
 }
