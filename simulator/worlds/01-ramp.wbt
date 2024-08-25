@@ -66,7 +66,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../assets/obj/ramp/ramp.obj"
+          "../obj/ramp/ramp.obj"
           # CAD model: 
           # https://cad.onshape.com/documents/6f3539dce311ee369ea0f883/w/464fa708fb0128c47975b4df/e/c591a1060107675e92250695
         ]
@@ -190,7 +190,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../assets/obj/ramp/guards.obj"
+          "../obj/ramp/guards.obj"
         ]
       }
     }
@@ -209,7 +209,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../assets/obj/ramp/hoop.obj"
+          "../obj/ramp/hoop.obj"
         ]
       }
     }

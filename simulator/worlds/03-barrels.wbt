@@ -49,7 +49,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../assets/obj/barrels/rails.obj"
+          "../obj/barrels/rails.obj"
         ]
       }
     }

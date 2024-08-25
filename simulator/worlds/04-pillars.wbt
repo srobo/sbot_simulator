@@ -274,7 +274,7 @@ DEF RAMPS Group {
           }
           geometry Mesh {
             url [
-              "../../assets/obj/pillars/ramps.obj"
+              "../obj/pillars/ramps.obj"
             ]
           }
         }
@@ -362,7 +362,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../assets/obj/pillars/end-zone.obj"
+          "../obj/pillars/end-zone.obj"
         ]
       }
     }
@@ -383,7 +383,7 @@ DEF MARKERS Group {
           }
           geometry Mesh {
             url [
-              "../../assets/obj/pillars/markers.obj"
+              "../obj/pillars/markers.obj"
             ]
           }
         }

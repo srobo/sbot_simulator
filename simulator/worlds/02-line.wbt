@@ -48,7 +48,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../assets/obj/line/v2_floor.obj"
+          "../obj/line/v2_floor.obj"
         ]
       }
     }
@@ -181,7 +181,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../assets/obj/line/v2_wall.obj"
+          "../obj/line/v2_wall.obj"
         ]
       }
     }
@@ -200,7 +200,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../assets/obj/line/v2_big_inner_wall.obj"
+          "../obj/line/v2_big_inner_wall.obj"
         ]
       }
     }
@@ -219,7 +219,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../assets/obj/line/v2_medium_inner_wall.obj"
+          "../obj/line/v2_medium_inner_wall.obj"
         ]
       }
     }
@@ -238,7 +238,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../assets/obj/line/v2_small_inner_wall.obj"
+          "../obj/line/v2_small_inner_wall.obj"
         ]
       }
     }
@@ -257,7 +257,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../assets/obj/line/v2_line.obj"
+          "../obj/line/v2_line.obj"
         ]
       }
     }
