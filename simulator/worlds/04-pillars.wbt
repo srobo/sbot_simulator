@@ -1,0 +1,427 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "../protos/SRObot.proto"
+EXTERNPROTO "../protos/props/Marker.proto"
+
+WorldInfo {
+  basicTimeStep 8
+  contactProperties [
+    ContactProperties {
+      material1 "caster"
+      coulombFriction 0.1
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.18820706677456372 0.08301141062978949 -0.9786149425189499 2.3266433791805627
+  position 1.0259524860385207 7.9931643833437604 2.140920533643392
+  near 0.1
+  ambientOcclusionRadius 0.3
+  bloomThreshold 100
+}
+DEF SUN DirectionalLight {
+  color 1 0.98 0.76
+  direction 0.2 0.1 -1
+  intensity 2
+  castShadows TRUE
+}
+DEF AMBIENT Background {
+  skyColor [
+    0.45 0.7 0.8
+  ]
+  luminosity 1.2
+}
+SRObot {
+  name "robot"
+  translation 0 0 0
+  rotation 0 0 1 0
+  flagColour 1 0 0
+  controllerArgs ["0"]
+  controller "usercode_runner"
+  customData "start"
+}
+
+DEF PILLARS Group {
+  children [
+    Solid {
+      translation 0.0000 0.0000 -1.0000
+      children [
+        DEF PILLAR Group {
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                radius 0.7500
+                height 2
+              }
+            }
+
+            Pose {
+              translation -0.5080562222825344 0.5080562222825344 0
+              rotation 0 0 -1 -0.7853981633974483
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Box {
+                    size 0.6 0.063 1.995
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      contactMaterial "floor"
+      name "pillar 0"
+      boundingObject USE PILLAR
+      locked TRUE
+    }
+    Solid {
+      translation -1.5556 1.5556 -1.1250
+      children [
+        DEF PILLAR Group {
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                radius 0.7500
+                height 1.75
+              }
+            }
+
+            Pose {
+              translation 0.5080562222825344 -0.5080562222825343 0
+              rotation 0 0 -1 2.356194490192345
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Box {
+                    size 0.6 0.063 1.745
+                  }
+                }
+              ]
+            }
+            Pose {
+              translation 0.5080562222825344 0.5080562222825344 0
+              rotation 0 0 -1 0.7853981633974483
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Box {
+                    size 0.6 0.063 1.745
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      contactMaterial "floor"
+      name "pillar 1"
+      boundingObject USE PILLAR
+      locked TRUE
+    }
+    Solid {
+      translation 0.0000 3.1113 -1.2500
+      children [
+        DEF PILLAR Group {
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                radius 0.7500
+                height 1.5
+              }
+            }
+
+            Pose {
+              translation -0.5080562222825344 -0.5080562222825343 0
+              rotation 0 0 -1 -2.356194490192345
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Box {
+                    size 0.6 0.063 1.495
+                  }
+                }
+              ]
+            }
+            Pose {
+              translation 0.7185 4.399543625936867e-17 0
+              rotation 0 0 -1 1.5707963267948966
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Box {
+                    size 0.6 0.063 1.495
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      contactMaterial "floor"
+      name "pillar 2"
+      boundingObject USE PILLAR
+      locked TRUE
+    }
+    Solid {
+      translation 2.2000 3.1113 -1.3750
+      children [
+        DEF PILLAR Group {
+          children [
+            Shape {
+              appearance PBRAppearance {
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                radius 0.7500
+                height 1.25
+              }
+            }
+
+            Pose {
+              translation -0.7185 4.399543625936867e-17 0
+              rotation 0 0 -1 -1.5707963267948966
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Box {
+                    size 0.6 0.063 1.245
+                  }
+                }
+              ]
+            }
+            Pose {
+              translation -0.5080562222825344 0.5080562222825344 0
+              rotation 0 0 -1 -0.7853981633974483
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Box {
+                    size 0.6 0.063 1.245
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      contactMaterial "floor"
+      name "pillar 3"
+      boundingObject USE PILLAR
+      locked TRUE
+    }
+    Solid {
+      translation 0.89493 4.4163 -1.5
+      rotation 0 0 1 -0.785398163
+      children [
+        DEF PILLAR Shape {
+          geometry Box {
+            size 0.7913 0.6 1
+          }
+        }
+      ]
+      contactMaterial "floor"
+      name "end pillar"
+      boundingObject USE PILLAR
+      locked TRUE
+    }
+  ]
+}
+
+DEF RAMPS Group {
+  children [
+    Solid {
+      children [
+        DEF RAMPS Shape {
+          appearance PBRAppearance {
+            baseColor 0.25 0.4 1
+            roughness 1
+            metalness 0
+          }
+          geometry Mesh {
+            url [
+              "../../assets/obj/pillars/ramps.obj"
+            ]
+          }
+        }
+      ]
+      name "Ramps"
+      locked TRUE
+    }
+    Solid {
+        translation -0.7778 0.7778 -0.1250
+        rotation 0 0 1 -2.3562
+        boundingObject Pose {
+            translation 0 0.1581138830085887 -0.4743416490252003
+            rotation 1 0 0 0.3218
+            children [
+                Shape {
+                    geometry Box {
+                        size 0.6 0.743 1
+                    }
+                }
+            ]
+        }
+        locked TRUE
+        name "Ramp 0"
+    }
+    Solid {
+        translation -0.7778 2.3335 -0.3750
+        rotation 0 0 1 2.3562
+        boundingObject Pose {
+            translation 0 0.1581138830085887 -0.4743416490252003
+            rotation 1 0 0 0.3218
+            children [
+                Shape {
+                    geometry Box {
+                        size 0.6 0.743 1
+                    }
+                }
+            ]
+        }
+        locked TRUE
+        name "Ramp 1"
+    }
+    Solid {
+        translation 1.1000 3.1113 -0.6250
+        rotation 0 0 1 1.5708
+        boundingObject Pose {
+            translation 0 0.1581138830085887 -0.4743416490252003
+            rotation 1 0 0 0.3218
+            children [
+                Shape {
+                    geometry Box {
+                        size 0.6 0.743 1
+                    }
+                }
+            ]
+        }
+        locked TRUE
+        name "Ramp 2"
+    }
+    Solid {
+        translation 1.4222 3.8891 -0.8750
+        rotation 0 0 1 -2.3562
+        boundingObject Pose {
+            translation 0 0.1581138830085887 -0.4743416490252003
+            rotation 1 0 0 0.3218
+            children [
+                Shape {
+                    geometry Box {
+                        size 0.6 0.743 1
+                    }
+                }
+            ]
+        }
+        locked TRUE
+        name "Ramp 3"
+    }
+  ]
+}
+Solid {
+  children [
+    DEF END_ZONE Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../assets/obj/pillars/end-zone.obj"
+        ]
+      }
+    }
+  ]
+  name "End Zone"
+  boundingObject USE END_ZONE
+  locked TRUE
+}
+DEF MARKERS Group {
+  children [
+    Solid {
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.25 0.4 1
+            roughness 1
+            metalness 0
+          }
+          geometry Mesh {
+            url [
+              "../../assets/obj/pillars/markers.obj"
+            ]
+          }
+        }
+      ]
+      name "Markers"
+      locked TRUE
+    }
+    Marker {
+        translation -2.6835 2.6835 -0.0500
+        rotation 0 0 -1 5.497787139
+        upright TRUE
+        size 0.08 0.08
+        texture_url ["sim_markers/0.png"]
+        model "0"
+    }
+    Marker {
+        translation 1.1278 4.2391 -0.3000
+        rotation 0 0 -1 7.068583465
+        upright TRUE
+        size 0.08 0.08
+        texture_url ["sim_markers/1.png"]
+        model "1"
+    }
+    Marker {
+        translation 3.7950 3.1113 -0.5500
+        rotation 0 0 -1 7.853981628
+        upright TRUE
+        size 0.08 0.08
+        texture_url ["sim_markers/2.png"]
+        model "2"
+    }
+    Marker {
+        translation -0.0213 5.3425 -0.8
+        rotation 0 0 -1 5.497787139
+        upright TRUE
+        size 0.08 0.08
+        texture_url ["sim_markers/3.png"]
+        model "3"
+    }
+  ]
+}

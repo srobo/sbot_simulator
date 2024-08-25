@@ -1,0 +1,138 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "../protos/Line_Robot/Line_Robot.proto"
+
+WorldInfo {
+  basicTimeStep 8
+  contactProperties [
+    ContactProperties {
+      material1 "caster"
+      coulombFriction [
+        0.05
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.23647530354813523 0.1014883292292574 -0.966322694467056 2.3553341584542866
+  position 0.7971174524754518 1.1218143203648197 0.6840548125942467
+  near 0.1
+  ambientOcclusionRadius 0.3
+  bloomThreshold 100
+}
+DEF SUN DirectionalLight {
+  color 1 0.98 0.76
+  direction 0.2 0.1 -1
+  intensity 2
+  castShadows TRUE
+}
+DEF AMBIENT Background {
+  skyColor [
+    0.45 0.7 0.8
+  ]
+  luminosity 1.2
+}
+DEF ROBOT-0 Line_Robot {
+  translation 0 0.3769971778818044 0.02714892928479916
+  rotation 0.012339420184167222 0.012391221710236546 -0.9998470864757504 1.5719386871765395
+
+  controller "sr_controller"
+  model "Robot0"
+  flagColour 0 1 0
+  controllerArgs [
+    "0"
+  ]
+}
+Solid {
+  children [
+    DEF FLOOR Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../obj/gem/floor.obj"
+        ]
+      }
+    }
+  ]
+  name "floor"
+  boundingObject USE FLOOR
+  locked TRUE
+}
+Solid {
+  children [
+    DEF SKIRTING Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../obj/gem/skirting.obj"
+        ]
+      }
+    }
+  ]
+  name "Skirting"
+  boundingObject USE SKIRTING
+  locked TRUE
+}
+Solid {
+  children [
+    DEF GEM Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 1 0.25
+        roughness 1
+        metalness 0.4
+      }
+      geometry Mesh {
+        url [
+          "../obj/gem/gem.obj"
+        ]
+      }
+    }
+  ]
+  name "Gem"
+  locked TRUE
+}
+Solid {
+  children [
+    DEF PEDESTAL Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../obj/gem/pedestal.obj"
+        ]
+      }
+    }
+  ]
+  name "Pedestal"
+  boundingObject USE SKIRTING
+  locked TRUE
+}
+Solid {
+  children [
+    DEF INNER_RING Shape {
+      appearance PBRAppearance {
+        baseColor 0.25 0.4 1
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../obj/gem/inner_ring.obj"
+        ]
+      }
+    }
+  ]
+  name "Inner ring"
+  boundingObject USE INNER_RING
+  locked TRUE
+}
