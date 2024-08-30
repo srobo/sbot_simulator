@@ -57,7 +57,7 @@ Solid {
 Solid {
   children [
     DEF RAMP Shape {
-      appearance PBRAppearance {
+      appearance DEF WHITE PBRAppearance {
         roughness 1
         metalness 0
       }
@@ -180,7 +180,7 @@ Solid {
 Solid {
   children [
     DEF GUARDS Shape {
-      appearance PBRAppearance {
+      appearance DEF BLUE PBRAppearance {
         baseColor 0.25 0.4 1
         roughness 1
         metalness 0
@@ -199,16 +199,15 @@ Solid {
 Solid {
   children [
     DEF HOOP Shape {
-      appearance PBRAppearance {
-        baseColor 0.25 0.4 1
-        roughness 1
-        metalness 0
-      }
+      appearance USE BLUE
       geometry Mesh {
         url [
           "../obj/ramp/hoop.obj"
         ]
       }
+    }
+    DEF FIRE Shape {
+      # It's a methanol fire, you can't see it. Trust me, it's on fire.
     }
   ]
   name "Hoop"

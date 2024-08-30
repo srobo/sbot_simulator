@@ -40,7 +40,7 @@ DEF PILLARS Group {
         DEF PILLAR Group {
           children [
             Shape {
-              appearance PBRAppearance {
+              appearance DEF WHITE PBRAppearance {
                 roughness 1
                 metalness 0
               }
@@ -55,10 +55,7 @@ DEF PILLARS Group {
               rotation 0 0 -1 -0.7853981633974483
               children [
                 Shape {
-                  appearance PBRAppearance {
-                    roughness 1
-                    metalness 0
-                  }
+                  appearance USE WHITE
                   geometry Box {
                     size 0.6 0.063 1.995
                   }
@@ -79,10 +76,7 @@ DEF PILLARS Group {
         DEF PILLAR Group {
           children [
             Shape {
-              appearance PBRAppearance {
-                roughness 1
-                metalness 0
-              }
+              appearance USE WHITE
               geometry Cylinder {
                 radius 0.7500
                 height 1.75
@@ -94,10 +88,7 @@ DEF PILLARS Group {
               rotation 0 0 -1 2.356194490192345
               children [
                 Shape {
-                  appearance PBRAppearance {
-                    roughness 1
-                    metalness 0
-                  }
+                  appearance USE WHITE
                   geometry Box {
                     size 0.6 0.063 1.745
                   }
@@ -109,10 +100,7 @@ DEF PILLARS Group {
               rotation 0 0 -1 0.7853981633974483
               children [
                 Shape {
-                  appearance PBRAppearance {
-                    roughness 1
-                    metalness 0
-                  }
+                  appearance USE WHITE
                   geometry Box {
                     size 0.6 0.063 1.745
                   }
@@ -133,10 +121,7 @@ DEF PILLARS Group {
         DEF PILLAR Group {
           children [
             Shape {
-              appearance PBRAppearance {
-                roughness 1
-                metalness 0
-              }
+              appearance USE WHITE
               geometry Cylinder {
                 radius 0.7500
                 height 1.5
@@ -148,10 +133,7 @@ DEF PILLARS Group {
               rotation 0 0 -1 -2.356194490192345
               children [
                 Shape {
-                  appearance PBRAppearance {
-                    roughness 1
-                    metalness 0
-                  }
+                  appearance USE WHITE
                   geometry Box {
                     size 0.6 0.063 1.495
                   }
@@ -163,10 +145,7 @@ DEF PILLARS Group {
               rotation 0 0 -1 1.5707963267948966
               children [
                 Shape {
-                  appearance PBRAppearance {
-                    roughness 1
-                    metalness 0
-                  }
+                  appearance USE WHITE
                   geometry Box {
                     size 0.6 0.063 1.495
                   }
@@ -187,10 +166,7 @@ DEF PILLARS Group {
         DEF PILLAR Group {
           children [
             Shape {
-              appearance PBRAppearance {
-                roughness 1
-                metalness 0
-              }
+              appearance USE WHITE
               geometry Cylinder {
                 radius 0.7500
                 height 1.25
@@ -202,10 +178,7 @@ DEF PILLARS Group {
               rotation 0 0 -1 -1.5707963267948966
               children [
                 Shape {
-                  appearance PBRAppearance {
-                    roughness 1
-                    metalness 0
-                  }
+                  appearance USE WHITE
                   geometry Box {
                     size 0.6 0.063 1.245
                   }
@@ -217,10 +190,7 @@ DEF PILLARS Group {
               rotation 0 0 -1 -0.7853981633974483
               children [
                 Shape {
-                  appearance PBRAppearance {
-                    roughness 1
-                    metalness 0
-                  }
+                  appearance USE WHITE
                   geometry Box {
                     size 0.6 0.063 1.245
                   }
@@ -258,7 +228,7 @@ DEF RAMPS Group {
     Solid {
       children [
         DEF RAMPS Shape {
-          appearance PBRAppearance {
+          appearance DEF BLUE PBRAppearance {
             baseColor 0.25 0.4 1
             roughness 1
             metalness 0
@@ -346,11 +316,7 @@ DEF RAMPS Group {
 Solid {
   children [
     DEF END_ZONE Shape {
-      appearance PBRAppearance {
-        baseColor 0.25 0.4 1
-        roughness 1
-        metalness 0
-      }
+      appearance USE BLUE
       geometry Mesh {
         url [
           "../obj/pillars/end-zone.obj"
@@ -367,11 +333,7 @@ DEF MARKERS Group {
     Solid {
       children [
         Shape {
-          appearance PBRAppearance {
-            baseColor 0.25 0.4 1
-            roughness 1
-            metalness 0
-          }
+          appearance USE BLUE
           geometry Mesh {
             url [
               "../obj/pillars/markers.obj"

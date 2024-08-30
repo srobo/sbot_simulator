@@ -33,7 +33,7 @@ SRObot {
 Solid {
   children [
     DEF FLOOR Shape {
-      appearance PBRAppearance {
+      appearance DEF WHITE PBRAppearance {
         roughness 1
         metalness 0
       }
@@ -165,7 +165,7 @@ Solid {
 Solid {
   children [
     DEF WALLS Shape {
-      appearance PBRAppearance {
+      appearance DEF BLUE PBRAppearance {
         baseColor 0.25 0.4 1
         roughness 1
         metalness 0
@@ -184,11 +184,7 @@ Solid {
 Solid {
   children [
     DEF BIG_INNER_WALL Shape {
-      appearance PBRAppearance {
-        baseColor 0.25 0.4 1
-        roughness 1
-        metalness 0
-      }
+      appearance USE BLUE
       geometry Mesh {
         url [
           "../obj/line/v2_big_inner_wall.obj"
@@ -203,11 +199,7 @@ Solid {
 Solid {
   children [
     DEF MEDIUM_INNER_WALL Shape {
-      appearance PBRAppearance {
-        baseColor 0.25 0.4 1
-        roughness 1
-        metalness 0
-      }
+      appearance USE BLUE
       geometry Mesh {
         url [
           "../obj/line/v2_medium_inner_wall.obj"
@@ -222,11 +214,7 @@ Solid {
 Solid {
   children [
     DEF SMALL_INNER_WALL Shape {
-      appearance PBRAppearance {
-        baseColor 0.25 0.4 1
-        roughness 1
-        metalness 0
-      }
+      appearance USE BLUE
       geometry Mesh {
         url [
           "../obj/line/v2_small_inner_wall.obj"
@@ -241,11 +229,7 @@ Solid {
 Solid {
   children [
     DEF LINE Shape {
-      appearance PBRAppearance {
-        baseColor 0.25 0.4 1
-        roughness 1
-        metalness 0
-      }
+      appearance USE BLUE
       geometry Mesh {
         url [
           "../obj/line/v2_line.obj"
