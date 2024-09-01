@@ -199,10 +199,11 @@ def main() -> bool:
         # Run cleanup code registered in the usercode
         atexit._run_exitfuncs()  # noqa: SLF001
         # Cleanup devices
+        devices.completed = True
         devices.stop_event.set()
 
     return True
 
 
 if __name__ == '__main__':
-    exit(main())
+    exit(0 if main() else 1)
