@@ -154,6 +154,8 @@ class SocketServer:
         self.devices = devices
         self.stop_event = Event()
         g.stop_event = self.stop_event
+        # flag to indicate that we are exiting because the usercode has completed
+        self.completed = False
 
     def run(self) -> None:
         """
@@ -199,8 +201,9 @@ class SocketServer:
         for device in self.devices:
             device.close()
 
-        # Stop the usercode
-        os.kill(os.getpid(), signal.SIGINT)
+        if self.stop_event.is_set() and self.completed is False:
+            # Stop the usercode
+            os.kill(os.getpid(), signal.SIGINT)
 
     def links(self) -> dict[str, dict[str, str]]:
         """Return a mapping of asset tags to ports, grouped by board type."""
