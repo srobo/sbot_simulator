@@ -1,9 +1,7 @@
 #VRML_SIM R2023b utf8
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "../protos/arena/Arena.proto"
-EXTERNPROTO "../protos/arena/Deck.proto"
-EXTERNPROTO "../protos/arena/TriangleDeck.proto"
-EXTERNPROTO "../protos/props/Can.proto"
+EXTERNPROTO "../protos/arena/Pillar.proto"
+EXTERNPROTO "../protos/props/BoxToken.proto"
 EXTERNPROTO "../protos/props/Marker.proto"
 EXTERNPROTO "../protos/SRObot.proto"
 
@@ -12,259 +10,541 @@ WorldInfo {
 }
 Viewpoint {
   orientation 0.43231 0.43231 -0.79134 1.80272
-  position 0 9.1 13.8
+  position 0 6.4 9.5
 }
 DEF AMBIENT Background {
   skyColor [
     0.4 0.4 0.4
   ]
-  luminosity 1.6
+  luminosity 1
 }
-TexturedBackgroundLight {
+DirectionalLight {
+  ambientIntensity 1
+  direction -0.1 -0.2 -1
+  color 0.95 0.95 1
+  intensity 1.5
+  on TRUE
+  castShadows TRUE
 }
 
-SRObot {
-  name "robot"
-  translation 0.45 1.95 0
-  rotation 0 0 1 3.1415
-  flagColour 1 0 0
+DEF ROBOT0 SRObot {
+  name "robot0"
+  translation 2.375 -2.375 0
+  rotation 0 0 1 2.3562
+  flagColour 0 1 0
   controllerArgs ["0"]
+  controller "usercode_runner"
+  customData "start"
+}
+DEF ROBOT1 SRObot {
+  name "robot1"
+  translation -2.375 -2.375 0
+  rotation 0 0 1 0.7854
+  flagColour 1 0.5 0
+  controllerArgs ["1"]
+  controller "usercode_runner"
+  customData "start"
+}
+DEF ROBOT2 SRObot {
+  name "robot2"
+  translation -2.375 2.375 0
+  rotation 0 0 1 -0.7854
+  flagColour 1 0 1
+  controllerArgs ["2"]
+  controller "usercode_runner"
+  customData "start"
+}
+DEF ROBOT3 SRObot {
+  name "robot3"
+  translation 2.375 2.375 0
+  rotation 0 0 1 -2.3562
+  flagColour 1 1 0
+  controllerArgs ["3"]
   controller "usercode_runner"
   customData "start"
 }
 
 Arena {
-  size 5.4 5.4
+  size 5.75 5.75
   locked TRUE
   floorTexture ["arena_floor.png"]
 }
-Deck {
-  name "TL deck"
-  size 1.2192 1.2192
-  translation 2.0904 -2.0904 0.085
-  locked TRUE
-}
-Deck {
-  name "BR deck"
-  size 1.2192 1.2192
-  translation -2.0904 2.0904 0.085
-  locked TRUE
-}
-Deck {
-  name "CR deck"
-  size 1.2192 1.2192
-  translation -0.6096 -0.6096 0.085
-  locked TRUE
-}
-Deck {
-  name "CL deck"
-  size 1.2192 1.2192
-  translation 0.6096 0.6096 0.085
-  locked TRUE
-}
-TriangleDeck {
-  name "TR deck"
-  size 1.2192 1.2192
-  translation -2.0904 -2.0904 0.085
-  locked TRUE
-}
-TriangleDeck {
-  name "BL deck"
-  size 1.2192 1.2192
-  translation 2.0904 2.0904 0.085
-  rotation 0 0 1 3.14159
-  locked TRUE
-}
 
-DEF CANS Pose {
-  translation 0 0 0.05
+DEF PILLARS Pose {
   children [
-    Can {
-      name "can1"
-      translation -0.3 0.44 0
+    Pillar {
+      translation 0.75 -0.75 0
+      size 0.13 0.13 0.13
+      marker "195"
+      model "pillar_0"
+      texture_url ["sim_markers/195.png"]
     }
-    Can {
-      name "can2"
-      translation -1.5 1.2 0
+    Pillar {
+      translation -0.75 -0.75 0
+      size 0.13 0.13 0.13
+      marker "196"
+      model "pillar_1"
+      texture_url ["sim_markers/196.png"]
     }
-    Can {
-      name "can3"
-      translation -1.5892 0.06 0
+    Pillar {
+      translation -0.75 0.75 0
+      size 0.13 0.13 0.13
+      marker "197"
+      model "pillar_2"
+      texture_url ["sim_markers/197.png"]
     }
-    Can {
-      name "can4"
-      translation -2.33 -0.06 0
+    Pillar {
+      translation 0.75 0.75 0
+      size 0.13 0.13 0.13
+      marker "198"
+      model "pillar_3"
+      texture_url ["sim_markers/198.png"]
     }
-    Can {
-      name "can5"
-      translation -1.5 -1.5 0
-    }
-
-    Can {
-      name "can6"
-      translation 0.3 -0.44 0
-    }
-    Can {
-      name "can7"
-      translation 1.5 -1.2 0
-    }
-    Can {
-      name "can8"
-      translation 1.5892 -0.06 0
-    }
-    Can {
-      name "can9"
-      translation 2.33 0.06 0
-    }
-    Can {
-      name "can10"
-      translation 1.5 1.5 0
+    Pillar {
+      translation 0 0 0
+      size 0.13 0.13 0.26
+      marker "199"
+      model "pillar_centre"
+      texture_url ["sim_markers/199.png"]
     }
   ]
 }
 
-Marker {
-  name "A0"
-  model "0"
-  size 0.1 0.1
-  translation -1.4798 2.29 0.07
-  rotation 0 0 1 1.5708
-  texture_url ["sim_markers/0.png"]
-  upright TRUE
-}
-Marker {
-  name "A1"
-  model "1"
-  size 0.1 0.1
-  translation -1.4798 1.99 0.07
-  rotation 0 0 1 1.5708
-  texture_url ["sim_markers/1.png"]
-  upright TRUE
-}
-Marker {
-  name "A2"
-  model "2"
-  size 0.1 0.1
-  translation -0.4192 0.001 0.07
-  rotation 0 0 1 3.1415
-  texture_url ["sim_markers/2.png"]
-  upright TRUE
-}
-Marker {
-  name "A3"
-  model "3"
-  size 0.1 0.1
-  translation -0.7192 0.001 0.07
-  rotation 0 0 1 3.1415
-  texture_url ["sim_markers/3.png"]
-  upright TRUE
-}
-Marker {
-  name "A4"
-  model "4"
-  size 0.1 0.1
-  translation -2.699 0.91 0.07
-  rotation 0 0 1 1.5708
-  texture_url ["sim_markers/4.png"]
-  upright TRUE
-}
-Marker {
-  name "A5"
-  model "5"
-  size 0.1 0.1
-  translation -2.699 0.61 0.07
-  rotation 0 0 1 1.5708
-  texture_url ["sim_markers/5.png"]
-  upright TRUE
-}
-Marker {
-  name "A6"
-  model "6"
-  size 0.1 0.1
-  translation -2.19545 -1.98335 0.07
-  rotation 0 0 1 2.3561
-  texture_url ["sim_markers/6.png"]
-  upright TRUE
-}
-Marker {
-  name "A7"
-  model "7"
-  size 0.1 0.1
-  translation -1.98335 -2.19545 0.07
-  rotation 0 0 1 2.3561
-  texture_url ["sim_markers/7.png"]
-  upright TRUE
+DEF TOKENS Pose {
+  translation 0 0 0.07
+  children [
+    # 146, 132, 153, 145, 148, 121
+    DEF TOKEN0_1 BoxToken {
+      translation 0.3 -2.45 0
+      colour 0 1 0
+      marker "146"
+      model "T146"
+      texture_url ["sim_markers/146.png"]
+    }
+    DEF TOKEN0_2 BoxToken {
+      translation 0.3 -2.05 0
+      colour 0 1 0
+      marker "132"
+      model "T132"
+      texture_url ["sim_markers/132.png"]
+    }
+    DEF TOKEN0_3 BoxToken {
+      translation 0.3 -1.65 0
+      colour 0 1 0
+      marker "153"
+      model "T153"
+      texture_url ["sim_markers/153.png"]
+    }
+    DEF TOKEN0_4 BoxToken {
+      translation 2.45 -0.3 0
+      colour 0 1 0
+      marker "145"
+      model "T145"
+      texture_url ["sim_markers/145.png"]
+    }
+    DEF TOKEN0_5 BoxToken {
+      translation 2.05 -0.3 0
+      colour 0 1 0
+      marker "148"
+      model "T148"
+      texture_url ["sim_markers/148.png"]
+    }
+    DEF TOKEN0_6 BoxToken {
+      translation 1.65 -0.3 0
+      colour 0 1 0
+      marker "121"
+      model "T121"
+      texture_url ["sim_markers/121.png"]
+    }
+    # 135, 126, 100, 103, 129, 102
+    DEF TOKEN1_1 BoxToken {
+      translation -0.3 -2.45 0
+      colour 1 0.5 0
+      marker "135"
+      model "T135"
+      texture_url ["sim_markers/135.png"]
+    }
+    DEF TOKEN1_2 BoxToken {
+      translation -0.3 -2.05 0
+      colour 1 0.5 0
+      marker "126"
+      model "T126"
+      texture_url ["sim_markers/126.png"]
+    }
+    DEF TOKEN1_3 BoxToken {
+      translation -0.3 -1.65 0
+      colour 1 0.5 0
+      marker "100"
+      model "T100"
+      texture_url ["sim_markers/100.png"]
+    }
+    DEF TOKEN1_4 BoxToken {
+      translation -2.45 -0.3 0
+      colour 1 0.5 0
+      marker "103"
+      model "T103"
+      texture_url ["sim_markers/103.png"]
+    }
+    DEF TOKEN1_5 BoxToken {
+      translation -2.05 -0.3 0
+      colour 1 0.5 0
+      marker "129"
+      model "T129"
+      texture_url ["sim_markers/129.png"]
+    }
+    DEF TOKEN1_6 BoxToken {
+      translation -1.65 -0.3 0
+      colour 1 0.5 0
+      marker "102"
+      model "T102"
+      texture_url ["sim_markers/102.png"]
+    }
+    # 109, 154, 158, 130, 127, 137
+    DEF TOKEN2_1 BoxToken {
+      translation -0.3 2.45 0
+      colour 1 0 1
+      marker "109"
+      model "T109"
+      texture_url ["sim_markers/109.png"]
+    }
+    DEF TOKEN2_2 BoxToken {
+      translation -0.3 2.05 0
+      colour 1 0 1
+      marker "154"
+      model "T154"
+      texture_url ["sim_markers/154.png"]
+    }
+    DEF TOKEN2_3 BoxToken {
+      translation -0.3 1.65 0
+      colour 1 0 1
+      marker "158"
+      model "T158"
+      texture_url ["sim_markers/158.png"]
+    }
+    DEF TOKEN2_4 BoxToken {
+      translation -2.45 0.3 0
+      colour 1 0 1
+      marker "130"
+      model "T130"
+      texture_url ["sim_markers/130.png"]
+    }
+    DEF TOKEN2_5 BoxToken {
+      translation -2.05 0.3 0
+      colour 1 0 1
+      marker "127"
+      model "T127"
+      texture_url ["sim_markers/127.png"]
+    }
+    DEF TOKEN2_6 BoxToken {
+      translation -1.65 0.3 0
+      colour 1 0 1
+      marker "137"
+      model "T137"
+      texture_url ["sim_markers/137.png"]
+    }
+    # 105, 119, 136, 138, 128, 115
+    DEF TOKEN3_1 BoxToken {
+      translation 0.3 2.45 0
+      colour 1 1 0
+      marker "105"
+      model "T105"
+      texture_url ["sim_markers/105.png"]
+    }
+    DEF TOKEN3_2 BoxToken {
+      translation 0.3 2.05 0
+      colour 1 1 0
+      marker "119"
+      model "T119"
+      texture_url ["sim_markers/119.png"]
+    }
+    DEF TOKEN3_3 BoxToken {
+      translation 0.3 1.65 0
+      colour 1 1 0
+      marker "136"
+      model "T136"
+      texture_url ["sim_markers/136.png"]
+    }
+    DEF TOKEN3_4 BoxToken {
+      translation 2.45 0.3 0
+      colour 1 1 0
+      marker "138"
+      model "T138"
+      texture_url ["sim_markers/138.png"]
+    }
+    DEF TOKEN3_5 BoxToken {
+      translation 2.05 0.3 0
+      colour 1 1 0
+      marker "128"
+      model "T128"
+      texture_url ["sim_markers/128.png"]
+    }
+    DEF TOKEN3_6 BoxToken {
+      translation 1.65 0.3 0
+      colour 1 1 0
+      marker "115"
+      model "T115"
+      texture_url ["sim_markers/115.png"]
+    }
+  ]
 }
 
-Marker {
-  name "B0"
-  model "0"
-  size 0.1 0.1
-  translation 1.4798 -2.29 0.07
-  rotation 0 0 1 -1.5708
-  texture_url ["sim_markers/0.png"]
-  upright TRUE
-}
-Marker {
-  name "B1"
-  model "1"
-  size 0.1 0.1
-  translation 1.4798 -1.99 0.07
-  rotation 0 0 1 -1.5708
-  texture_url ["sim_markers/1.png"]
-  upright TRUE
-}
-Marker {
-  name "B2"
-  model "2"
-  size 0.1 0.1
-  translation 0.4192 -0.001 0.07
-  rotation 0 0 1 0
-  texture_url ["sim_markers/2.png"]
-  upright TRUE
-}
-Marker {
-  name "B3"
-  model "3"
-  size 0.1 0.1
-  translation 0.7192 -0.001 0.07
-  rotation 0 0 1 0
-  texture_url ["sim_markers/3.png"]
-  upright TRUE
-}
-Marker {
-  name "B4"
-  model "4"
-  size 0.1 0.1
-  translation 2.699 -0.81 0.07
-  rotation 0 0 1 -1.5708
-  texture_url ["sim_markers/4.png"]
-  upright TRUE
-}
-Marker {
-  name "B5"
-  model "5"
-  size 0.1 0.1
-  translation 2.699 -0.51 0.07
-  rotation 0 0 1 -1.5708
-  texture_url ["sim_markers/5.png"]
-  upright TRUE
-}
-Marker {
-  name "B6"
-  model "6"
-  size 0.1 0.1
-  translation 2.19545 1.98335 0.07
-  rotation 0 0 1 -0.7853
-  texture_url ["sim_markers/6.png"]
-  upright TRUE
-}
-Marker {
-  name "B7"
-  model "7"
-  size 0.1 0.1
-  translation 1.98335 2.19545 0.07
-  rotation 0 0 1 -0.7853
-  texture_url ["sim_markers/7.png"]
-  upright TRUE
+DEF WALL_MARKERS Pose {
+  children [
+    # North wall
+    Marker {
+      name "A0"
+      model "0"
+      size 0.15 0.15
+      translation 2.15625 -2.874 0.125
+      rotation 0 0 1 3.1415
+      texture_url ["sim_markers/0.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A1"
+      model "1"
+      size 0.15 0.15
+      translation 1.4375 -2.874 0.125
+      rotation 0 0 1 3.1415
+      texture_url ["sim_markers/1.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A2"
+      model "2"
+      size 0.15 0.15
+      translation 0.71875 -2.874 0.125
+      rotation 0 0 1 3.1415
+      texture_url ["sim_markers/2.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A3"
+      model "3"
+      size 0.15 0.15
+      translation 0 -2.874 0.125
+      rotation 0 0 1 3.1415
+      texture_url ["sim_markers/3.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A4"
+      model "4"
+      size 0.15 0.15
+      translation -0.71875 -2.874 0.125
+      rotation 0 0 1 3.1415
+      texture_url ["sim_markers/4.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A5"
+      model "5"
+      size 0.15 0.15
+      translation -1.4375 -2.874 0.125
+      rotation 0 0 1 3.1415
+      texture_url ["sim_markers/5.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A6"
+      model "6"
+      size 0.15 0.15
+      translation -2.15625 -2.874 0.125
+      rotation 0 0 1 3.1415
+      texture_url ["sim_markers/6.png"]
+      upright TRUE
+    }
+    # East wall
+    Marker {
+      name "A7"
+      model "7"
+      size 0.15 0.15
+      translation -2.874 -2.15625 0.125
+      rotation 0 0 1 1.5708
+      texture_url ["sim_markers/7.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A8"
+      model "8"
+      size 0.15 0.15
+      translation -2.874 -1.4375 0.125
+      rotation 0 0 1 1.5708
+      texture_url ["sim_markers/8.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A9"
+      model "9"
+      size 0.15 0.15
+      translation -2.874 -0.71875 0.125
+      rotation 0 0 1 1.5708
+      texture_url ["sim_markers/9.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A10"
+      model "10"
+      size 0.15 0.15
+      translation -2.874 0 0.125
+      rotation 0 0 1 1.5708
+      texture_url ["sim_markers/10.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A11"
+      model "11"
+      size 0.15 0.15
+      translation -2.874 0.71875 0.125
+      rotation 0 0 1 1.5708
+      texture_url ["sim_markers/11.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A12"
+      model "12"
+      size 0.15 0.15
+      translation -2.874 1.4375 0.125
+      rotation 0 0 1 1.5708
+      texture_url ["sim_markers/12.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A13"
+      model "13"
+      size 0.15 0.15
+      translation -2.874 2.15625 0.125
+      rotation 0 0 1 1.5708
+      texture_url ["sim_markers/13.png"]
+      upright TRUE
+    }
+    # South wall
+    Marker {
+      name "A14"
+      model "14"
+      size 0.15 0.15
+      translation -2.15625 2.874 0.125
+      rotation 0 0 1 0
+      texture_url ["sim_markers/14.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A15"
+      model "15"
+      size 0.15 0.15
+      translation -1.4375 2.874 0.125
+      rotation 0 0 1 0
+      texture_url ["sim_markers/15.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A16"
+      model "16"
+      size 0.15 0.15
+      translation -0.71875 2.874 0.125
+      rotation 0 0 1 0
+      texture_url ["sim_markers/16.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A17"
+      model "17"
+      size 0.15 0.15
+      translation 0 2.874 0.125
+      rotation 0 0 1 0
+      texture_url ["sim_markers/17.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A18"
+      model "18"
+      size 0.15 0.15
+      translation 0.71875 2.874 0.125
+      rotation 0 0 1 0
+      texture_url ["sim_markers/18.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A19"
+      model "19"
+      size 0.15 0.15
+      translation 1.4375 2.874 0.125
+      rotation 0 0 1 0
+      texture_url ["sim_markers/19.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A20"
+      model "20"
+      size 0.15 0.15
+      translation 2.15625 2.874 0.125
+      rotation 0 0 1 0
+      texture_url ["sim_markers/20.png"]
+      upright TRUE
+    }
+    # # West wall
+    Marker {
+      name "A21"
+      model "21"
+      size 0.15 0.15
+      translation 2.874 2.15625 0.125
+      rotation 0 0 1 -1.5708
+      texture_url ["sim_markers/21.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A22"
+      model "22"
+      size 0.15 0.15
+      translation 2.874 1.4375 0.125
+      rotation 0 0 1 -1.5708
+      texture_url ["sim_markers/22.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A23"
+      model "23"
+      size 0.15 0.15
+      translation 2.874 0.71875 0.125
+      rotation 0 0 1 -1.5708
+      texture_url ["sim_markers/23.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A24"
+      model "24"
+      size 0.15 0.15
+      translation 2.874 0 0.125
+      rotation 0 0 1 -1.5708
+      texture_url ["sim_markers/24.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A25"
+      model "25"
+      size 0.15 0.15
+      translation 2.874 -0.71875 0.125
+      rotation 0 0 1 -1.5708
+      texture_url ["sim_markers/25.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A26"
+      model "26"
+      size 0.15 0.15
+      translation 2.874 -1.4375 0.125
+      rotation 0 0 1 -1.5708
+      texture_url ["sim_markers/26.png"]
+      upright TRUE
+    }
+    Marker {
+      name "A27"
+      model "27"
+      size 0.15 0.15
+      translation 2.874 -2.15625 0.125
+      rotation 0 0 1 -1.5708
+      texture_url ["sim_markers/27.png"]
+      upright TRUE
+    }
+  ]
 }

@@ -7,7 +7,7 @@ EXTERNPROTO "./Marker.proto"
 PROTO BoxToken [
   field SFVec3f translation 0 0 0
   field SFRotation rotation 0 1 0 0
-  field SFVec3f size 0.12 0.12 0.12
+  field SFVec3f size 0.13 0.13 0.13
   field SFVec2f {0.08 0.08, 0.15 0.15, 0.2 0.2} marker_size 0.08 0.08
   field SFColor colour 0.7 0.55 0.35
   field SFString marker "0"
