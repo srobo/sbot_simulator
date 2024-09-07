@@ -4,7 +4,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Callable
 
-from sbot_interface.devices.util import get_globals
+from sbot_interface.devices.util import WebotsDevice, get_globals, get_robot_device
 
 
 class Output:
@@ -34,6 +34,36 @@ class Output:
         if self._current_func is not None:
             return self._current_func()
         return 0
+
+
+class ConnectorOutput(Output):
+    """
+    A class to represent a power output that controls a webots connector device.
+
+    :param device_name: The name of the device in webots.
+    :param downstream_current: A function to get the current draw of the downstream device.
+    """
+
+    def __init__(
+        self,
+        device_name: str,
+        downstream_current: Callable[[], int] | None = None,
+    ) -> None:
+        super().__init__(downstream_current)
+        g = get_globals()
+        self._device = get_robot_device(g.robot, device_name, WebotsDevice.Connector)
+        self._enabled = False
+
+    def set_output(self, enable: bool) -> None:
+        """Set the output state."""
+        if enable:
+            self._device.lock()
+        else:
+            self._device.unlock()
+
+    def get_output(self) -> bool:
+        """Get the output state."""
+        return self._device.isLocked()
 
 
 class BaseBuzzer(ABC):

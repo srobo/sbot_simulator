@@ -13,6 +13,7 @@ from controller import (
     Accelerometer,
     Camera,
     Compass,
+    Connector,
     DistanceSensor,
     Emitter,
     Gyro,
@@ -45,6 +46,7 @@ class WebotsDevice:
     Accelerometer = Accelerometer
     Camera = Camera
     Compass = Compass
+    Connector = Connector
     DistanceSensor = DistanceSensor
     Emitter = Emitter
     GPS = GPS

@@ -1,0 +1,133 @@
+#VRML_SIM R2023b utf8
+# template language: javascript
+
+PROTO VacuumSucker [
+  field SFString name ""
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 0 1 0
+] {
+  Pose {
+    translation IS translation
+    rotation IS rotation
+    children [
+      DEF BASE Solid {
+        translation 0 0 0.052
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.7 0.7 0.7
+              roughness 1
+              metalness 0
+            }
+            geometry DEF BASE_GEO Box {
+              size 0.06 0.06 0.125
+            }
+          }
+        ]
+        name "Tower Base"
+        boundingObject USE BASE_GEO
+        physics Physics {
+          density 500  # Hollow Aluminium
+        }
+      }
+      Pose {
+        translation 0 0 0.1
+        children [
+          SliderJoint {
+            jointParameters JointParameters {
+              axis 0 0 1
+              minStop 0
+              maxStop 0.27
+              position 0.02
+            }
+            device [
+              LinearMotor {
+                name %<= "\"" + fields.name.value + " motor\"" >%
+                minPosition 0
+                maxPosition 0.27
+                maxVelocity 2
+                sound ""
+              }
+              PositionSensor {
+                name %<= "\"" + fields.name.value + " position sensor\"" >%
+              }
+            ]
+            endPoint Solid {
+              translation 0.1 0 0
+              children [
+                Solid {
+                  children [
+                    Pose {
+                      translation -0.05 0 0.025
+                      children [
+                        Shape {
+                          appearance PBRAppearance {
+                            baseColor 0.7 0.7 0.7
+                            roughness 1
+                            metalness 0
+                          }
+                          geometry Box {
+                            size 0.15 0.05 0.02
+                          }
+                        }
+                      ]
+                    }
+                    Pose {
+                      translation -0.1 0 -0.45
+                      children [
+                        Shape {
+                          appearance PBRAppearance {
+                            baseColor 0.7 0.7 0.7
+                            roughness 1
+                            metalness 0
+                          }
+                          geometry Box {
+                            size 0.05 0.05 0.12
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                  name "Armature"
+                }
+                DEF SUCKER Shape {
+                  appearance PBRAppearance {
+                    baseColor 0 0 0
+                    roughness 1
+                    metalness 1
+                  }
+                  geometry DEF hook_geo Box {
+                    size 0.05 0.05 0.03
+                  }
+                  castShadows FALSE
+                }
+                Connector {
+                  # Shift origin to be the lower face of the hook shape
+                  translation 0 0 -0.015
+                  rotation 0 1 0 3.1416
+                  type "active"
+                  distanceTolerance 0.1
+                  axisTolerance 0.7854
+                  rotationTolerance 0
+                  numberOfRotations 0
+                  tensileStrength 35
+                  shearStrength 20
+                  snap FALSE
+                  autoLock TRUE
+                  name IS name
+                  unilateralUnlock TRUE
+                  unilateralLock TRUE
+                }
+              ]
+              boundingObject USE hook_geo
+              physics Physics {
+                density 1500  # rubber
+              }
+            }
+          }
+          # TODO: secondary slider joint for telescoping column
+        ]
+      }
+    ]
+  }
+}
