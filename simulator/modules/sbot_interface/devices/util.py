@@ -154,6 +154,6 @@ def add_jitter(
     std_dev = value * (std_dev_percent / 100.0)
     mean_offset = value * (offset_percent / 100.0)
 
-    error = value + gauss(mean_offset, std_dev)
+    error = gauss(mean_offset, std_dev)
     # Ensure the error is within the range
     return max(value_range[0], min(value_range[1], value + error))

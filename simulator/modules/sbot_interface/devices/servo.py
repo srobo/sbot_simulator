@@ -112,7 +112,7 @@ class Servo(BaseServo):
         """
         # Apply a small amount of variation to the power setting to simulate
         # inaccuracies in the servo
-        value = int(add_jitter(value, (MIN_POSITION, MAX_POSITION)))
+        value = int(add_jitter(value, (MIN_POSITION, MAX_POSITION), std_dev_percent=0.5))
 
         self._device.setPosition(map_to_range(
             value,
