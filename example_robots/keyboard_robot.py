@@ -1,10 +1,9 @@
 import math
 
 from controller import Keyboard
-from sr.robot3 import A0, A1, A2, Robot
+from sr.robot3 import A0, A1, A2, OUT_H0, Colour, Robot
 
-# Any keys still pressed in the following period will be handled again
-# leading to rprinting sensors multiple times
+# Keyboard sampling period in milliseconds
 KEYBOARD_SAMPLING_PERIOD = 100
 NO_KEY_PRESSED = -1
 
@@ -15,7 +14,11 @@ CONTROLS = {
     "right": (ord("D"), ord("L")),
     "sense": (ord("Q"), ord("U")),
     "see": (ord("E"), ord("O")),
-    "led": (ord("R"), ord("P")),
+    "led": (ord("Z"), ord("M")),
+    "sucker_enable": (ord("X"), ord(",")),
+    "sucker_disable": (ord("C"), ord(".")),
+    "lift_up": (ord("R"), ord("P")),
+    "lift_down": (ord("F"), ord(";")),
     "boost": (Keyboard.SHIFT, Keyboard.CONTROL),
     "angle_unit": (ord("B"), ord("B")),
 }
@@ -120,10 +123,12 @@ def print_camera_detection(robot: Robot) -> None:
 
 
 robot = Robot()
-
 keyboard = KeyboardInterface()
+lift_height = robot.servo_board.servos[0].position
 
-key_sense = CONTROLS["sense"][robot.zone]
+ZONE_CONTROLS = robot.zone
+
+assert ZONE_CONTROLS < len(CONTROLS["forward"]), "No controls defined for this zone"
 
 print(
     "Note: you need to click on 3D viewport for keyboard events to be picked "
@@ -138,36 +143,54 @@ while True:
     keys = keyboard.process_keys()
 
     # Actions that are run continuously while the key is held
-    if CONTROLS["forward"][robot.zone] in keys["held"]:
+    if CONTROLS["forward"][ZONE_CONTROLS] in keys["held"]:
         left_power += 0.5
         right_power += 0.5
 
-    if CONTROLS["reverse"][robot.zone] in keys["held"]:
+    if CONTROLS["reverse"][ZONE_CONTROLS] in keys["held"]:
         left_power += -0.5
         right_power += -0.5
 
-    if CONTROLS["left"][robot.zone] in keys["held"]:
+    if CONTROLS["left"][ZONE_CONTROLS] in keys["held"]:
         left_power -= 0.25
         right_power += 0.25
 
-    if CONTROLS["right"][robot.zone] in keys["held"]:
+    if CONTROLS["right"][ZONE_CONTROLS] in keys["held"]:
         left_power += 0.25
         right_power -= 0.25
 
-    if CONTROLS["boost"][robot.zone] in keys["held"]:
+    if CONTROLS["boost"][ZONE_CONTROLS] in keys["held"]:
         boost = True
 
+    if CONTROLS["lift_up"][ZONE_CONTROLS] in keys["held"]:
+        # constrain to [-1, 1]
+        lift_height = max(min(lift_height + 0.05, 1), -1)
+        robot.servo_board.servos[0].position = lift_height
+
+    if CONTROLS["lift_down"][ZONE_CONTROLS] in keys["held"]:
+        # constrain to [-1, 1]
+        lift_height = max(min(lift_height - 0.05, 1), -1)
+        robot.servo_board.servos[0].position = lift_height
+
     # Actions that are run once when the key is pressed
-    if CONTROLS["sense"][robot.zone] in keys["pressed"]:
+    if CONTROLS["sense"][ZONE_CONTROLS] in keys["pressed"]:
         print_sensors(robot)
 
-    if CONTROLS["see"][robot.zone] in keys["pressed"]:
+    if CONTROLS["see"][ZONE_CONTROLS] in keys["pressed"]:
         print_camera_detection(robot)
 
-    if CONTROLS["led"][robot.zone] in keys["pressed"]:
-        pass
+    if CONTROLS["sucker_enable"][ZONE_CONTROLS] in keys["pressed"]:
+        robot.power_board.outputs[OUT_H0].is_enabled = 1
 
-    if CONTROLS["angle_unit"][robot.zone] in keys["pressed"]:
+    if CONTROLS["sucker_disable"][ZONE_CONTROLS] in keys["pressed"]:
+        robot.power_board.outputs[OUT_H0].is_enabled = 0
+
+    if CONTROLS["led"][ZONE_CONTROLS] in keys["pressed"]:
+        robot.kch.leds[1].colour = Colour.MAGENTA
+    elif CONTROLS["led"][ZONE_CONTROLS] in keys["released"]:
+        robot.kch.leds[1].colour = Colour.OFF
+
+    if CONTROLS["angle_unit"][ZONE_CONTROLS] in keys["pressed"]:
         USE_DEGREES = not USE_DEGREES
         print(f"Angle unit set to {'degrees' if USE_DEGREES else 'radians'}")
 
