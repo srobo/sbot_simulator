@@ -3,7 +3,7 @@ EXTERNPROTO "../protos/arena/Arena.proto"
 EXTERNPROTO "../protos/arena/Pillar.proto"
 EXTERNPROTO "../protos/props/BoxToken.proto"
 EXTERNPROTO "../protos/props/Marker.proto"
-EXTERNPROTO "../protos/SRObot.proto"
+EXTERNPROTO "../protos/SR2025bot.proto"
 
 WorldInfo {
   basicTimeStep 8
@@ -27,7 +27,7 @@ DirectionalLight {
   castShadows TRUE
 }
 
-DEF ROBOT0 SRObot {
+DEF ROBOT0 SR2025bot {
   name "robot0"
   translation 2.375 -2.375 0
   rotation 0 0 1 2.3562
@@ -36,7 +36,7 @@ DEF ROBOT0 SRObot {
   controller "usercode_runner"
   customData "start"
 }
-DEF ROBOT1 SRObot {
+DEF ROBOT1 SR2025bot {
   name "robot1"
   translation -2.375 -2.375 0
   rotation 0 0 1 0.7854
@@ -45,7 +45,7 @@ DEF ROBOT1 SRObot {
   controller "usercode_runner"
   customData "start"
 }
-DEF ROBOT2 SRObot {
+DEF ROBOT2 SR2025bot {
   name "robot2"
   translation -2.375 2.375 0
   rotation 0 0 1 -0.7854
@@ -54,7 +54,7 @@ DEF ROBOT2 SRObot {
   controller "usercode_runner"
   customData "start"
 }
-DEF ROBOT3 SRObot {
+DEF ROBOT3 SR2025bot {
   name "robot3"
   translation 2.375 2.375 0
   rotation 0 0 1 -2.3562
