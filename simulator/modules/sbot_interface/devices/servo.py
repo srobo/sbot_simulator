@@ -97,8 +97,11 @@ class Servo(BaseServo):
         self._enabled = False
         g = get_globals()
         self._device = get_robot_device(g.robot, device_name, WebotsDevice.Motor)
+        self._pos_sensor = self._device.getPositionSensor()
         self._max_position = self._device.getMaxPosition()
         self._min_position = self._device.getMinPosition()
+        if self._pos_sensor is not None:
+            self._pos_sensor.enable(g.timestep)
 
     def disable(self) -> None:
         """Disable the servo."""
@@ -128,6 +131,12 @@ class Servo(BaseServo):
 
         Position is the pulse width in microseconds.
         """
+        if self._pos_sensor is not None:
+            self.position = int(map_to_range(
+                self._pos_sensor.getValue(),
+                (self._min_position + 0.001, self._max_position - 0.001),
+                (MIN_POSITION, MAX_POSITION),
+            ))
         return self.position
 
     def get_current(self) -> int:
