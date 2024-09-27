@@ -14,6 +14,8 @@ PROTO BoxToken [
   field SFString model ""
   field SFFloat mass 0.100
   field MFString texture_url []
+  field SFFloat connectorStrength 35
+  field SFFloat connectorShear 20
 ]
 {
   Solid {
@@ -77,6 +79,39 @@ PROTO BoxToken [
         name "bottom"
         model IS marker
         texture_url IS texture_url
+      }
+      # Shape {
+      #   appearance PBRAppearance {
+      #     transparency 0.4
+      #     baseColor 1 0 0
+      #   }
+      #   geometry Sphere {
+      #     radius %<= fields.size.value.x / 2 * 1.44 >%
+      #     subdivision 5
+      #   }
+      # }
+      Connector {
+        type "passive"
+        distanceTolerance %<= fields.size.value.x / 2 * 1.44 >%
+        axisTolerance 3.1415
+        rotationTolerance 0
+        numberOfRotations 0
+        tensileStrength IS connectorStrength
+        shearStrength IS connectorShear
+        snap FALSE
+        name "Front Connector"
+      }
+      Connector {
+        rotation 0 0 1 3.1416
+        type "passive"
+        distanceTolerance %<= fields.size.value.x / 2 * 1.44 >%
+        axisTolerance 3.1415
+        rotationTolerance 0
+        numberOfRotations 0
+        tensileStrength IS connectorStrength
+        shearStrength IS connectorShear
+        snap FALSE
+        name "Rear Connector"
       }
     ]
     name IS model
