@@ -10,7 +10,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation 0.43231 0.43231 -0.79134 1.80272
-  position 0 7 10.4
+  position 0 6.67 9.87
 }
 DEF AMBIENT Background {
   skyColor [
