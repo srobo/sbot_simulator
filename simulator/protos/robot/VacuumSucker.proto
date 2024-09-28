@@ -5,41 +5,41 @@ PROTO VacuumSucker [
   field SFString name ""
   field SFVec3f translation 0 0 0
   field SFRotation rotation 0 0 1 0
-  field SFFloat max_height 0.27
+  field SFFloat max_height 0.35
+  field SFFloat forward_reach 0.12
 ] {
   Pose {
     translation IS translation
     rotation IS rotation
     children [
-      DEF BASE Solid {
-        translation 0 0 0.052
+      Pose {
+        translation 0 0 %<= fields.max_height.value / 4 >%
         children [
-          Shape {
-            appearance PBRAppearance {
-              baseColor 0.7 0.7 0.7
-              roughness 1
-              metalness 0
-            }
-            geometry DEF BASE_GEO Box {
-              size 0.06 0.06 0.125
+          DEF BASE Solid {
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.7 0.7 0.7
+                  roughness 1
+                  metalness 0
+                }
+                geometry DEF BASE_GEO Box {
+                  size 0.06 0.06 %<= fields.max_height.value / 2 >%
+                }
+              }
+            ]
+            name "Tower Base"
+            boundingObject USE BASE_GEO
+            physics Physics {
+              density 500  # Hollow Aluminium
             }
           }
-        ]
-        name "Tower Base"
-        boundingObject USE BASE_GEO
-        physics Physics {
-          density 500  # Hollow Aluminium
-        }
-      }
-      Pose {
-        translation 0 0 0.1
-        children [
           SliderJoint {
             jointParameters JointParameters {
               axis 0 0 1
               minStop 0
               maxStop IS max_height
-              position 0.02
+              position 0.01
             }
             device [
               LinearMotor {
@@ -54,27 +54,42 @@ PROTO VacuumSucker [
               }
             ]
             endPoint Solid {
-              translation 0.1 0 0.02
+              translation %<= (fields.forward_reach.value + 0.055) - 0.05 >% 0 %<= fields.max_height.value / 4 - 0.05 >%
               children [
                 Solid {
                   children [
                     Pose {
-                      translation -0.05 0 0.025
+                      translation %<= 0.025 - (fields.forward_reach.value + 0.055) / 2 >% 0 0.08
                       children [
-                        Shape {
+                        Shape {  # Horizontal arm
                           appearance PBRAppearance {
                             baseColor 0.7 0.7 0.7
                             roughness 1
                             metalness 0
                           }
                           geometry Box {
-                            size 0.15 0.05 0.02
+                            size %<= fields.forward_reach.value + 0.055 >% 0.05 0.02
                           }
                         }
                       ]
                     }
                     Pose {
-                      translation -0.1 0 -0.045
+                      translation %<= 0.05 - (fields.forward_reach.value + 0.055) >% 0 %<= 0.06 - (fields.max_height.value / 4) >%
+                      children [
+                        Shape {  # Column
+                          appearance PBRAppearance {
+                            baseColor 0.7 0.7 0.7
+                            roughness 1
+                            metalness 0
+                          }
+                          geometry DEF COLUMN_GEO Box {
+                            size 0.05 0.05 %<= fields.max_height.value / 2 + 0.02 >%
+                          }
+                        }
+                      ]
+                    }
+                    Pose {
+                      translation 0 0 0.045
                       children [
                         Shape {
                           appearance PBRAppearance {
@@ -83,13 +98,20 @@ PROTO VacuumSucker [
                             metalness 0
                           }
                           geometry Box {
-                            size 0.05 0.05 0.12
+                            size 0.05 0.05 0.05
                           }
                         }
                       ]
                     }
                   ]
                   name "Armature"
+                  boundingObject Pose {
+                    translation %<= 0.05 - (fields.forward_reach.value + 0.055) >% 0 %<= 0.06 - (fields.max_height.value / 4) >%
+                    children [USE COLUMN_GEO]
+                  }
+                  physics Physics {
+                    density 200  # Hollow Aluminium
+                  }
                 }
                 DEF SUCKER Shape {
                   appearance PBRAppearance {
@@ -98,17 +120,17 @@ PROTO VacuumSucker [
                     metalness 1
                   }
                   geometry DEF hook_geo Box {
-                    size 0.05 0.05 0.03
+                    size 0.05 0.05 0.04
                   }
                   castShadows FALSE
                 }
                 Connector {
-                  # Shift origin to be the lower face of the hook shape
-                  translation 0 0 -0.015
+                  # Shift origin to near the lower face of the hook shape
+                  translation 0 0 -0.01
                   rotation 0 1 0 3.1416
                   type "active"
-                  distanceTolerance 0.1  # (0.14 / 2) * sqrt(2)
-                  axisTolerance 3.1415  # TODO: check this
+                  distanceTolerance 0.094  # (0.14 / 2) * sqrt(2)
+                  axisTolerance 3.1415
                   rotationTolerance 0
                   numberOfRotations 0
                   tensileStrength 35
@@ -120,7 +142,14 @@ PROTO VacuumSucker [
                   unilateralLock TRUE
                 }
               ]
-              boundingObject USE hook_geo
+              boundingObject Pose {
+                translation 0 0 0.005
+                children [
+                  Box {
+                    size 0.05 0.05 0.03
+                  }
+                ]
+              }
               physics Physics {
                 density 1500  # rubber
               }
@@ -132,7 +161,7 @@ PROTO VacuumSucker [
               axis 0 0 1
               minStop 0
               maxStop %<= fields.max_height.value / 2 >%
-              position 0.01
+              position 0.005
             }
             device [
               LinearMotor {
@@ -145,7 +174,7 @@ PROTO VacuumSucker [
               }
             ]
             endPoint Solid {
-              translation 0 0 -0.035
+              translation 0 0 0.005
               children [
                 Shape {
                   appearance PBRAppearance {
@@ -153,12 +182,16 @@ PROTO VacuumSucker [
                     roughness 1
                     metalness 0
                   }
-                  geometry Box {
-                    size 0.055 0.055 0.12
+                  geometry DEF COLUMN_GEO Box {
+                    size 0.055 0.055 %<= fields.max_height.value / 2 + 0.01 >%
                   }
                 }
               ]
               name "Extension"
+              boundingObject USE COLUMN_GEO
+              physics Physics {
+                density 200  # Hollow Aluminium
+              }
             }
           }
         ]

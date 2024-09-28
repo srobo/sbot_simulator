@@ -12,7 +12,7 @@ PROTO BoxToken [
   field SFColor colour 0.7 0.55 0.35
   field SFString marker "0"
   field SFString model ""
-  field SFFloat mass 0.100
+  field SFFloat mass 0.080
   field MFString texture_url []
   field SFFloat connectorStrength 35
   field SFFloat connectorShear 20
@@ -86,13 +86,13 @@ PROTO BoxToken [
       #     baseColor 1 0 0
       #   }
       #   geometry Sphere {
-      #     radius %<= fields.size.value.x / 2 * 1.44 >%
+      #     radius %<= fields.size.value.x / 2 * 1.4 >%
       #     subdivision 5
       #   }
       # }
       Connector {
         type "passive"
-        distanceTolerance %<= fields.size.value.x / 2 * 1.44 >%
+        distanceTolerance %<= fields.size.value.x / 2 * 1.4 >%
         axisTolerance 3.1415
         rotationTolerance 0
         numberOfRotations 0
@@ -104,7 +104,7 @@ PROTO BoxToken [
       Connector {
         rotation 0 0 1 3.1416
         type "passive"
-        distanceTolerance %<= fields.size.value.x / 2 * 1.44 >%
+        distanceTolerance %<= fields.size.value.x / 2 * 1.4 >%
         axisTolerance 3.1415
         rotationTolerance 0
         numberOfRotations 0
