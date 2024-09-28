@@ -91,12 +91,12 @@ def print_sensors(robot: Robot) -> None:
 
     print("Touch sensor readings:")
     for pin, name in touch_sensor_names.items():
-        touching = robot.arduino.pins[pin].digital_value
+        touching = robot.arduino.pins[pin].digital_read()
         print(f"{pin} {name: <6}: {touching}")
 
     print("Reflectance sensor readings:")
     for Apin, name in reflectance_sensor_names.items():
-        reflectance = robot.arduino.pins[Apin].analog_value
+        reflectance = robot.arduino.pins[Apin].analog_read()
         print(f"{Apin} {name: <12}: {reflectance:.2f} V")
 
 
@@ -107,8 +107,9 @@ def print_camera_detection(robot: Robot) -> None:
         for marker in markers:
             print(f" #{marker.id}")
             print(
-                f" Position: {marker.distance:.0f} mm, azi: {angle_str(marker.azimuth)}, "
-                f"elev: {angle_str(marker.elevation)}",
+                f" Position: {marker.position.distance:.0f} mm, "
+                f"{angle_str(marker.position.horizontal_angle)} right, "
+                f"{angle_str(marker.position.vertical_angle)} up",
             )
             yaw, pitch, roll = marker.orientation
             print(
@@ -126,9 +127,13 @@ robot = Robot()
 keyboard = KeyboardInterface()
 lift_height = robot.servo_board.servos[0].position
 
+# Automatically set the zone controls based on the robot's zone
+# Alternatively, you can set this manually
+# ZONE_CONTROLS = 0
 ZONE_CONTROLS = robot.zone
 
-assert ZONE_CONTROLS < len(CONTROLS["forward"]), "No controls defined for this zone"
+assert ZONE_CONTROLS < len(CONTROLS["forward"]), \
+    "No controls defined for this zone, alter the ZONE_CONTROLS variable to use in this zone."
 
 print(
     "Note: you need to click on 3D viewport for keyboard events to be picked "
@@ -186,9 +191,13 @@ while True:
         robot.power_board.outputs[OUT_H0].is_enabled = 0
 
     if CONTROLS["led"][ZONE_CONTROLS] in keys["pressed"]:
+        robot.kch.leds[0].colour = Colour.MAGENTA
         robot.kch.leds[1].colour = Colour.MAGENTA
+        robot.kch.leds[2].colour = Colour.MAGENTA
     elif CONTROLS["led"][ZONE_CONTROLS] in keys["released"]:
+        robot.kch.leds[0].colour = Colour.OFF
         robot.kch.leds[1].colour = Colour.OFF
+        robot.kch.leds[2].colour = Colour.OFF
 
     if CONTROLS["angle_unit"][ZONE_CONTROLS] in keys["pressed"]:
         USE_DEGREES = not USE_DEGREES
