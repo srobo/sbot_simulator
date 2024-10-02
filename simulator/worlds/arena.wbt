@@ -74,35 +74,35 @@ DEF PILLARS Pose {
   children [
     Pillar {
       translation 0.75 -0.75 0
-      size 0.15 0.15 0.15
+      size 0.15 0.15 0.13
       marker "195"
       model "pillar_0"
       texture_url ["sim_markers/195.png"]
     }
     Pillar {
       translation -0.75 -0.75 0
-      size 0.15 0.15 0.15
+      size 0.15 0.15 0.13
       marker "196"
       model "pillar_1"
       texture_url ["sim_markers/196.png"]
     }
     Pillar {
       translation -0.75 0.75 0
-      size 0.15 0.15 0.15
+      size 0.15 0.15 0.13
       marker "197"
       model "pillar_2"
       texture_url ["sim_markers/197.png"]
     }
     Pillar {
       translation 0.75 0.75 0
-      size 0.15 0.15 0.15
+      size 0.15 0.15 0.13
       marker "198"
       model "pillar_3"
       texture_url ["sim_markers/198.png"]
     }
     Pillar {
       translation 0 0 0
-      size 0.15 0.15 0.30
+      size 0.15 0.15 0.26
       marker "199"
       model "pillar_centre"
       texture_url ["sim_markers/199.png"]
