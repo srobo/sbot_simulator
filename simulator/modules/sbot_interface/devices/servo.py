@@ -4,7 +4,10 @@ A wrapper for the Webots servo device.
 The servo will apply a small amount of variation to the power setting to simulate
 inaccuracies in the servo.
 """
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
 
 from sbot_interface.devices.util import (
     WebotsDevice,
@@ -13,6 +16,9 @@ from sbot_interface.devices.util import (
     get_robot_device,
     map_to_range,
 )
+
+if TYPE_CHECKING:
+    from controller import PositionSensor
 
 MAX_POSITION = 2000
 MIN_POSITION = 1000
@@ -97,7 +103,7 @@ class Servo(BaseServo):
         self._enabled = False
         g = get_globals()
         self._device = get_robot_device(g.robot, device_name, WebotsDevice.Motor)
-        self._pos_sensor = self._device.getPositionSensor()
+        self._pos_sensor: PositionSensor | None = self._device.getPositionSensor()  # type: ignore[no-untyped-call]
         self._max_position = self._device.getMaxPosition()
         self._min_position = self._device.getMinPosition()
         if self._pos_sensor is not None:

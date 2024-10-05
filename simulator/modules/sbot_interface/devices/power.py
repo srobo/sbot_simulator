@@ -57,9 +57,9 @@ class ConnectorOutput(Output):
     def set_output(self, enable: bool) -> None:
         """Set the output state."""
         if enable:
-            self._device.lock()
+            self._device.lock()  # type: ignore[no-untyped-call]
         else:
-            self._device.unlock()
+            self._device.unlock()  # type: ignore[no-untyped-call]
 
     def get_output(self) -> bool:
         """Get the output state."""
