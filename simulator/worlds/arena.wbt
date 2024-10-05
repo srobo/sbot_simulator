@@ -64,6 +64,13 @@ DEF ROBOT3 SR2025bot {
   customData "start"
 }
 
+Robot {
+  name "competition_supervisor"
+  controller "competition_supervisor"
+  supervisor TRUE
+}
+
+
 Arena {
   size 5.75 5.75
   locked TRUE
