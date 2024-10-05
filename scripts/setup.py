@@ -51,6 +51,7 @@ try:
     logger.info("Setting up Webots Python location")
 
     runtime_ini = project_root / "simulator/controllers/usercode_runner/runtime.ini"
+    # TODO setup for supervisor as well
     runtime_content: list[str] = []
     if runtime_ini.exists():
         prev_runtime_content = runtime_ini.read_text().splitlines()
