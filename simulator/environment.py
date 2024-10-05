@@ -15,6 +15,7 @@ ZONE_ROOT = ARENA_ROOT
 GAME_MODE_FILE = ARENA_ROOT / 'mode.txt'
 
 NUM_ZONES = 4
+DEFAULT_MATCH_DURATION = 150  # seconds
 
 
 if not ARENA_ROOT.is_absolute():

@@ -14,7 +14,6 @@ import os
 import runpy
 import sys
 import threading
-from datetime import datetime
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -23,7 +22,7 @@ from controller import Robot
 # Robot constructor lacks a return type annotation in R2023b
 sys.path.insert(0, Robot().getProjectPath())  # type: ignore[no-untyped-call]
 import environment  # configure path to include modules
-from robot_logging import prefix_and_tee_streams
+from robot_logging import get_match_identifier, prefix_and_tee_streams
 from robot_utils import get_game_mode, get_robot_file, print_simulation_version
 from sbot_interface.setup import setup_devices
 from sbot_interface.socket_server import SocketServer
@@ -116,7 +115,7 @@ def main() -> bool:
 
     # Setup log file
     prefix_and_tee_streams(
-        robot_file.parent / f'log-{datetime.now():%Y_%m_%dT%H_%M_%S}.txt',
+        robot_file.parent / f'log-zone-{zone}-{get_match_identifier()}.txt',
         prefix=lambda: f'[{zone}| {robot.getTime():0.3f}] ',
     )
 

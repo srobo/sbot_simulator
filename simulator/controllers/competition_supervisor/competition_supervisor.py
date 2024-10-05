@@ -4,7 +4,6 @@ from __future__ import annotations
 import sys
 import time
 from contextlib import contextmanager
-from datetime import datetime
 from pathlib import Path
 from typing import Iterator
 
@@ -13,7 +12,7 @@ from controller import Supervisor
 # Robot constructor lacks a return type annotation in R2023b
 sys.path.insert(0, Supervisor().getProjectPath())  # type: ignore[no-untyped-call]
 import environment  # configure path to include modules
-from robot_logging import prefix_and_tee_streams
+from robot_logging import get_match_identifier, prefix_and_tee_streams
 from robot_utils import get_game_mode, get_match_data, get_robot_file
 
 # Get the robot object that was created when setting up the environment
@@ -229,9 +228,10 @@ def main() -> None:
         exit()
 
     match_data = get_match_data()
-    # TODO configure logging
+    match_id = get_match_identifier()
+
     prefix_and_tee_streams(
-        environment.ARENA_ROOT / f'log-{datetime.now():%Y_%m_%dT%H_%M_%S}.txt',
+        environment.ARENA_ROOT / f'supervisor-log-{match_id}.txt',
         prefix=lambda: f'[{supervisor.getTime():0.3f}] ',
     )
 
@@ -255,8 +255,6 @@ def main() -> None:
 
 # lighting
 # scoring
-
-# log naming
 
 
 if __name__ == '__main__':

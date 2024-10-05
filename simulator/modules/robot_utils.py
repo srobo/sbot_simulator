@@ -1,7 +1,11 @@
 """General utilities that are useful across runners."""
+from __future__ import annotations
+
+import json
 import subprocess
 import sys
 from pathlib import Path
+from typing import NamedTuple
 
 # Configure path to import the environment configuration
 sys.path.insert(0, str(Path(__file__).parents[1]))
@@ -9,6 +13,22 @@ import environment
 
 # Reset the path
 del sys.path[0]
+
+
+class MatchData(NamedTuple):
+    """
+    Data about the current match.
+
+    :param match_number: The current match number
+    :param match_duration: The duration of the match in seconds
+    :param video_enabled: Whether video recording is enabled
+    :param video_resolution: The resolution of the video recording
+    """
+
+    match_number: int | None = None
+    match_duration: int = environment.DEFAULT_MATCH_DURATION
+    video_enabled: bool = True
+    video_resolution: tuple[int, int] = (1920, 1080)
 
 
 def get_robot_file(robot_zone: int) -> Path:
@@ -68,3 +88,29 @@ def print_simulation_version() -> None:
             version = 'unknown'
 
     print(f"Running simulator version: {version}")
+
+
+def get_match_data() -> MatchData:
+    """Load the match data from the match data file."""
+    match_data_file = environment.ARENA_ROOT / 'match.json'
+    default_match_data = MatchData()
+
+    if match_data_file.exists():
+        # TODO error handling for invalid json
+        raw_data = json.loads(match_data_file.read_text())
+        match_data = MatchData(
+            match_number=raw_data.get('match_number', default_match_data.match_number),
+            match_duration=raw_data.get('duration', default_match_data.match_duration),
+            video_enabled=(
+                raw_data.get('recording_config', {})
+                .get('enabled', default_match_data.video_enabled)
+            ),
+            video_resolution=(
+                raw_data.get('recording_config', {})
+                .get('video_resolution', default_match_data.video_resolution)
+            ),
+        )
+    else:
+        match_data = default_match_data
+
+    return match_data
