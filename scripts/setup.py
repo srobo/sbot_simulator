@@ -20,6 +20,45 @@ from venv import create
 logging.basicConfig(level=logging.INFO, format="[%(asctime)s] %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
+
+def populate_python_config(runtime_ini: Path, venv_python: Path) -> None:
+    """
+    Populate the python configuration in the runtime.ini file.
+
+    This will set the python command to the virtual environment python.
+
+    :param runtime_ini: The path to the runtime.ini file
+    :param venv_python: The path to the virtual environment python executable
+    """
+    runtime_content: list[str] = []
+    if runtime_ini.exists():
+        prev_runtime_content = runtime_ini.read_text().splitlines()
+    else:
+        prev_runtime_content = []
+
+    # Remove previous python settings from runtime.ini
+    # Everything between [python] and the next section is removed
+    in_python_section = False
+    for line in prev_runtime_content:
+        if line == "[python]":
+            in_python_section = True
+            if runtime_content and runtime_content[-1] == "":
+                runtime_content.pop()
+        elif in_python_section and line.startswith("["):
+            in_python_section = False
+        elif not in_python_section:
+            runtime_content.append(line)
+
+    runtime_content.extend([
+        "",
+        "[python]",
+        f"COMMAND = {venv_python.absolute()}",
+        "",
+    ])
+
+    runtime_ini.write_text('\n'.join(runtime_content))
+
+
 try:
     if (Path(__file__).parent / 'simulator/VERSION').exists():
         # This is running from a release
@@ -50,35 +89,11 @@ try:
 
     logger.info("Setting up Webots Python location")
 
-    runtime_ini = project_root / "simulator/controllers/usercode_runner/runtime.ini"
-    # TODO setup for supervisor as well
-    runtime_content: list[str] = []
-    if runtime_ini.exists():
-        prev_runtime_content = runtime_ini.read_text().splitlines()
-    else:
-        prev_runtime_content = []
-
-    # Remove previous python settings from runtime.ini
-    # Everything between [python] and the next section is removed
-    in_python_section = False
-    for line in prev_runtime_content:
-        if line == "[python]":
-            in_python_section = True
-            if runtime_content and runtime_content[-1] == "":
-                runtime_content.pop()
-        elif in_python_section and line.startswith("["):
-            in_python_section = False
-        elif not in_python_section:
-            runtime_content.append(line)
-
-    runtime_content.extend([
-        "",
-        "[python]",
-        f"COMMAND = {venv_python.absolute()}",
-        "",
-    ])
-
-    runtime_ini.write_text('\n'.join(runtime_content))
+    controllers_dir = project_root / "simulator/controllers"
+    usercode_ini = controllers_dir / "usercode_runner/runtime.ini"
+    supervisor_ini = controllers_dir / "competition_supervisor/runtime.ini"
+    populate_python_config(usercode_ini, venv_python)
+    populate_python_config(supervisor_ini, venv_python)
 
     # repopulate zone 0 with example code if robot.py is missing
     zone_0 = project_root / "zone_0"
