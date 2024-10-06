@@ -12,6 +12,7 @@ from controller import Supervisor
 # Robot constructor lacks a return type annotation in R2023b
 sys.path.insert(0, Supervisor().getProjectPath())  # type: ignore[no-untyped-call]
 import environment  # configure path to include modules
+from lighting_control import LightingControl
 from robot_logging import get_match_identifier, prefix_and_tee_streams
 from robot_utils import get_game_mode, get_match_data, get_robot_file
 
@@ -183,9 +184,12 @@ def run_match(
     """Run a match in the arena."""
     robots = Robots()
     robots.remove_unoccupied_robots()
-    robots.preset_robots()
 
-    # TODO check for required libraries?
+    time_step = int(supervisor.getBasicTimeStep())
+    match_timesteps = (match_duration * 1000) // time_step
+    lighting_control = LightingControl(supervisor, match_timesteps)
+
+    robots.preset_robots()
 
     robots.wait_for_ready(5)
 
@@ -193,7 +197,8 @@ def run_match(
         # Animations don't support lighting changes so start the animation before
         # setting the lighting. Step the simulation to allow the animation to start.
         supervisor.step()
-        # TODO set initial lighting
+        # Set initial lighting
+        lighting_control.service_lighting(0)
         with record_video(media_path_stem.with_suffix('.mp4'), video_resolution, skip_video):
             print("===========")
             print("Match start")
@@ -203,21 +208,17 @@ def run_match(
             robots.start_robots()
             supervisor.simulationSetMode(Supervisor.SIMULATION_MODE_FAST)  # type: ignore[attr-defined]
 
-            time_step = int(supervisor.getBasicTimeStep())
-            match_timesteps = (match_duration * 1000) // time_step
-            for _ in range(match_timesteps):
+            for current_step in range(match_timesteps + 1):
+                lighting_control.service_lighting(current_step)
                 supervisor.step(time_step)
-                # TODO service lighting controller
 
             print("==================")
             print("Game over, pausing")
             print("==================")
             supervisor.simulationSetMode(Supervisor.SIMULATION_MODE_PAUSE)  # type: ignore[attr-defined]
 
-        # To allow for a clear image of the final state, we reset the lighting first
-        # TODO set lighting for match end photo
-        # Step while paused to allow the lighting to update
-        supervisor.step(0)
+        # To allow for a clear image of the final state, we have reset the
+        # lighting after the final frame of the video.
         save_image(media_path_stem.with_suffix('.jpg'))
         # TODO score match
 
@@ -236,6 +237,8 @@ def main() -> None:
     )
 
     try:
+        # TODO check for required libraries?
+
         run_match(
             match_data.match_duration,
             environment.ARENA_ROOT / 'recordings' / match_id,
@@ -251,10 +254,6 @@ def main() -> None:
         raise
     else:
         supervisor.simulationQuit(0)
-
-
-# lighting
-# scoring
 
 
 if __name__ == '__main__':
