@@ -168,11 +168,12 @@ The robot has a number of boards attached to it that can be interacted with usin
 These boards include:
 
 - Power Board (serial number: `PWR`)
+    - OUT_H0 controls the vacuum pump. Enabling this allows the robot to pick up the token.
 - Motor Board (serial number: `MOT`)
     - The left wheel is connected to motor 0.
     - The right wheel is connected to motor 1.
 - Servo Board (serial number: `SERVO`)
-    - No servos are attached to the simulated robot.
+    - Servo 0 controls the lifter. Setting the position to -1 will move the lifter to the bottom position and a position of 1 will move the lifter to the top position.
 - Arduino Board (serial number: `Arduino1`)
     - The attached sensors are covered in the [Sensors](#attached-sensors) section.
 - Camera (serial number: `Camera`)
