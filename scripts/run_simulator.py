@@ -3,8 +3,9 @@
 A script to run the project in Webots.
 
 Largely just a shortcut to running the arena world in Webots.
-Only functional in releases.
 """
+from __future__ import annotations
+
 import sys
 import traceback
 from pathlib import Path
