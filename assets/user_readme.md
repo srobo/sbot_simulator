@@ -255,6 +255,15 @@ If you see a message saying that Python cannot be found that looks similar to th
 As well as the guidance above, there are a few other points to note when using the simulator.
 These can help you to understand what is happening and how to get the most out of the simulator.
 
+### Using Other Zones
+
+If the arena has multiple starting zones, you can run multiple robots in the simulator.
+To test how your robot behaves in each starting zone of the arena, you can copy your robot's code to run in each corner.
+
+In the folder where you extracted the simulator, alongside the `zone_0` folder, you may have other `zone_<number>` folders.
+Such as `zone_1`, `zone_2`, etc.
+Each of these folders can contain a `robot.py` file that will be run in the corresponding starting zone of the arena.
+
 ### Performance Optimisations
 
 The default settings work for most users however if you are using a less powerful computer or one without a dedicated graphics card (as is the case on many laptops), you may wish to adjust the graphics settings to enable the simulation to run faster.
