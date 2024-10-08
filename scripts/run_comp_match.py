@@ -7,9 +7,14 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from zipfile import ZipFile
+
+if (Path(__file__).parents[1] / 'simulator/VERSION').exists():
+    # Running in release mode, run_simulator will be in folder above
+    sys.path.append(str(Path(__file__).parents[1]))
 
 from run_simulator import get_webots_parameters
 
