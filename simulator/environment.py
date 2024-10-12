@@ -3,15 +3,27 @@ Configure the sys.path list for importing simulator modules.
 
 Also contains constants for where several important files are located.
 """
+import os
 import sys
 from pathlib import Path
 
 SIM_ROOT = Path(__file__).absolute().parent
-ZONE_ROOT = SIM_ROOT.parent
 MODULES_ROOT = SIM_ROOT / 'modules'
-GAME_MODE_FILE = SIM_ROOT / 'mode.txt'
+
+ARENA_ROOT = Path(os.environ.get('ARENA_ROOT', SIM_ROOT.parent))
+ZONE_ROOT = ARENA_ROOT
+GAME_MODE_FILE = ARENA_ROOT / 'mode.txt'
 
 NUM_ZONES = 4
+DEFAULT_MATCH_DURATION = 150  # seconds
+
+
+if not ARENA_ROOT.is_absolute():
+    # Webots sets the current directory of each controller to the directory of
+    # the controller file. As such, relative paths would be ambiguous.
+    # Hint: `$PWD` or `%CD%` may be useful to construct an absolute path from
+    # your relative path.
+    raise ValueError(f"'ARENA_ROOT' must be an absolute path, got {ARENA_ROOT!r}")
 
 
 def setup_environment() -> None:

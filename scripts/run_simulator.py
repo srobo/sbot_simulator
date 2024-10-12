@@ -3,8 +3,9 @@
 A script to run the project in Webots.
 
 Largely just a shortcut to running the arena world in Webots.
-Only functional in releases.
 """
+from __future__ import annotations
+
 import sys
 import traceback
 from pathlib import Path
@@ -14,13 +15,27 @@ from subprocess import Popen
 if sys.platform == "win32":
     from subprocess import CREATE_NEW_PROCESS_GROUP, DETACHED_PROCESS
 
-try:
-    if not (Path(__file__).parent / 'simulator/VERSION').exists():
-        print("This script is only functional in releases.")
-        raise RuntimeError
+if (Path(__file__).parent / 'simulator/VERSION').exists():
+    print("Running in release mode")
+    SIM_BASE = Path(__file__).parent
+else:
+    print("Running in development mode")
+    # Assume the script is in the scripts directory
+    SIM_BASE = Path(__file__).parents[1]
 
-    world_file = Path(__file__).parent / "simulator/worlds/arena.wbt"
 
+def get_webots_parameters() -> tuple[Path, Path]:
+    """
+    Get the paths to the Webots executable and the arena world file.
+
+    :return: The paths to the Webots executable and the arena world file
+    """
+    world_file = SIM_BASE / "simulator/worlds/arena.wbt"
+
+    if not world_file.exists():
+        raise RuntimeError("World file not found.")
+
+    # Check if Webots is in the PATH
     webots = which("webots")
 
     # Find the webots executable, if it is not in the PATH
@@ -46,21 +61,36 @@ try:
         print("Webots executable not found.")
         raise RuntimeError
 
-    if not (Path(__file__).parent / "venv").exists():
+    if not (SIM_BASE / "venv").exists():
         print("Please run the setup.py script before running the simulator.")
         raise RuntimeError
 
-    # Run the world file in Webots,
-    # detaching the process so it does not close when this script does
-    if sys.platform == "win32":
-        Popen([webots, world_file], creationflags=DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP)
-    else:
-        Popen([webots, world_file], start_new_session=True)
-except RuntimeError:
-    input("Press enter to continue...")
-    exit(1)
-except Exception as e:
-    print(f"An error occurred: {e}")
-    print(traceback.format_exc())
-    input("Press enter to continue...")
-    exit(1)
+    return Path(webots), world_file
+
+
+def main() -> None:
+    """Run the project in Webots."""
+    try:
+        webots, world_file = get_webots_parameters()
+
+        # Run the world file in Webots,
+        # detaching the process so it does not close when this script does
+        if sys.platform == "win32":
+            Popen(
+                [str(webots), str(world_file)],
+                creationflags=DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP,
+            )
+        else:
+            Popen([str(webots), str(world_file)], start_new_session=True)
+    except RuntimeError:
+        input("Press enter to continue...")
+        exit(1)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        print(traceback.format_exc())
+        input("Press enter to continue...")
+        exit(1)
+
+
+if __name__ == "__main__":
+    main()

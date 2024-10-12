@@ -7,9 +7,14 @@ destinations.
 from __future__ import annotations
 
 import sys
+from datetime import datetime
 from io import TextIOWrapper
 from pathlib import Path
 from typing import Callable, TextIO
+
+from robot_utils import get_match_data
+
+DATE_IDENTIFIER = datetime.now().strftime("%Y_%m_%dT%H_%M_%S")
 
 
 class Tee(TextIOWrapper):
@@ -109,3 +114,19 @@ def prefix_and_tee_streams(name: Path, prefix: Callable[[], str] | str | None = 
         ),
         prefix=prefix,
     )
+
+
+def get_match_identifier() -> str:
+    """
+    Get the identifier for this run of the simulator.
+
+    This identifier is used to name the log files.
+
+    :return: The match identifier
+    """
+    match_data = get_match_data()
+
+    if match_data.match_number is not None:
+        return f"match-{match_data.match_number}"
+    else:
+        return DATE_IDENTIFIER

@@ -141,7 +141,7 @@ The API for the simulator is the same as the API for the physical robot, so you 
 
 
 As well as the logs being displayed in the console, they are also saved to a file.
-This file is saved in the `zone_0` folder and has a name in the format `log-<date>.log`.
+This file is saved in the `zone_0` folder and has a name in the format `log-zone-<zone>-<date>.log`.
 The date is when that simulation was run.
 
 ### Simulation of Time
