@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import sys
 import traceback
+from os.path import expandvars
 from pathlib import Path
 from shutil import which
 from subprocess import Popen
@@ -43,7 +44,17 @@ def get_webots_parameters() -> tuple[Path, Path]:
         if sys.platform == "darwin":
             webots = "/Applications/Webots.app/Contents/MacOS/webots"
         elif sys.platform == "win32":
-            webots = "C:\\Program Files\\Webots\\msys64\\mingw64\\bin\\webotsw.exe"
+            possible_paths = [
+                "C:\\Program Files\\Webots\\msys64\\mingw64\\bin\\webotsw.exe",
+                expandvars("%LOCALAPPDATA%\\Programs\\Webots\\msys64\\mingw64\\bin\\webotsw.exe"),
+            ]
+            for path in possible_paths:
+                if Path(path).exists():
+                    webots = path
+                    break
+            else:
+                print("Webots executable not found.")
+                raise RuntimeError
         elif sys.platform.startswith("linux"):
             possible_paths = ["/usr/local/bin/webots", "/usr/bin/webots"]
             for path in possible_paths:
