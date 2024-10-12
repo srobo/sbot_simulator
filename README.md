@@ -1,9 +1,7 @@
 # sbot_simulator
 A simulator built around Webots to use the sr-robot3 library virtually.
 
-![sbot_simulator](assets/arena_overview.jpg)
-
-### This is a work in progress
+![sbot_simulator](assets/arena_overview.png)
 
 ## Installation
 
