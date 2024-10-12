@@ -48,7 +48,7 @@ def get_robot_file(robot_zone: int) -> Path:
 
     # Check if the robot file exists
     if not robot_file.exists():
-        raise FileNotFoundError(f"No robot controller found for zone {robot_file}")
+        raise FileNotFoundError(f"No robot code to run for zone {robot_zone}")
 
     return robot_file
 
@@ -169,8 +169,9 @@ def main() -> bool:
         robot_file = get_robot_file(zone)
     except FileNotFoundError as e:
         print(e.args[0])
+        robot.step()
         # Not having a robot file is not an error in dev mode
-        return game_mode == 'comp'
+        return game_mode != 'comp'
 
     # Setup log file
     prefix_and_tee_streams(

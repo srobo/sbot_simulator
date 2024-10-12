@@ -97,7 +97,7 @@ class Motor(BaseMotor):
         self._device.setVelocity(0)
         self._max_speed = self._device.getMaxVelocity()
         # Limit the torque the motor can apply to have realistic acceleration
-        self._device.setAvailableTorque(1)
+        self._device.setAvailableTorque(2)
 
     def disable(self) -> None:
         """Disable the motor."""

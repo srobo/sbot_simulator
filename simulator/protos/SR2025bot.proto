@@ -1,0 +1,204 @@
+#VRML_SIM R2023b utf8
+EXTERNPROTO "./robot/MotorAssembly.proto"
+EXTERNPROTO "./robot/Caster.proto"
+EXTERNPROTO "./robot/RobotCamera.proto"
+EXTERNPROTO "./robot/UltrasoundModule.proto"
+EXTERNPROTO "./robot/RGBLed.proto"
+EXTERNPROTO "./robot/ReflectanceSensor.proto"
+EXTERNPROTO "./robot/Flag.proto"
+EXTERNPROTO "./robot/BumpSensor.proto"
+EXTERNPROTO "./robot/VacuumSucker.proto"
+
+PROTO SR2025bot [
+  field SFString name ""
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 0 1 0
+  field SFString controller "<generic>"
+  field MFString controllerArgs []
+  field SFString customData ""
+  field SFColor flagColour 1 1 1
+] {
+  Robot {
+    name IS name
+    translation IS translation
+    rotation IS rotation
+    controller IS controller
+    controllerArgs IS controllerArgs
+    customData IS customData
+    children [
+      Pose {
+        translation 0 0 0.049
+        children [
+          MotorAssembly {
+            name "left motor"
+            rotation 0 0 1 3.1415
+            reversed TRUE
+            translation 0 0.14 0
+          }
+          MotorAssembly {
+            name "right motor"
+            translation 0 -0.14 0
+          }
+          Caster {
+            name "caster"
+            translation -0.15 0 -0.045
+          }
+          DEF BASE Solid {
+            translation -0.065 0 -0.02
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.757 0.604 0.424
+                  roughness 1
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.25 0.25 0.02
+                }
+              }
+            ]
+            name "Chassis"
+            boundingObject DEF BASE_GEO Box {
+              size 0.25 0.25 0.02
+            }
+            physics Physics {
+              density 2000  # 66% Aluminium
+            }
+          }
+          DEF BOARD Solid {
+            translation -0.05 0 0
+            rotation 0 0 1 1.5708
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0 0 0
+                  roughness 1
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.08 0.06 0.02
+                }
+              }
+            ]
+            name "Board"
+          }
+          DEF STABILISER Solid {
+            translation -0.16 0 0
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.8 0.8 0.75
+                  roughness 1
+                  metalness 0
+                }
+                geometry DEF WEIGHT_GEO Box {
+                  size 0.04 0.15 0.02
+                }
+              }
+            ]
+            name "Chassis weight"
+            boundingObject USE WEIGHT_GEO
+            physics Physics {
+              density 8000  # Steel
+            }
+          }
+          RobotCamera {
+            name "camera"
+            translation 0.05 0 0.03
+          }
+          Solid {
+            translation 0.03 0 0
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.4 0.4 0.4
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.01 0.01 0.03
+                }
+              }
+            ]
+            name "Camera riser"
+          }
+          VacuumSucker {
+            name "vacuum sucker"
+            translation 0.01 0 -0.02
+          }
+          UltrasoundModule {
+            name "ultrasound front"
+            translation 0.04 0 0
+          }
+          UltrasoundModule {
+            name "ultrasound left"
+            translation -0.08 0.12 0
+            rotation 0 0 1 1.5708
+          }
+          UltrasoundModule {
+            name "ultrasound back"
+            translation -0.18 0 0
+            rotation 0 0 1 3.1416
+          }
+          UltrasoundModule {
+            name "ultrasound right"
+            translation -0.08 -0.12 0
+            rotation 0 0 1 -1.5708
+          }
+          RGBLed {
+            name "led 1"
+            translation -0.11 0.08 -0.008
+          }
+          RGBLed {
+            name "led 2"
+            translation -0.11 0 -0.008
+          }
+          RGBLed {
+            name "led 3"
+            translation -0.11 -0.08 -0.008
+          }
+          ReflectanceSensor {
+            name "left reflectance sensor"
+            translation 0.03 0.02 -0.03
+            rotation 0 0 1 1.5708
+          }
+          ReflectanceSensor {
+            name "center reflectance sensor"
+            translation 0.03 0 -0.03
+            rotation 0 0 1 1.5708
+          }
+          ReflectanceSensor {
+            name "right reflectance sensor"
+            translation 0.03 -0.02 -0.03
+            rotation 0 0 1 1.5708
+          }
+          BumpSensor {
+            name "front left bump sensor"
+            translation 0.06 0.06 -0.02
+          }
+          BumpSensor {
+            name "front right bump sensor"
+            translation 0.06 -0.06 -0.02
+          }
+          BumpSensor {
+            name "rear left bump sensor"
+            translation -0.19 0.06 -0.02
+          }
+          BumpSensor {
+            name "rear right bump sensor"
+            translation -0.19 -0.06 -0.02
+          }
+          Flag {
+            name "flag"
+            translation 0.03 0.07 0.09
+            flagColour IS flagColour
+          }
+        ]
+      }
+    ]
+    boundingObject Pose {
+      translation -0.065 0 0.029
+      children [USE BASE_GEO]
+    }
+    physics Physics {}
+  }
+}

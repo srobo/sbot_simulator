@@ -1,0 +1,76 @@
+#VRML_SIM R2023b utf8
+# template language: javascript
+# tags: nonDeterministic
+
+EXTERNPROTO "../props/Marker.proto"
+
+PROTO Pillar [
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 1 0 0
+  field SFVec3f size 0.13 0.13 0.13
+  field SFVec2f {0.08 0.08, 0.15 0.15, 0.2 0.2} marker_size 0.08 0.08
+  field SFFloat marker_height 0.065
+  field SFColor colour 0.9 0.9 0.9
+  field SFString marker "0"
+  field SFString model ""
+  field MFString texture_url []
+]
+{
+  Pose {
+    translation IS translation
+    rotation IS rotation
+    children [
+      Solid {
+        translation 0 0 %<= fields.size.value.z / 2 >%
+        children [
+          Shape {
+            appearance DEF PILLAR_APPEARANCE PBRAppearance {
+              baseColor IS colour
+              metalness 0
+              roughness 1
+            }
+            geometry DEF PILLAR_GEOMETRY Box {
+              size IS size
+            }
+          }
+          Marker {
+            translation 0 %<= fields.size.value.y / 2 + 0.001 >% %<= fields.marker_height.value - (fields.size.value.z / 2) >%
+            rotation 1 0 0 -1.5708
+            size IS marker_size
+            name "front"
+            model IS marker
+            texture_url IS texture_url
+          }
+          Marker {
+            translation 0 %<= -(fields.size.value.y / 2 + 0.001) >% %<= fields.marker_height.value - (fields.size.value.z / 2) >%
+            rotation 1 0 0 1.5708
+            size IS marker_size
+            name "back"
+            model IS marker
+            texture_url IS texture_url
+          }
+          Marker {
+            translation %<= fields.size.value.x / 2 + 0.001 >% 0 %<= fields.marker_height.value - (fields.size.value.z / 2) >%
+            rotation 0 1 0 1.5708
+            size IS marker_size
+            name "side-1"
+            model IS marker
+            texture_url IS texture_url
+          }
+          Marker {
+            translation %<= -(fields.size.value.x / 2 + 0.001) >% 0 %<= fields.marker_height.value - (fields.size.value.z / 2) >%
+            rotation 0 1 0 -1.5708
+            size IS marker_size
+            name "side-2"
+            model IS marker
+            texture_url IS texture_url
+          }
+        ]
+        name IS model
+        model IS model
+        boundingObject USE PILLAR_GEOMETRY
+        locked TRUE
+      }
+    ]
+  }
+}

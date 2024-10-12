@@ -26,8 +26,8 @@ from sbot_interface.devices.arduino_devices import (
 from sbot_interface.devices.camera import Camera
 from sbot_interface.devices.led import Led, NullLed
 from sbot_interface.devices.motor import Motor
-from sbot_interface.devices.power import NullBuzzer, Output, StartButton
-from sbot_interface.devices.servo import NullServo
+from sbot_interface.devices.power import ConnectorOutput, NullBuzzer, Output, StartButton
+from sbot_interface.devices.servo import NullServo, Servo
 from sbot_interface.socket_server import Board, DeviceServer, SocketServer
 
 
@@ -46,7 +46,10 @@ def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
     # this is the configuration of devices connected to the robot
     devices: list[Board] = [
         PowerBoard(
-            outputs=[Output() for _ in range(7)],
+            outputs=(
+                [ConnectorOutput('vacuum sucker')]
+                + [Output() for _ in range(6)]
+            ),
             buzzer=NullBuzzer(),
             button=StartButton(),
             leds=(NullLed(), NullLed()),
@@ -60,7 +63,10 @@ def setup_devices(log_level: int | str = logging.WARNING) -> SocketServer:
             asset_tag='MOT',
         ),
         ServoBoard(
-            servos=[NullServo() for _ in range(8)],
+            servos=(
+                [Servo('vacuum sucker motor::main')]
+                + [NullServo() for _ in range(7)]
+            ),
             asset_tag='SERVO',
         ),
         LedBoard(

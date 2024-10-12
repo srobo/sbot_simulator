@@ -11,7 +11,7 @@ ZONE_ROOT = SIM_ROOT.parent
 MODULES_ROOT = SIM_ROOT / 'modules'
 GAME_MODE_FILE = SIM_ROOT / 'mode.txt'
 
-NUM_ZONES = 1
+NUM_ZONES = 4
 
 
 def setup_environment() -> None:

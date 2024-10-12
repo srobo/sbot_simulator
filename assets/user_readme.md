@@ -168,11 +168,12 @@ The robot has a number of boards attached to it that can be interacted with usin
 These boards include:
 
 - Power Board (serial number: `PWR`)
+    - OUT_H0 controls the vacuum pump. Enabling this allows the robot to pick up the token.
 - Motor Board (serial number: `MOT`)
     - The left wheel is connected to motor 0.
     - The right wheel is connected to motor 1.
 - Servo Board (serial number: `SERVO`)
-    - No servos are attached to the simulated robot.
+    - Servo 0 controls the lifter. Setting the position to -1 will move the lifter to the bottom position and a position of 1 will move the lifter to the top position.
 - Arduino Board (serial number: `Arduino1`)
     - The attached sensors are covered in the [Sensors](#attached-sensors) section.
 - Camera (serial number: `Camera`)
@@ -253,6 +254,15 @@ If you see a message saying that Python cannot be found that looks similar to th
 
 As well as the guidance above, there are a few other points to note when using the simulator.
 These can help you to understand what is happening and how to get the most out of the simulator.
+
+### Using Other Zones
+
+If the arena has multiple starting zones, you can run multiple robots in the simulator.
+To test how your robot behaves in each starting zone of the arena, you can copy your robot's code to run in each corner.
+
+In the folder where you extracted the simulator, alongside the `zone_0` folder, you may have other `zone_<number>` folders.
+Such as `zone_1`, `zone_2`, etc.
+Each of these folders can contain a `robot.py` file that will be run in the corresponding starting zone of the arena.
 
 ### Performance Optimisations
 
