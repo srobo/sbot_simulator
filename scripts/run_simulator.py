@@ -4,6 +4,7 @@ A script to run the project in Webots.
 
 Largely just a shortcut to running the arena world in Webots.
 """
+# ruff: noqa: E501
 from __future__ import annotations
 
 import sys
@@ -24,6 +25,17 @@ else:
     # Assume the script is in the scripts directory
     SIM_BASE = Path(__file__).parents[1]
 
+POSSIBLE_WEBOTS_PATHS = [
+    ("darwin", "/Applications/Webots.app/Contents/MacOS/webots"),
+    ("win32", "C:\\Program Files\\Webots\\msys64\\mingw64\\bin\\webotsw.exe"),
+    ("win32", expandvars("%LOCALAPPDATA%\\Programs\\Webots\\msys64\\mingw64\\bin\\webotsw.exe")),
+    # Attempt to use the start menu shortcut
+    ("win32", expandvars("%ProgramData%\\Microsoft\\Windows\\Start Menu\\Programs\\Cyberbotics\\Webots.lnk")),
+    ("win32", expandvars("%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Cyberbotics\\Webots.lnk")),
+    ("linux", "/usr/local/bin/webots"),
+    ("linux", "/usr/bin/webots"),
+]
+
 
 def get_webots_parameters() -> tuple[Path, Path]:
     """
@@ -36,44 +48,24 @@ def get_webots_parameters() -> tuple[Path, Path]:
     if not world_file.exists():
         raise RuntimeError("World file not found.")
 
+    if not (SIM_BASE / "venv").exists():
+        print("Please run the setup.py script before running the simulator.")
+        raise RuntimeError
+
     # Check if Webots is in the PATH
     webots = which("webots")
 
     # Find the webots executable, if it is not in the PATH
     if webots is None:
-        if sys.platform == "darwin":
-            webots = "/Applications/Webots.app/Contents/MacOS/webots"
-        elif sys.platform == "win32":
-            possible_paths = [
-                "C:\\Program Files\\Webots\\msys64\\mingw64\\bin\\webotsw.exe",
-                expandvars("%LOCALAPPDATA%\\Programs\\Webots\\msys64\\mingw64\\bin\\webotsw.exe"),
-            ]
-            for path in possible_paths:
+        for system_filter, path in POSSIBLE_WEBOTS_PATHS:
+            if sys.platform.startswith(system_filter):
+                print(f"Checking {path}")
                 if Path(path).exists():
                     webots = path
                     break
-            else:
-                print("Webots executable not found.")
-                raise RuntimeError
-        elif sys.platform.startswith("linux"):
-            possible_paths = ["/usr/local/bin/webots", "/usr/bin/webots"]
-            for path in possible_paths:
-                if Path(path).exists():
-                    webots = path
-                    break
-            else:
-                print("Webots executable not found.")
-                raise RuntimeError
-        else:
-            print("Unsupported platform.")
-            raise RuntimeError
 
-    if not Path(webots).exists():
+    if webots is None or not Path(webots).exists():
         print("Webots executable not found.")
-        raise RuntimeError
-
-    if not (SIM_BASE / "venv").exists():
-        print("Please run the setup.py script before running the simulator.")
         raise RuntimeError
 
     return Path(webots), world_file
