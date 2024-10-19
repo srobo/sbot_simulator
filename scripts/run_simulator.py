@@ -19,11 +19,11 @@ if sys.platform == "win32":
 
 if (Path(__file__).parent / 'simulator/VERSION').exists():
     print("Running in release mode")
-    SIM_BASE = Path(__file__).parent
+    SIM_BASE = Path(__file__).parent.resolve()
 else:
     print("Running in development mode")
     # Assume the script is in the scripts directory
-    SIM_BASE = Path(__file__).parents[1]
+    SIM_BASE = Path(__file__).parents[1].resolve()
 
 POSSIBLE_WEBOTS_PATHS = [
     ("darwin", "/Applications/Webots.app/Contents/MacOS/webots"),
@@ -82,6 +82,8 @@ def main() -> None:
             Popen(
                 [str(webots), str(world_file)],
                 creationflags=DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP,
+                # shell=True is needed to run from shortcuts
+                shell=(webots.suffix == ".lnk"),
             )
         else:
             Popen([str(webots), str(world_file)], start_new_session=True)
