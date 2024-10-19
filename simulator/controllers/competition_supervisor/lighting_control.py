@@ -178,7 +178,7 @@ class LightingControl:
         """Expand a fade effect into a list of steps."""
         fades = []
 
-        assert isinstance(cue.start_time, float), \
+        assert isinstance(cue.start_time, (float, int)), \
             "FromEnd times should be converted to absolute times"
         cue_start = int((cue.start_time * 1000) / self.timestep)
 
