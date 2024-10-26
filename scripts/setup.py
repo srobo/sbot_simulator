@@ -13,6 +13,7 @@ from __future__ import annotations
 import logging
 import platform
 import shutil
+import sys
 from pathlib import Path
 from subprocess import run
 from venv import create
@@ -62,12 +63,16 @@ def populate_python_config(runtime_ini: Path, venv_python: Path) -> None:
 try:
     if (Path(__file__).parent / 'simulator/VERSION').exists():
         # This is running from a release
+        print("Running in release mode")
         project_root = Path(__file__).parent
         requirements = project_root / "simulator/requirements.txt"
     else:
         # This is running from the repository
+        print("Running in development mode")
         project_root = Path(__file__).parents[1]
         requirements = project_root / "requirements.txt"
+
+    print(f"Python version: {sys.version} on {platform.platform()}")
 
     venv_dir = project_root / "venv"
 
