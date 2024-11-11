@@ -49,8 +49,7 @@ def get_webots_parameters() -> tuple[Path, Path]:
         raise RuntimeError("World file not found.")
 
     if not (SIM_BASE / "venv").exists():
-        print("Please run the setup.py script before running the simulator.")
-        raise RuntimeError
+        raise RuntimeError("Please run the setup.py script before running the simulator.")
 
     # Check if Webots is in the PATH
     webots = which("webots")
@@ -65,8 +64,7 @@ def get_webots_parameters() -> tuple[Path, Path]:
                     break
 
     if webots is None or not Path(webots).exists():
-        print("Webots executable not found.")
-        raise RuntimeError
+        raise RuntimeError("Webots executable not found.")
 
     return Path(webots), world_file
 
@@ -87,7 +85,8 @@ def main() -> None:
             )
         else:
             Popen([str(webots), str(world_file)], start_new_session=True)
-    except RuntimeError:
+    except RuntimeError as e:
+        print(f"An error occurred: {e}")
         input("Press enter to continue...")
         exit(1)
     except Exception as e:

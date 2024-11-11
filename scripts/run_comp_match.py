@@ -175,8 +175,8 @@ def execute_match(arena_root: Path) -> None:
     # Webots is only on the PATH on Linux so we have a helper function to find it
     try:
         webots, world_file = get_webots_parameters()
-    except RuntimeError:
-        raise FileNotFoundError("Webots executable not found.")
+    except RuntimeError as e:
+        raise FileNotFoundError(e)
 
     sim_env = os.environ.copy()
     sim_env['ARENA_ROOT'] = str(arena_root)
