@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import platform
 import subprocess
 import sys
 from pathlib import Path
@@ -87,7 +88,10 @@ def print_simulation_version() -> None:
         except subprocess.CalledProcessError:
             version = 'unknown'
 
-    print(f"Running simulator version: {version}")
+    print(
+        f"Running simulator version: {version} in Python {platform.python_version()} "
+        f"({platform.system()}-{platform.machine()})"
+    )
 
 
 def get_match_data() -> MatchData:
