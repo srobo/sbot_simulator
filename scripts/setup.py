@@ -15,7 +15,7 @@ import platform
 import shutil
 import sys
 from pathlib import Path
-from subprocess import run
+from subprocess import SubprocessError, check_call
 from venv import create
 
 logging.basicConfig(level=logging.INFO, format="[%(asctime)s] %(levelname)s: %(message)s")
@@ -86,11 +86,11 @@ try:
     else:
         pip = venv_dir / "bin/pip"
         venv_python = venv_dir / "bin/python"
-    run(
+    check_call(
         [str(venv_python), "-m", "pip", "install", "--upgrade", "pip", "setuptools", "wheel"],
         cwd=venv_dir,
     )
-    run([str(pip), "install", "-r", str(requirements)], cwd=venv_dir)
+    check_call([str(pip), "install", "-r", str(requirements)], cwd=venv_dir)
 
     logger.info("Setting up Webots Python location")
 
@@ -106,6 +106,9 @@ try:
         logger.info("Repopulating zone 0 with example code")
         zone_0.mkdir(exist_ok=True)
         shutil.copy(project_root / "example_robots/basic_robot.py", zone_0 / "robot.py")
+except SubprocessError:
+    logger.error("Setup failed due to an error.")
+    input("An error occurred, press enter to close.")
 except Exception:
     logger.exception("Setup failed due to an error.")
     input("An error occurred, press enter to close.")
