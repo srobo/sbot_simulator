@@ -90,7 +90,10 @@ try:
         [str(venv_python), "-m", "pip", "install", "--upgrade", "pip", "setuptools", "wheel"],
         cwd=venv_dir,
     )
-    check_call([str(pip), "install", "-r", str(requirements)], cwd=venv_dir)
+    check_call(
+        [str(pip), "install", "--only-binary=:all:", "-r", str(requirements)],
+        cwd=venv_dir,
+    )
 
     logger.info("Setting up Webots Python location")
 
