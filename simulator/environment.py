@@ -14,7 +14,7 @@ ARENA_ROOT = Path(os.environ.get('ARENA_ROOT', SIM_ROOT.parent))
 ZONE_ROOT = ARENA_ROOT
 GAME_MODE_FILE = ARENA_ROOT / 'mode.txt'
 
-NUM_ZONES = 4
+NUM_ZONES = 2
 DEFAULT_MATCH_DURATION = 150  # seconds
 
 

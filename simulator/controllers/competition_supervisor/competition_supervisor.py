@@ -11,8 +11,8 @@ from controller import Supervisor
 
 # Robot constructor lacks a return type annotation in R2023b
 sys.path.insert(0, Supervisor().getProjectPath())  # type: ignore[no-untyped-call]
+# from lighting_control import LightingControl
 import environment  # configure path to include modules
-from lighting_control import LightingControl
 from robot_logging import get_match_identifier, prefix_and_tee_streams
 from robot_utils import get_game_mode, get_match_data, get_robot_file
 
@@ -187,7 +187,7 @@ def run_match(
 
     time_step = int(supervisor.getBasicTimeStep())
     match_timesteps = (match_duration * 1000) // time_step
-    lighting_control = LightingControl(supervisor, match_timesteps)
+    # lighting_control = LightingControl(supervisor, match_timesteps)
 
     robots.preset_robots()
 
@@ -198,7 +198,7 @@ def run_match(
         # setting the lighting. Step the simulation to allow the animation to start.
         supervisor.step()
         # Set initial lighting
-        lighting_control.service_lighting(0)
+        # lighting_control.service_lighting(0)
         with record_video(media_path_stem.with_suffix('.mp4'), video_resolution, skip_video):
             print("===========")
             print("Match start")
@@ -208,9 +208,10 @@ def run_match(
             robots.start_robots()
             supervisor.simulationSetMode(Supervisor.SIMULATION_MODE_FAST)  # type: ignore[attr-defined]
 
-            for current_step in range(match_timesteps + 1):
-                lighting_control.service_lighting(current_step)
-                supervisor.step(time_step)
+            # for current_step in range(match_timesteps + 1):
+            #     lighting_control.service_lighting(current_step)
+            #     supervisor.step(time_step)
+            supervisor.step(match_timesteps)
 
             print("==================")
             print("Game over, pausing")

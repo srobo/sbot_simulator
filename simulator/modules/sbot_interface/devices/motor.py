@@ -97,7 +97,7 @@ class Motor(BaseMotor):
         self._device.setVelocity(0)
         self._max_speed = self._device.getMaxVelocity()
         # Limit the torque the motor can apply to have realistic acceleration
-        self._device.setAvailableTorque(2)
+        self._device.setAvailableTorque(1)
 
     def disable(self) -> None:
         """Disable the motor."""
@@ -119,7 +119,7 @@ class Motor(BaseMotor):
             else:
                 # Apply a small amount of variation to the power setting to simulate
                 # inaccuracies in the motor
-                value = int(add_jitter(value, (MIN_POWER, MAX_POWER), std_dev_percent=1))
+                value = int(add_jitter(value, (MIN_POWER, MAX_POWER)))
 
         self._device.setVelocity(map_to_range(
             value,
