@@ -21,6 +21,10 @@ from venv import create
 logging.basicConfig(level=logging.INFO, format="[%(asctime)s] %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
+BOLD_RED = '\x1b[31;1m'
+GREEN = '\x1b[32;20m'
+RESET_COLOUR = '\x1b[0m'
+
 
 def populate_python_config(runtime_ini: Path, venv_python: Path) -> None:
     """
@@ -110,10 +114,12 @@ try:
         zone_0.mkdir(exist_ok=True)
         shutil.copy(project_root / "example_robots/basic_robot.py", zone_0 / "robot.py")
 except SubprocessError:
+    print(BOLD_RED)
     logger.error("Setup failed due to an error.")
-    input("An error occurred, press enter to close.")
+    input(f"An error occurred, press enter to close.{RESET_COLOUR}")
 except Exception:
+    print(BOLD_RED)
     logger.exception("Setup failed due to an error.")
-    input("An error occurred, press enter to close.")
+    input(f"An error occurred, press enter to close.{RESET_COLOUR}")
 else:
-    input("Setup complete, press enter to close.")
+    input(f"{GREEN}Setup complete, press enter to close.{RESET_COLOUR}")
