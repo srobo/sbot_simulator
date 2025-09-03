@@ -99,6 +99,9 @@ try:
         cwd=venv_dir,
     )
 
+    logger.info("Preloading OpenCV")
+    check_call([str(venv_python), "-c", "import cv2"], cwd=venv_dir)
+
     logger.info("Setting up Webots Python location")
 
     controllers_dir = project_root / "simulator/controllers"
