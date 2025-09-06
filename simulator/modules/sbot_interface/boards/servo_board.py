@@ -44,7 +44,7 @@ class ServoBoard:
         if args[0] == '*IDN?':
             return f'Student Robotics:SBv4B:{self.asset_tag}:{self.software_version}'
         elif args[0] == '*STATUS?':
-            return f"{self.watchdog_fail}:{self.pgood}"
+            return f"{self.watchdog_fail:d}:{self.pgood:d}"
         elif args[0] == '*RESET':
             LOGGER.info(f'Resetting servo board {self.asset_tag}')
             for servo in self.servos:

@@ -15,11 +15,15 @@ import platform
 import shutil
 import sys
 from pathlib import Path
-from subprocess import run
+from subprocess import SubprocessError, check_call
 from venv import create
 
 logging.basicConfig(level=logging.INFO, format="[%(asctime)s] %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
+
+BOLD_RED = '\x1b[31;1m'
+GREEN = '\x1b[32;20m'
+RESET_COLOUR = '\x1b[0m'
 
 
 def populate_python_config(runtime_ini: Path, venv_python: Path) -> None:
@@ -76,6 +80,9 @@ try:
 
     venv_dir = project_root / "venv"
 
+    # Reset success flag
+    (venv_dir / "setup_success").unlink(missing_ok=True)
+
     logger.info(f"Creating virtual environment in {venv_dir.absolute()}")
     create(venv_dir, with_pip=True)
 
@@ -86,11 +93,17 @@ try:
     else:
         pip = venv_dir / "bin/pip"
         venv_python = venv_dir / "bin/python"
-    run(
+    check_call(
         [str(venv_python), "-m", "pip", "install", "--upgrade", "pip", "setuptools", "wheel"],
         cwd=venv_dir,
     )
-    run([str(pip), "install", "-r", str(requirements)], cwd=venv_dir)
+    check_call(
+        [str(pip), "install", "--only-binary=:all:", "-r", str(requirements)],
+        cwd=venv_dir,
+    )
+
+    logger.info("Preloading OpenCV & sr.robot3")
+    check_call([str(venv_python), "-c", "import cv2;import sr.robot3"], cwd=venv_dir)
 
     logger.info("Setting up Webots Python location")
 
@@ -100,14 +113,22 @@ try:
     populate_python_config(usercode_ini, venv_python)
     populate_python_config(supervisor_ini, venv_python)
 
+    # Mark that we succeeded
+    (venv_dir / "setup_success").touch()
+
     # repopulate zone 0 with example code if robot.py is missing
     zone_0 = project_root / "zone_0"
     if not (zone_0 / "robot.py").exists():
         logger.info("Repopulating zone 0 with example code")
         zone_0.mkdir(exist_ok=True)
         shutil.copy(project_root / "example_robots/basic_robot.py", zone_0 / "robot.py")
+except SubprocessError:
+    print(BOLD_RED)
+    logger.error("Setup failed due to an error.")
+    input(f"An error occurred, press enter to close.{RESET_COLOUR}")
 except Exception:
+    print(BOLD_RED)
     logger.exception("Setup failed due to an error.")
-    input("An error occurred, press enter to close.")
+    input(f"An error occurred, press enter to close.{RESET_COLOUR}")
 else:
-    input("Setup complete, press enter to close.")
+    input(f"{GREEN}Setup complete, press enter to close.{RESET_COLOUR}")

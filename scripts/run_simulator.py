@@ -14,6 +14,10 @@ from pathlib import Path
 from shutil import which
 from subprocess import Popen
 
+BOLD_RED = '\x1b[31;1m'
+RESET_COLOUR = '\x1b[0m'
+
+
 if sys.platform == "win32":
     from subprocess import CREATE_NEW_PROCESS_GROUP, DETACHED_PROCESS
 
@@ -51,6 +55,10 @@ def get_webots_parameters() -> tuple[Path, Path]:
     if not (SIM_BASE / "venv").exists():
         raise RuntimeError("Please run the setup.py script before running the simulator.")
 
+    # Check setup finish successfully
+    if not (SIM_BASE / "venv/setup_success").exists():
+        raise RuntimeError("Setup has not completed successfully. Please re-run the setup.py script.")
+
     # Check if Webots is in the PATH
     webots = which("webots")
 
@@ -86,13 +94,15 @@ def main() -> None:
         else:
             Popen([str(webots), str(world_file)], start_new_session=True)
     except RuntimeError as e:
-        print(f"An error occurred: {e}")
-        input("Press enter to continue...")
+        print(BOLD_RED)
+        print(f"An error occurred: \n{e}")
+        input(f"Press enter to continue...{RESET_COLOUR}")
         exit(1)
     except Exception as e:
+        print(BOLD_RED)
         print(f"An error occurred: {e}")
         print(traceback.format_exc())
-        input("Press enter to continue...")
+        input(f"Press enter to continue...{RESET_COLOUR}")
         exit(1)
 
 

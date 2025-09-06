@@ -226,6 +226,8 @@ def run_match(
 def main() -> None:
     """Run the competition supervisor."""
     if is_dev_mode():
+        robots = Robots()
+        robots.remove_unoccupied_robots()
         exit()
 
     match_data = get_match_data()
