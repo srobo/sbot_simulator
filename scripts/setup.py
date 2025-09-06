@@ -80,6 +80,9 @@ try:
 
     venv_dir = project_root / "venv"
 
+    # Reset success flag
+    (venv_dir / "setup_success").unlink(missing_ok=True)
+
     logger.info(f"Creating virtual environment in {venv_dir.absolute()}")
     create(venv_dir, with_pip=True)
 
@@ -109,6 +112,9 @@ try:
     supervisor_ini = controllers_dir / "competition_supervisor/runtime.ini"
     populate_python_config(usercode_ini, venv_python)
     populate_python_config(supervisor_ini, venv_python)
+
+    # Mark that we succeeded
+    (venv_dir / "setup_success").touch()
 
     # repopulate zone 0 with example code if robot.py is missing
     zone_0 = project_root / "zone_0"

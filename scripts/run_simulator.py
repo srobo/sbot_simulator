@@ -12,7 +12,7 @@ import traceback
 from os.path import expandvars
 from pathlib import Path
 from shutil import which
-from subprocess import Popen, check_output
+from subprocess import Popen
 
 BOLD_RED = '\x1b[31;1m'
 RESET_COLOUR = '\x1b[0m'
@@ -55,15 +55,9 @@ def get_webots_parameters() -> tuple[Path, Path]:
     if not (SIM_BASE / "venv").exists():
         raise RuntimeError("Please run the setup.py script before running the simulator.")
 
-    # Check the venv contains sr-robot3
-    venv_dir = SIM_BASE / "venv"
-    if sys.platform == "win32":
-        pip = venv_dir / "Scripts/pip.exe"
-    else:
-        pip = venv_dir / "bin/pip"
-    packages = check_output([pip, 'freeze'], text=True)
-    if 'sr-robot3' not in packages:
-        raise RuntimeError("sr-robot3 is not installed. Please re-run the setup.py script.")
+    # Check setup finish successfully
+    if not (SIM_BASE / "venv/setup_success").exists():
+        raise RuntimeError("Setup has not completed successfully. Please re-run the setup.py script.")
 
     # Check if Webots is in the PATH
     webots = which("webots")
