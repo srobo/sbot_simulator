@@ -141,147 +141,147 @@ DEF CANS Pose {
 
 Marker {
   name "A0"
-  model "0"
+  model "100"
   size 0.1 0.1
   translation -1.4798 2.165 0.07
   rotation 0 0 1 1.5708
-  texture_url ["sim_markers/0.png"]
+  texture_url ["sim_markers/100.png"]
   upright TRUE
 }
 Marker {
   name "A1"
-  model "1"
+  model "101"
   size 0.1 0.1
   translation -1.4798 2.015 0.07
   rotation 0 0 1 1.5708
-  texture_url ["sim_markers/1.png"]
+  texture_url ["sim_markers/101.png"]
   upright TRUE
 }
 Marker {
   name "A2"
-  model "2"
+  model "102"
   size 0.1 0.1
   translation -0.535 0.001 0.07
   rotation 0 0 1 3.1415
-  texture_url ["sim_markers/2.png"]
+  texture_url ["sim_markers/102.png"]
   upright TRUE
 }
 Marker {
   name "A3"
-  model "3"
+  model "103"
   size 0.1 0.1
   translation -0.685 0.001 0.07
   rotation 0 0 1 3.1415
-  texture_url ["sim_markers/3.png"]
+  texture_url ["sim_markers/103.png"]
   upright TRUE
 }
 Marker {
   name "A4"
-  model "4"
+  model "104"
   size 0.1 0.1
   translation -2.699 0.815 0.07
   rotation 0 0 1 1.5708
-  texture_url ["sim_markers/4.png"]
+  texture_url ["sim_markers/104.png"]
   upright TRUE
 }
 Marker {
   name "A5"
-  model "5"
+  model "105"
   size 0.1 0.1
   translation -2.699 0.665 0.07
   rotation 0 0 1 1.5708
-  texture_url ["sim_markers/5.png"]
+  texture_url ["sim_markers/105.png"]
   upright TRUE
 }
 Marker {
   name "A6"
-  model "6"
+  model "106"
   size 0.1 0.1
   translation -2.14243 -2.03637 0.07
   rotation 0 0 1 2.3561
-  texture_url ["sim_markers/6.png"]
+  texture_url ["sim_markers/106.png"]
   upright TRUE
 }
 Marker {
   name "A7"
-  model "7"
+  model "107"
   size 0.1 0.1
   translation -2.03637 -2.14243 0.07
   rotation 0 0 1 2.3561
-  texture_url ["sim_markers/7.png"]
+  texture_url ["sim_markers/107.png"]
   upright TRUE
 }
 
 Marker {
   name "B0"
-  model "0"
+  model "100"
   size 0.1 0.1
   translation 1.4798 -2.165 0.07
   rotation 0 0 1 -1.5708
-  texture_url ["sim_markers/0.png"]
+  texture_url ["sim_markers/100.png"]
   upright TRUE
 }
 Marker {
   name "B1"
-  model "1"
+  model "101"
   size 0.1 0.1
   translation 1.4798 -2.015 0.07
   rotation 0 0 1 -1.5708
-  texture_url ["sim_markers/1.png"]
+  texture_url ["sim_markers/101.png"]
   upright TRUE
 }
 Marker {
   name "B2"
-  model "2"
+  model "102"
   size 0.1 0.1
   translation 0.535 -0.001 0.07
   rotation 0 0 1 0
-  texture_url ["sim_markers/2.png"]
+  texture_url ["sim_markers/102.png"]
   upright TRUE
 }
 Marker {
   name "B3"
-  model "3"
+  model "103"
   size 0.1 0.1
   translation 0.685 -0.001 0.07
   rotation 0 0 1 0
-  texture_url ["sim_markers/3.png"]
+  texture_url ["sim_markers/103.png"]
   upright TRUE
 }
 Marker {
   name "B4"
-  model "4"
+  model "104"
   size 0.1 0.1
   translation 2.699 -0.815 0.07
   rotation 0 0 1 -1.5708
-  texture_url ["sim_markers/4.png"]
+  texture_url ["sim_markers/104.png"]
   upright TRUE
 }
 Marker {
   name "B5"
-  model "5"
+  model "105"
   size 0.1 0.1
   translation 2.699 -0.665 0.07
   rotation 0 0 1 -1.5708
-  texture_url ["sim_markers/5.png"]
+  texture_url ["sim_markers/105.png"]
   upright TRUE
 }
 Marker {
   name "B6"
-  model "6"
+  model "106"
   size 0.1 0.1
   translation 2.14243 2.03637 0.07
   rotation 0 0 1 -0.7853
-  texture_url ["sim_markers/6.png"]
+  texture_url ["sim_markers/106.png"]
   upright TRUE
 }
 Marker {
   name "B7"
-  model "7"
+  model "107"
   size 0.1 0.1
   translation 2.03637 2.14243 0.07
   rotation 0 0 1 -0.7853
-  texture_url ["sim_markers/7.png"]
+  texture_url ["sim_markers/107.png"]
   upright TRUE
 }
 
