@@ -13,7 +13,7 @@ You control the virtual robot using the [sr-robot3 API](https://pypi.org/project
 
 ## Setup
 In order to use the simulator a few set-up steps need to be done.
-First you need to install Python 3.9+ and Webots R2023b.
+First you need to install Python 3.9+ and Webots R2025a.
 
 To install Python, you can download the latest version from the [Python website](https://www.python.org/downloads/). If you have already installed Python from a package manager, such as homebrew on MacOS, apt on Ubuntu, or the Windows store on Windows, you can skip this step.
 ![python download site](images/python-download.png)
