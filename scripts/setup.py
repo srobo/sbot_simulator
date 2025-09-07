@@ -16,7 +16,6 @@ import shutil
 import sys
 from pathlib import Path
 from subprocess import SubprocessError, check_call
-from venv import create
 
 logging.basicConfig(level=logging.INFO, format="[%(asctime)s] %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -84,7 +83,7 @@ try:
     (venv_dir / "setup_success").unlink(missing_ok=True)
 
     logger.info(f"Creating virtual environment in {venv_dir.absolute()}")
-    create(venv_dir, with_pip=True)
+    check_call([sys.executable, "-m", "venv", venv_dir])
 
     logger.info(f"Installing dependencies from {requirements.absolute()}")
     if platform.system() == "Windows":
