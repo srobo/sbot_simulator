@@ -90,56 +90,60 @@ DEF TOKENS Pose {
     # from random import randrange; print(", ".join(str(randrange(100, 140)) for _ in range(8)))
     # 119, 101, 104, 129, 137, 130, 102, 109
     DEF TOKEN0_1 BoxToken {
-      translation 0 -0.5 0.17
+      translation 0 -1.0 0
       colour 1 0 0
       marker "119"
       model "T119"
       texture_url ["sim_markers/119.png"]
     }
     DEF TOKEN0_2 BoxToken {
-      translation 0.5 0 0.17
+      translation 1.0 0 0
       colour 1 0 0
       marker "101"
       model "T101"
       texture_url ["sim_markers/101.png"]
     }
     DEF TOKEN0_3 BoxToken {
-      translation 0 0.5 0.17
+      translation 0 1.0 0
       colour 1 0 0
       marker "104"
       model "T104"
       texture_url ["sim_markers/104.png"]
     }
     DEF TOKEN0_4 BoxToken {
-      translation -0.5 0 0.17
+      translation -1.0 0 0
       colour 1 0 0
       marker "129"
       model "T129"
       texture_url ["sim_markers/129.png"]
     }
     DEF TOKEN0_5 BoxToken {
-      translation 1.0 1.0 0
+      translation 0.5 0.5 0.17
+      rotation 0 0 1 0.7854
       colour 1 0 0
       marker "137"
       model "T137"
       texture_url ["sim_markers/137.png"]
     }
     DEF TOKEN0_6 BoxToken {
-      translation 1.0 -1.0 0
+      translation 0.5 -0.5 0.17
+      rotation 0 0 1 0.7854
       colour 1 0 0
       marker "130"
       model "T130"
       texture_url ["sim_markers/130.png"]
     }
     DEF TOKEN0_7 BoxToken {
-      translation -1.0 -1.0 0
+      translation -0.5 -0.5 0.17
+      rotation 0 0 1 0.7854
       colour 1 0 0
       marker "102"
       model "T102"
       texture_url ["sim_markers/102.png"]
     }
     DEF TOKEN0_8 BoxToken {
-      translation -1.0 1.0 0
+      translation -0.5 0.5 0.17
+      rotation 0 0 1 0.7854
       colour 1 0 0
       marker "109"
       model "T109"
@@ -147,56 +151,60 @@ DEF TOKENS Pose {
     }
     # 162, 171, 146, 156, 176, 140, 152, 150
     DEF TOKEN1_1 BoxToken {
-      translation 0.5 0.5 0.17
+      translation 1.0 1.0 0
+      rotation 0 0 1 0.7854
       colour 0 0 1
       marker "162"
       model "T162"
       texture_url ["sim_markers/162.png"]
     }
     DEF TOKEN1_2 BoxToken {
-      translation 0.5 -0.5 0.17
+      translation 1.0 -1.0 0
+      rotation 0 0 1 0.7854
       colour 0 0 1
       marker "171"
       model "T171"
       texture_url ["sim_markers/171.png"]
     }
     DEF TOKEN1_3 BoxToken {
-      translation -0.5 -0.5 0.17
+      translation -1.0 -1.0 0
+      rotation 0 0 1 0.7854
       colour 0 0 1
       marker "146"
       model "T146"
       texture_url ["sim_markers/146.png"]
     }
     DEF TOKEN1_4 BoxToken {
-      translation -0.5 0.5 0.17
+      translation -1.0 1.0 0
+      rotation 0 0 1 0.7854
       colour 0 0 1
       marker "156"
       model "T156"
       texture_url ["sim_markers/156.png"]
     }
     DEF TOKEN1_5 BoxToken {
-      translation 1.0 0 0
+      translation 0.5 0 0.17
       colour 0 0 1
       marker "176"
       model "T176"
       texture_url ["sim_markers/176.png"]
     }
     DEF TOKEN1_6 BoxToken {
-      translation 0 -1.0 0
+      translation 0 -0.5 0.17
       colour 0 0 1
       marker "140"
       model "T140"
       texture_url ["sim_markers/140.png"]
     }
     DEF TOKEN1_7 BoxToken {
-      translation -1.0 0 0
+      translation -0.5 0 0.17
       colour 0 0 1
       marker "152"
       model "T152"
       texture_url ["sim_markers/152.png"]
     }
     DEF TOKEN1_8 BoxToken {
-      translation 0 1.0 0
+      translation 0 0.5 0.17
       colour 0 0 1
       marker "150"
       model "T150"
