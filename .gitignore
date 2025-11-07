@@ -167,3 +167,4 @@ cython_debug/
 /simulator/controllers/competition_supervisor/runtime.ini
 /zone_*
 /dist
+/uv.lock
