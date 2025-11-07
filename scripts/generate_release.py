@@ -85,6 +85,7 @@ with TemporaryDirectory() as temp_dir_str:
     script_dir = temp_dir / "scripts"
     script_dir.mkdir()
     shutil.copy(project_root / "scripts/run_comp_match.py", script_dir)
+    shutil.copy(project_root / "scripts/setup_python_fix.py", script_dir)
 
     logger.info("Copying example code to temp directory")
     shutil.copytree(project_root / "example_robots", temp_dir / "example_robots")
