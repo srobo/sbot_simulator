@@ -1,4 +1,4 @@
-sr-robot3==2026.0.1
+sr-robot3==2026.0.3
 april_vision==3.0.0
 opencv-python-headless >=4.10,<5
 
